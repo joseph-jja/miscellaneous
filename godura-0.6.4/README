@@ -1,0 +1,17 @@
+This program is called Godura. It is modeled after my program Tk NotePad,
+which was modeled after windows notepad. Tk NotePad is a basic text editor 
+like windows Notepad, with a few enhancements, like Search - Replace, 
+and unlimited (well virtually unlimited) Undo / Redo.
+Tk NotePad may have a few quirks, but there are no real bugs.  The current 
+issues with Tk NotePad are believed to be inherent in Tcl/Tk.
+
+Godura uses the gtk+/glib 2+ widget set and C.
+
+So far not much is implemented. 
+	1) The File menu works, but has no Print. This is stil in testing.
+	2) Edit works.
+	3) memory leaks ???
+	4) seems to have built in drag and drop between godura instances.
+	5) line numbering seems to work, but not for mouse actions, and some other things.
+	
+

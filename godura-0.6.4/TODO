@@ -1,0 +1,39 @@
+So far things are coming along okay.
+
+TODO:
+
+More testing overall.  
+
+1) FILE menu
+	- new window needs better call then system("godura &") or do I ???
+	- add more file menu options:
+		- print
+		- send mail
+		- ftp open
+	- key bindings
+
+2) EDIT menu
+	- more testing on the cut, copy, and paste 
+	- get key bindings to actually work! 
+	- undo / redo - needs more testing 
+
+3) SEARCH menu  
+	- clean up code and add more comments 
+	- add key bindings
+
+4) preferences menu
+	- save / restore preferences 
+
+5) then add spec file stuff
+
+6) then add syntax highlightening
+	- spec files
+	- html files
+	- tcl files
+	- C files
+	- java files
+
+7) add smtp sending capabilities
+
+8) add ftp editing capabilities
+

@@ -1,0 +1,53 @@
+This file describes how to install this software and should be read!
+
+For RPM machines like Redhat:
+--------------------------------------
+
+To install and use rpm safely I recommend the following: 
+
+1) Untar the godura-0.6.1.tar.gz file as follows:
+
+tar -zxvf godura-0.6.1.tar.gz
+
+2) Edit the spec files and change the builddir to point to the dir that you 
+plan to build the rpm in. In most cases this is /var/tmp. I prefer to use a 
+safer method of doing so and build them in my home dir, thus preventing 
+mucking up my system. The install.sh script is an attempt at doing this.
+
+3) Then move or copy the tar to SOURCES directory that you wish to install 
+into.
+
+4) Then run rpm:
+
+rpm -ba godura.spec
+
+or 
+
+rpm -bb godura.spec
+
+5) Then you can rpm -i ~/rpmbuild/RPMS/i386/godura-0.6.1.tar.gz
+
+YOU INSTALLED!
+
+** if only all rpms were this easy ;-)
+
+For machines that do not use redhat package management (rpm?):
+--------------------------------------
+
+1) tar -zxvf godura-0.6.1.tar.gz
+
+2) then cd godura-0.6.1
+
+3) ./configure 
+NOTE: only a few options are supported and it has not been fully tested.
+Use --prefix=<where you want the prefix to be> to change this
+Default is /usr/local
+
+4) make
+
+5) make install 
+
+** It installs the godura executable in /usr/local/bin 
+
+
+
