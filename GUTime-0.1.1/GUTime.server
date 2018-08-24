@@ -1,0 +1,26 @@
+<oaf_info>
+<oaf_server iid="OAFIID:GUTime_applet_Factory" type="exe"
+            location="/usr/local/bin/GUTime">
+
+        <oaf_attribute name="repo_ids" type="stringv">
+                <item value="IDL:Bonobo/GenericFactory:1.0"/>
+                <item value="IDL:Bonobo/Unknown:1.0"/>
+        </oaf_attribute>
+        <oaf_attribute name="name" type="string" value="GUTime Uptime Applet"/>
+        <oaf_attribute name="description" type="string" value="Updated GUTime applet factory"/>
+</oaf_server>
+
+<oaf_server iid="OAFIID:GUTime_applet" type="factory"
+            location="OAFIID:GUTime_applet_Factory">
+
+        <oaf_attribute name="repo_ids" type="stringv">
+                <item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+                <item value="IDL:Bonobo/Control:1.0"/>
+                <item value="IDL:Bonobo/Unknown:1.0"/>
+        </oaf_attribute>
+        <oaf_attribute name="name" type="string" value="GUTime Uptime Applet"/>
+        <oaf_attribute name="description" type="string" value="Updated GUTime applet factory"/>
+        <oaf_attribute name="panel:category" type="string" value="Amusements"/>
+        <oaf_attribute name="panel:icon" type="string" value="gnome-applets.png"/>
+</oaf_server>
+</oaf_info>

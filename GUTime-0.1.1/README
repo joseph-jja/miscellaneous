@@ -1,0 +1,20 @@
+This is a sinmple uptime applet.
+
+It is designed for the GNOME panel and is untested elsewhere.
+Read the LICENSE file that you should have gotton with this 
+program.
+
+This has been updated to use GTK+ 2.x and GNOME 2.6+.
+
+Even though this is a .0.0.6 version it is considered completed. If you want 
+improvements then feel free to make them.  Although it may not required
+by the license it is recommended that any additions are sent back to me the 
+author so that I have a change to integrate them.  Also any bug reports
+as well as fixes should also be sent back to me as the author.
+
+This software is licensed under the GPL.
+
+To install this software see the install file.
+
+NOTE: the meminfo applets does not work in gnome 2.x
+

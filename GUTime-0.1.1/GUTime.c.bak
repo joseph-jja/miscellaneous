@@ -1,0 +1,139 @@
+#include <panel-applet.h>
+
+/* some #defines here specific to our little applet */
+#define PACKAGE "GUTime"
+#define VERSION "0.0.4"
+#define LICENSE "Licensed under the GPL" 
+#define COMMENTS "A simple uptime applet for the GNOME panel. "
+#define FILENAME "/proc/uptime"
+#define UPDATE_TIME 30000
+#define ONEBITE 1
+#define STATUSLEN 100
+#define ERRORFILENOTFOUND "FileNot Found!"
+#define TEXTFONT "-adobe-courier-medium-r-normal-*-*-120-*-*-m-*-*-*"
+#define WIDTH 100
+#define HEIGHT 40
+
+const gchar *author[] = {
+    "Joseph Acosta (joeja@mindspring.com)",
+    NULL
+};	
+
+/* here is our function prototype for the funciton to uptdate our
+ * little uptime applet */
+static gint uptime_update (GtkWidget *);
+
+static void about_menu (AppletWidget *widget, gpointer data) {
+
+	gtk_widget_show(gnome_about_new(PACKAGE,VERSION,LICENSE,
+             (const gchar**)author, 
+              _(COMMENTS),
+              NULL));
+
+}
+		
+int main(int argc, char **argv)
+{
+    /* these are necessary for the applets */
+    GtkWidget *applet, *myvbox;
+	GtkWidget *label;
+    GtkWidget *widget;
+    GtkStyle  *style;
+
+    /* applet widget generic things */
+    applet_widget_init(PACKAGE, VERSION, argc, argv, NULL, 0, NULL);
+    applet = panel_applet_new(PACKAGE);
+    
+    /* a vbox for out label and our entry */
+    myvbox = gtk_vbox_new(FALSE,1);
+    applet_widget_add(APPLET_WIDGET(applet), myvbox);
+
+    /* gtk stuff to create our label and our widget */
+    label = gtk_label_new("uptime");
+    gtk_widget_show(label);	
+
+    widget = gtk_entry_new();
+    gtk_widget_show(widget);	
+    gtk_entry_set_editable(GTK_ENTRY(widget), FALSE);
+
+    style = gtk_widget_get_style(label);    
+    /* style->font = gdk_font_load(TEXTFONT); */
+    style->base->red = 0xffff;
+    style->base->green = 0xffff;
+    style->base->blue = 0xffff;
+    gtk_widget_set_style(label, style);
+    gtk_widget_set_style(widget, style);
+	
+    /* again some more gtk stuff for a label and widget */
+    gtk_box_pack_start (GTK_BOX(myvbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX(myvbox), widget, FALSE, FALSE, 0);
+    
+	/* add our update function here */
+	gtk_timeout_add(UPDATE_TIME, (GtkFunction)uptime_update, widget);
+	uptime_update(widget);
+	
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+	                                      "about",
+	                                      GNOME_STOCK_MENU_ABOUT,
+	                                      _("About"),
+	                                      about_menu,
+	                                      NULL);  
+	
+    gtk_widget_set_usize(GTK_WIDGET(myvbox), WIDTH, HEIGHT);
+    gtk_widget_show_all(applet);
+			
+    applet_widget_gtk_main();
+
+    return 0;
+}
+
+/* this code was taken in party form procps v1.2.7 and modified for my applet */
+static gint uptime_update (GtkWidget *widget)
+{
+	FILE *pFile;
+	static char buf[64];
+	static char tempbuf[64];
+	float uptime_secs, idle_secs;
+	int upminutes, uphours, updays;
+
+ 	sprintf(buf, "%s", " ");
+	if ((pFile=fopen(FILENAME, "r")) == NULL) {
+		gtk_entry_set_text(GTK_ENTRY(widget),ERRORFILENOTFOUND);
+                return 0;
+	} else {
+		char *buffer;
+		int nchars;
+		buffer = calloc(STATUSLEN,sizeof(ONEBITE));
+		
+		nchars = fread(buffer, 1, STATUSLEN, pFile);
+		sscanf(buffer," %f %f ",&uptime_secs, &idle_secs);
+		updays = (int) uptime_secs / (60*60*24);
+  		if (updays) {
+    			sprintf(tempbuf , "%d d%s ", updays, (updays != 1) ? "s" : "");
+			strcat(buf,tempbuf);
+		}
+		upminutes = (int) uptime_secs / 60;
+  		uphours = upminutes / 60;
+  		uphours = uphours % 24;
+  		upminutes = upminutes % 60;
+  		if(uphours) {
+  		  /*sprintf(tempbuf, "%2d:02d ", uphours, upminutes);*/
+  		  sprintf(tempbuf, "%2d h %02d m", uphours, upminutes);
+		  strcat(buf,tempbuf);
+  		}
+		else {
+  		  sprintf(tempbuf, "%d m ", upminutes);
+		  strcat(buf,tempbuf);
+		}
+		gtk_entry_set_editable(GTK_ENTRY(widget), TRUE);
+		gtk_entry_set_text(GTK_ENTRY(widget),buf);
+		gtk_entry_set_editable(GTK_ENTRY(widget), FALSE);
+		fclose(pFile);
+		if (buffer != NULL) {
+		    free(buffer);
+			buffer = NULL; 
+		}
+	}
+        return 1;
+}
+

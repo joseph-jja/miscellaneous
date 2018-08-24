@@ -1,0 +1,9 @@
+To install:
+
+type: make
+
+then type: make install
+
+It will install one file in /usr/local/bin called GUTime
+It will install one file in /usr/lib/bonobo/servers called GUTime.server
+
