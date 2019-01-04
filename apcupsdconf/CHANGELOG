@@ -1,0 +1,96 @@
+Changes:
+
+Dec 16-17, 2000
+Created checkPass subroutine and updatePass routines. Made all files call
+checkPass to make sure that a user submitted a correct username and password.
+
+Updated admin_cfg.cgi, apcupsd_conf.cgi, apcconf.cgi, and apcupsd_pwd.cgi 
+to call these subs.
+
+Also added apcupsd_common.pl which contains the checkPass and updatePass subs.
+
+Modified the Makefile so that you specify where perl is and it edits all 
+the perl files for you rather than hand editing all the files.
+
+Also modified the Makefile to optionally install the password file.
+
+Updated README.
+
+
+April 29, 2000
+Fixes and cleanups in the admin_cfg.cgi program.
+
+General cleaning up of the code so that the reset button now works.
+
+After submitting the data the uname / pwd && confirm pwd are now cleared
+
+Checking and changes to the pwd file are now done after pwd / uid verification of the admin user.
+
+
+April 23, 2000
+Lots of changes. apccomments was changed to perl and integrated into apcconf.cgi.
+ 
+I believe I fixed a bug in the handling of the slaves directive. It should handle  multiple slaves 
+adding and deleting with no problems.
+
+April 8, 2000
+Lots of changes this past week.
+
+Converted apcupsd_conf.cgi to 'use CGI;'.
+
+Converted apcreadconf to apcreadconf.cgi and 'use CGI;'. And integrated 
+to apcupsd_conf.cgi
+
+Converted to two column format and it is still viewable in 640x480 and lynx browsers.
+
+Added apcupsd_pwd.cgi to allow for password changing by the users 
+or administrators of the program.
+
+Added admin_cfg.cgi for user adding deleting and changing.  This allows for 
+adding, deleting and resetting user accounts for apcupsd_conf.
+
+Added the apcupsd.gif image to the top of every page.
+
+Modified the Makefile to allow for these new changes.
+
+
+April 1, 2000
+Added a login screen, as per Kern Sebbald suggestion.
+
+Converted the apcupsd_login.cgi to 'use CGI;' .
+
+Added configloc.pl which is included in all the perl programs.
+ 
+Changed name of apcsettings.cgi to apcupsd_conf.cgi .
+
+Added a where variable in the Makefile for users to specify where the apcupsd_conf files
+are to be installed.
+
+Cleanups in perl programs.
+
+
+
+Mar 8, 2000
+
+Added in encdec to encrypt a password and UID for security
+
+Mar 5, 2000
+
+Fixed reading of slave field.  Now reads in slave fields correctly.
+
+
+
+Mar 4, 2000
+
+Fixed apcreadconf so that if it cannot open the config file it does not print the error
+message 20 times.
+
+Comments are now peserverd through the use of apccomments which now writes only 
+the modified parts of the file.
+
+Modified the listboxes giving them a width=30. 
+
+Now has its own directory apcconf.
+
+Comes with 3 different config files. One for server, one for slave and one for the default.
+These are read on only.  They reside in the cfgfiles directory.

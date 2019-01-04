@@ -1,0 +1,4 @@
+BUGS:
+
+1) After modifing the data you must go back to the login so that the data is read in and refreshed.
+

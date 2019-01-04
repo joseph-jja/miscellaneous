@@ -1,0 +1,47 @@
+ABOUT:
+This is a GUI to the apcupsd configuration file.  It is intended in helping new users to set up 
+the apcupsd.conf file so that they are able to get the program up and runing a little easier.
+Although there is much left to do, this is in a state that will make it easier (I feel) to new
+users transitioning to apcupsd from other UPS software.
+
+
+INSTALL:
+
+1. To run this program you need perl 5.005 which should include the crypt function.
+You will need a web server that is configured to execute cgi.  The default installation for 
+perl is assumed to be /usr/bin/perl so if yours is not located there either create a 
+symbolic link to this or change the Makefile PERL variable and point it to your perl installation.
+
+2. Edit the 'where' in the Makefile.  This is the location of where the files for 
+acpupsd_conf and all of its related files will be installed.
+
+3. Check the configloc.pl and ensure that the file locations of the datafiles are correct.
+Theses should be the proper paths to the apcupsd.conf file that you want to edit. 
+The cfgfiles directory will be placed in your cgi-bin, and it contains the configuration files.
+
+4. Type 'make install' and this will install the necessary executable files to the directory
+specified in the 'where' variable in the Makefile.
+
+5. Then to install the .apcpwdfile with the default admin account type 'make install_pwdfile'.
+This will install it in the location specifed by where.  You NEED this file.
+
+6. Run your browser and point it at your cgi-bin (as defined on the where variable in the
+Makefile:   your-site/cgi-bin/apcupsd_login.cgi  (apcupsd_login.cgi has an 
+underscore rather than a dash in the name). Start with apcupsd_login.cgi .  Login with admin as the 
+username and admin as the password. Then you can change the password.
+You can add users delete user and reset user accounts to apcupd_conf when logged 
+in as the admin user.
+
+7. Depending on the security at your site, you may have to modify the file permissions 
+in the cgi-bin. For the $helpfile variable, you may need to specify a full 
+http://www.xxx.com/path if you have your security somewhat tight.
+
+TODO:
+There is still lots to do! 
+	1) more documentation
+	2) clean up the code 
+
+Questions, comments, bug fixes, typo corrections, etc?? Feel free to end email to me.  
+
+Joseph Acosta
+joeja@mindspring.com
