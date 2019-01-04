@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="build/WEB-INF/classes" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/antlr.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/commons-digester.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/commons-validator.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/struts.jar"/>
+	<classpathentry kind="lib" path="/home/joeja/workspace/jwmailapp/web/WEB-INF/lib/taglibs-mailer.jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[commons-collections-tomcat5].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[commons-dbcp-tomcat5].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[commons-el].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[commons-pool-tomcat5].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[ecj].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[jaf].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[jasper5-compiler].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[jasper5-runtime].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[javamail].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[jsp].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[servlet].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[tomcat5][naming-factory].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/[tomcat5][naming-resources].jar"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5/common/lib/jdtcore.jar"/>
+	<classpathentry kind="output" path="build/"/>
+</classpath>

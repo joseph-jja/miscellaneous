@@ -1,0 +1,15 @@
+
+There are a lot of bugs in this application now. Not sure why.  
+This seems to have occured at the time of the switch to the java mail api's 
+from my own custom beans.  I'll have to look into this as to see what it is
+that I am doing wrong and also probably update the mail.jar files.
+
+1) Logon fails and then on reload works.  
+	- fixed, this problme occurs when you have BOTH 
+	pop3.jar and mail.jar in the classpath 
+
+2) Need to add sessionid to urls so that cookies are not needed.
+<filename>.jsp;jsessionid=session.getId()? needs to be the 
+default base URLS
+
+3) Application should connect once and then maintain that state.  

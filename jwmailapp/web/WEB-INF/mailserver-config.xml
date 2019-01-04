@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<mailserver>
+    <pop3server>pop.earthlink.net</pop3server>
+    <pop3port>110</pop3port>
+    <apop>false</apop>
+    <maildomainname>earthlink.net</maildomainname>
+    <smtpserver>smtpauth.earthlink.net</smtpserver>
+    <smtpport>25</smtpport>
+    <smtptls>false</smtptls>
+    <smtpssl>false</smtpssl>
+    <smtpauth>true</smtpauth>
+</mailserver>

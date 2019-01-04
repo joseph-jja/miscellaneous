@@ -1,0 +1,114 @@
+
+div.header { 
+	position: relative;
+    padding: 0em;
+    margin: 0.4em;
+    font-family: Sans, Verdana;
+    font-size: 1.8em;
+    height: 3em;
+}
+
+div.header span { 
+    position: absolute; 
+    right: 0.4em;
+    font-size: 0.6em;
+}
+
+#container {
+    position: relative;
+    padding: 0em;
+    margin: 0.4em;
+    font-family: Sans, Verdana;
+    font-size: 1em;
+    border: 1px solid blue;
+}
+
+ol.formItems { 
+	position: relative;
+	list-style: none; 
+	 margin: 1em 0 0 0;
+}
+
+ol.formItems li { 
+	position: relative;
+	list-style: none; 	
+	height: 2.2em;
+}
+
+ol.formItems li label { 
+	position: relative;
+	display: block;
+	float: left; 
+	width: 6.4em;
+}
+
+div.buttons { 
+	position: relative;
+	margin: 0.4em 2.8em;
+}
+
+ol.formItems li input { 
+	position: relative;
+	width: 18em;
+}
+
+ol.formItems li textarea { 
+    position: relative;
+    width: 28em;
+    height: 10em;
+}
+
+div.buttons button { 
+    margin: 0 1em 0 0;
+}
+
+div.buttons button.right { 
+    margin: 0 0 0 0;
+    position: absolute; 
+    right: 0px;
+}
+
+div.title {
+   padding: 0.75em;
+   margin: 0 0 0.6em 0;
+   background: #7ac2ff;
+   color: #000000;
+   font-weight: bold;
+}
+
+div.errors { 
+    background: #ffff00;
+    border-top: 1px solid #ff0000;
+    border-bottom: 1px solid #ff0000;    
+    padding: 0.4em 0.6em;
+    margin: 0.4em 0.8em;
+}
+
+div#messagesContainer {
+    margin: 0 2.8em; 
+}
+
+table.resultsTable { 
+    position: relative; 
+    border: 1px solid black;
+    width: 100%;
+}
+
+table.resultsTable th, table.resultsTable td { 
+    padding: 0.4em; 
+    border: 1px solid black;
+}
+
+table.resultsTable tr.odd { 
+    background: #ddefff;
+}
+
+table.resultsTable tr.even { 
+    background: #f2ffc7;
+}
+
+span.linkLike {
+    text-decoration: underline;
+    color: blue;
+}
+

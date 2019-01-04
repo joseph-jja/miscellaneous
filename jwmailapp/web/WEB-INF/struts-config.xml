@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="authRecord" type="com.ja.jwmail.formbeans.AuthenticationRecord"/>
+        <form-bean name="mailMsg" type="com.ja.jwmail.formbeans.MailboxMessage"/>
+        <form-bean name="deleteMsg" type="com.ja.jwmail.formbeans.DeleteList"/>        
+        <form-bean name="sendmail" type="com.ja.jwmail.formbeans.SMTPRecord"/>        
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+
+    </global-forwards>
+
+    <action-mappings>
+
+        <action input="auth.page" name="authRecord" path="/index" 
+        	scope="request" type="com.ja.jwmail.servlets.DefaultAction">   
+            <forward name="success" path="auth.page" redirect="false"/>        
+        </action>
+        <action input="auth.page" name="authRecord" path="/auth" 
+        	scope="request" type="com.ja.jwmail.servlets.AuthenticateAction">
+            <forward name="failed" path="auth.page" redirect="true"/>        
+            <forward name="success" path="/inbox.do" redirect="false"/>        
+        </action>
+        <action input="auth.page" name="authRecord" path="/inbox" 
+        	scope="request" type="com.ja.jwmail.servlets.InboxAction">
+            <forward name="failed" path="auth.page" redirect="true"/>        
+            <forward name="success" path="inbox.page" redirect="false"/>        
+        </action>
+
+        <action input="auth.page" name="authRecord" path="/logout" 
+        	scope="request" type="com.ja.jwmail.servlets.LogoffAction">   
+            <forward name="success" path="auth.page" redirect="false"/>        
+        </action>
+
+        <action input="refresh.page" name="authRecord" path="/refreshInbox" 
+        	scope="request" type="com.ja.jwmail.servlets.InboxAction">
+            <forward name="failed" path="auth.page" redirect="true"/>        
+            <forward name="success" path="refresh.page" redirect="false"/>        
+        </action>
+
+        <action input="read.page" name="mailMsg" path="/readMessage" 
+        	scope="request" type="com.ja.jwmail.servlets.ReadMessageAction">
+            <forward name="failed" path="read.page" redirect="false"/>        
+            <forward name="success" path="read.page" redirect="false"/>        
+        </action>
+        
+        <action input="/inbox.do" name="deleteMsg" path="/deleteMessages" 
+        	scope="request" type="com.ja.jwmail.servlets.DeleteMessageAction">
+            <forward name="failed" path="/inbox.do" redirect="true"/>        
+            <forward name="success" path="/inbox.do" redirect="true"/>        
+        </action>
+
+        <action input="sendmail.page" name="sendmail" path="/compose" 
+            scope="request" type="com.ja.jwmail.servlets.DefaultAction">   
+            <forward name="success" path="sendmail.page" redirect="false"/>        
+        </action>
+        <action input="/inbox.do" name="sendmail" path="/sendMessage" 
+            scope="request" type="com.ja.jwmail.servlets.SendmailAction">
+            <forward name="failed" path="/inbox.do" redirect="true"/>        
+            <forward name="success" path="/inbox.do" redirect="true"/>        
+        </action>
+        
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="jwmailapp"/>
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

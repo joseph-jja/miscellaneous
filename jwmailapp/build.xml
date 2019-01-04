@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jwmailapp" default="compile" basedir=".">
+    <description>Builds, tests, and runs the project jwmailapp.</description>
+
+    <property name="app.name" value="jwmailapp"/>    
+
+    <property file="${basedir}/build.properties"/>
+    <property file="${basedir}/local.properties"/>
+    <property file="${test.data.dir}/${test.data.file}"/>
+
+    <path id="project.classpath">
+       <fileset dir="web/WEB-INF/lib/">
+          <include name="**/*.jar"/>
+       </fileset>
+       <fileset dir="/usr/share/tomcat5/common/lib/">
+          <include name="**/*.jar"/>
+       </fileset>
+    </path>
+
+    <path id="test.runtime.classpath">
+       <path refid="project.classpath"/>
+       <fileset dir="/usr/share/java/">
+          <include name="**/junit.jar"/>
+       </fileset>
+       <pathelement location="test/src"/>
+       <pathelement location="test/build"/>
+    </path>
+
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+
+        <copy todir="${build.dir}">
+            <fileset dir="${web.dir}"/>
+        </copy>
+
+        <javac srcdir="${src.dir}" destdir="${classes.dir}">
+          <classpath refid="project.classpath"/>
+         </javac>
+
+    </target>
+
+    <target name="tests" depends="compile">
+
+        <mkdir dir="${test.out.dir}"/>
+
+        <copy todir="${test.out.dir}">
+          <fileset dir="${classes.dir}">
+            <include name="**/**"/>
+          </fileset>
+        </copy>
+
+        <javac srcdir="${test.dir}" destdir="${test.out.dir}">
+          <classpath refid="project.classpath"/>
+         </javac>
+       
+        <echo message=" "/>
+       
+        <junit printsummary="yes" haltonfailure="yes" fork="true" dir="${test.out.dir}"
+                    showoutput="true">
+          <sysproperty key="smtpusername" value="${SMTP_USER}"/>
+          <sysproperty key="smtppasswd" value="${SMTP_PASS}"/>
+          <sysproperty key="smtp_auth" value="${SMTP_AUTH}"/>                       
+          <sysproperty key="smtp_tls" value="${SMTP_TLS}"/>                       
+          <sysproperty key="smtp_ssl" value="${SMTP_SSL}"/>                       
+          <sysproperty key="mailhost" value="${SMTP_HOST}"/>
+          <sysproperty key="mailport" value="${SMTP_PORT}"/>
+          <sysproperty key="mailfrom" value="${SMTP_MAIL_FROM}"/>
+          <sysproperty key="mailto" value="${SMTP_MAIL_TO}"/>
+          <sysproperty key="mail_subject" value="${MAIL_SUBJECT}"/>
+          <sysproperty key="mail_text" value="${MAIL_TEXT}"/>
+          <classpath refid="test.runtime.classpath"/>
+          <formatter type="brief" usefile="true" />
+          <test name="com.ja.jwmail.tests.TestSMTPService" outfile="SMTPResult"/>
+        </junit>
+
+        <echo message=" "/>
+
+    	<!-- run java here --> 
+        <junit printsummary="yes" haltonfailure="yes" fork="true" dir="${test.out.dir}"
+        	showoutput="true">
+          <sysproperty key="username" value="${USERNAME}"/>
+          <sysproperty key="passwd" value="${PASSWORD}"/>
+          <sysproperty key="mailhost" value="${MAILHOST}"/>
+          <classpath refid="test.runtime.classpath"/>
+          <formatter type="brief" usefile="true" />
+          <test name="com.ja.jwmail.tests.TestPOP3Service" outfile="POP3Result"/>
+        </junit>
+    	
+    </target>
+
+    <target name="httptests" depends="compile">
+
+        <mkdir dir="${test.out.dir}"/>
+
+        <copy todir="${test.out.dir}">
+          <fileset dir="${classes.dir}">
+            <include name="**/**"/>
+          </fileset>
+        </copy>
+
+        <javac srcdir="${test.dir}" destdir="${test.out.dir}">
+          <classpath refid="project.classpath"/>
+         </javac>
+       
+    </target>
+
+    <target name="clean">
+
+    	<delete dir="${build.dir}"/>
+      
+    	<delete dir="${dist.dir}"/>
+    	
+        <delete dir="${test.out.dir}"/>
+
+    </target> 
+
+    <target name="dist" depends="compile">
+
+        <mkdir dir="${dist.dir}"/>
+    
+    	<jar destfile="${dist.dir}/${app.name}.war" basedir="${build.dir}"/>
+    	
+    </target> 
+
+</project>

@@ -1,0 +1,196 @@
+This is a complete re-write of my original 2001-2006 web mail application.
+As I have had extra time the summer of 2009, i have decided to re-write this
+web mail application and update it to more modern standards.
+
+As of September 17, 2009
+        - POP3 has been re-written.  It is not a refactor as the old code has been 
+        discarded.  The new code is now a service that can be used independently 
+        of he web code. It does not handle attachments but it does handle mail 
+        messages much better than the original code base.
+        - The SMTP is now a service also and it can handle smtp auth. TLS and SSL 
+        have not been tested.
+        - junit is now used to test the POP3 service and SMTP service.
+        - struts and tiles are not implemented for the UI and the Action classes 
+        make better use of the MVC and layouts
+        - jquery has been added in for reading messages.  
+        - there is much work left to do as sending messages has been implemented in 
+        the service layer but not in the UI
+        
+        
+##############################################################################
+
+Below here is for posterity sake as it applies to nothing anymore!
+
+##############################################################################
+This is my first JSP application.  Currently I am looking for a place to host
+this application on line. 
+
+This application is a JSP Web based POP3 mail viewer.  There is NOW a POP3 
+class based on the Java Mail API.
+
+As of October 6, 2006, I have started to rework the entire codebase once again.
+        The old POP3 class has been refactored.  It now uses ArrayLists.
+        I have also implemented the struts framework.  The UI is in the process
+        of being cleaned up.  The POP3 connection is more stable now. Instead of 
+        connecting and disconnecting on each page, it now stores the connection in 
+        the session.  Also the finalize method in the POP3 class will close the 
+        connection if the session expires and the garbage collector wants to clean
+        up the object.  The POP3 object is more of a wrapper around the java mail api.
+        The HTMLDisplay object is now called the HTMLReformatter, as that better
+        describes what this class does. There is also now a new logon bean, that keeps 
+        all the necessary information for use in the application.
+        
+        Added a check for new mail 'button'.
+
+        Delete is now done in an ActionServlet, but delete MAY BE buggy.  
+        I am still testing this functionality.  I believe I have fixed this in 
+        the pop3 object, but it only deletes one message at a time.
+
+        At this time it seems it is mostly working and I am calling this a pre-alpha.
+       
+
+As of March 28, 2004 I have worked over the code and cleaned it up much. The unused
+        old classes for SMTP and POP3 are removed.  There is a new POP3 class.
+        The logon jsp page is now deleted and the inbox page has taken its place
+        as both the inbox page and the login page.  The inbox_check page is now 
+        as a result gone as it is no longer needed to be a seperate page.
+        It seems that the taglibs are not sending mail the way that I expected 
+        them to.  It may be something I am doing, I need to double check to make 
+        sure that the taglibs are not using the localhost or trying to.
+        - APOP does not work, I have not implemented it.  
+        - Show Full Headers is off and does not work, it needs to be implemented 
+        as well.
+        - Delete shows error messages, but deletes messages?
+        - send mail doesn't at least not on my machine, it seems to be going to
+        localhost
+
+As of March 27, 2004 A bug was fixed in logging off and I have started to move to 
+        using the Java Mail API.  I will only support POP3, and intend to start 
+        to provide a more rich and robust user interface. In the move to 
+	the JavaMail API the sending of mail sometimes works and there are a 
+	few bugs in message indexes as they are passed around.  They messages
+	real index starts at 0, but the user will probably see 1, and it gets
+	messed up in what is actually being deleted.  Small bug fix to do, 
+	which will get done before this is released, but not tonight. 
+
+This application is a JSP Web based POP3 mail viewer.  I have created both SMTP 
+and POP3 classes. The POP3 class was based on the PHPMailApp php POP class and 
+RFC1939.  The SMTP class was based on RFC821 and a TextMessage class I found on 
+the internet. BOTH classes have been customized a bit and made somewhat generic
+enough for ANY application.
+
+As of March 24, 2004 I have removed the need for the cookie and now all necessary
+        data is stored in the session.  Also I have started the implementaion of 
+        using the input taglibs.  I have also implemented the use of the mail 
+        taglib instead of my own SMTP object.
+
+As of November 28, 2003 there was a change to put the username and password
+        in the session instead of a cookie.  This means it does not need to 
+        be encrypted.  A little bit of security ;-). Also cleaned up the 
+        setCookies jsp pages.
+
+As of November 23, 2003 this application now uses the web.xml to set the 
+        pop mail server port and the smtp server ports.  These should 
+        really never change, for most people.
+
+As of July 15, 2003 this application has had a few code cleanups.
+        - the webSocket now throws an exception, and rather than 
+        creating a new Socket() it calls super instead and the 
+        reader and writer are now created upon instantiation.
+        - the POP3 object has had some methods converted to get** 
+        instead of just the method name, more bean like.
+        - the inbox_diaply.jsp page now has a few functions.  It would be
+        nice if it was just a file of funcitons or 1 function / servlet call.
+
+As of May 9, 2002 this application has the following added:
+	- The SMTP class now calls HELO with the local host name
+	correctly and allows the HELO command to work on some hosts that
+	require HELO to have something with it.
+	- 'From' is now changeable, but hopefuly you should not need to change 
+	it.  It takes popserver and user name and uses that as From.
+	In the case of ATT you may need to remove part of the From to 
+	make it 'look' right.
+
+As of May 8, 2002 this application has the following added:
+ 	- the deletemail.jsp pages has been redone so that instead of 
+	a line for each mail message there is on line for all the messages
+	that were deleted
+	- the HTMLdisplay string data has been broken out of the SMTP bean.
+	Now the SMTP bean only sends email.
+	- The SMTP bean now has checks added to it.  It checks for return
+	codes as per RFC 821, i.e. 220, 250, etc.  So that if a transaction 
+	fails it will check the return from the remote server for specific 
+	Success returns.  This should avoid the event of getting a success
+	when the remote server has refused the connection and it should
+	give the correct message as well.
+	- the sendmail.jsp page has been modified a little to use the new
+	HTMLdisplay bean and to check if the SMTP send mail message call
+	succeded.
+
+As of May 2, 2002 this application has the following added:
+ 	- the cookies are not secure this allows it to work with mozilla
+	as mozilla requires cookies to be either all secure or unsecure
+	and does not handle a mix.  I think konqueror is the same.
+	
+As of Apr 19, 2002 this application has the following added:
+	- the webSocket class has been modified so that the readWebSocket
+	now takes an argument the length of data to read.  This helps in the
+	pop and smtp beans so that they can read the correct size of data
+	from the socket (512=POP, 1000=SMTP) per their respective RFC's.
+	- the webSocket class also has a new method for reading a line of 
+	data called readWebSocketLine().
+	- CC is now implemented as I finally found out how to do it ;-)
+	multiple CC have not been tried but should work just as multiple
+	To's do.
+	- also fixed a bug in sending mail that had \n\r.\n\r it was
+	recgonized as eot and now it is converted to \n\r..\n\r as per RFC
+      	the \n\r on unix is \n.\n and this works as well.
+	- a few cleanups and changes in the SMTP class.
+
+As of Feb 10, 2002 this application has the following added:
+	- a new class waas created called webSocket. in doing this
+	some of the common socket code from POP3.java and SMTP.java was
+	combined. This class is flexable and can probably be used for most 
+	web type transactions like ftp, http, etc. 
+	- a second major change was cleaning up the POP.java ass so that only 
+	one socket is created on connect and not on each transaction.  
+	This may make things faster as now only 1 socket is created instead of 
+	a socket for each transaction.  Also the code was cleaned up some.
+	- Started ading in the infrastructure for forwarding spam from the inbox
+	to a specified source.  This will allow for sending to abuse@somedomain.com.
+	Earthlink has junkmail@earthlink.net
+
+As of Sept 2, 2001 the following was discovered:
+	- relooked at RFC 1939, for the POP3 class. APOP was implemented incorrectly.
+	I was not including the password before calling the MD5 class. This caused an
+	incorrect MD5 checksum to be passed and thus APOP failed miserably. (It still 
+	does with my ISP) 	     
+	- ability to customize 
+
+As of Sept 1, 2001 the following was added:
+	- can now view short headers instead of long headers
+	- fixed a bug that was not showing the correct or any 
+	Subject / Date / or From in the inbox (partial implementation of 
+	RFC 822, RFC 1123, RFC 2822 for proper parsing)
+	- fixed a bug that was making From apear as name only. This replaces the
+	< with &lt; and the > with &gt; 
+	- short headers is now tested and working
+	- discovered that apop is not working properly with my ISP.
+	** authentication fails and then the connection is closed
+	** question is what to do at that point? (can call quit/connect)
+
+As of Feb 2, 2001 this application has the following:
+	- retrieve POP mail using both APOP or regular POP logon.
+	- send mail WITHOUT sendmail or qmail using the SMTP class
+	- inbox to view who mail is from 
+	- multiple delete of mail messages from mail server
+	  ** this is usefull for removing spam and unwanted email messages 
+	     BEFORE they get on your computer
+	- delete confirm so that before messsages are deleted a user can confirm
+	  the choice
+	- able to access pop server on different port from default port 110 for 
+	  odd setups
+	- previous, next and reply and delete for each message
+	- some URL highlightening - linking so that a user can click on a URL
+	- reply to with subject and 'to' auto populated 
+
