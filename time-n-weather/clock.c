@@ -50,12 +50,17 @@ char *get_time() {
 
     int ihours = localNow->tm_hour;
     if (ihours > 12) {
+        ihours -=12;
         sprintf(ampm, "%s", "PM");
     } else {
         sprintf(ampm, "%s", "AM");
     }
 
-    sprintf(hours, "%d", ihours);
+    if (ihours < 10) {
+        sprintf(hours, "0%d", ihours);
+    } else {
+        sprintf(hours, "%d", ihours);
+    } 
 
     move(0, 0);
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
