@@ -61,3 +61,40 @@ void writeOne(int x, int y) {
     move(yp, xp);
     addch(ACS_BTEE);
 }
+
+void writeThree(int x, int y) {
+
+    int xp = x;
+    int yp = y;
+
+    move(yp, xp);
+
+    addch(ACS_HLINE);
+    xp++;
+    move(yp, xp);
+    addch(ACS_HLINE);
+    xp++;
+    move(yp, xp);
+    addch(ACS_URCORNER);
+
+    xp = x;
+    yp++;
+    move(yp, xp);
+    xp++;
+    move(yp, xp);
+    addch(ACS_HLINE);
+    xp++;
+    move(yp, xp);
+    addch(ACS_RTEE);
+
+    xp = x;
+    yp++;
+    move(yp, xp);
+    addch(ACS_HLINE);
+    xp++;
+    move(yp, xp);
+    addch(ACS_HLINE);
+    xp++;
+    move(yp, xp);
+    addch(ACS_LRCORNER);
+}
