@@ -1,9 +1,12 @@
 #include <ncurses.h>
 
+#include <string.h>
+
 #include <time.h>
 #include <unistd.h>
 
 static char *days[7];
+static char *months[12];
 
 void setupDays() {
    
@@ -16,18 +19,48 @@ void setupDays() {
     days[6] = "Saturday";
 }
 
+void setupMonths() {
+    months[0] = "January";
+    months[1] = "February";
+    months[2] = "March";
+    months[3] = "April";
+    months[4] = "May";
+    months[5] = "June";
+    months[6] = "July";
+    months[7] = "August";
+    months[8] = "September";
+    months[9] = "October";
+    months[10] = "November";
+    months[11] = "December";
+}
+
 char *get_time() {
 
     time_t now = time(NULL);
     const struct tm *localNow = localtime(&now);
 
     int year = 1900 + localNow->tm_year;
-    int month = 1 + localNow->tm_mon;
+    int month = localNow->tm_mon;
+
+    char hours[3], 
+        ampm[3];
+
+    memset(hours, '\0', sizeof(hours));
+    memset(ampm, '\0', sizeof(ampm));
+
+    int ihours = localNow->tm_hour;
+    if (ihours > 12) {
+        sprintf(ampm, "%s", "PM");
+    } else {
+        sprintf(ampm, "%s", "AM");
+    }
+
+    sprintf(hours, "%d", ihours);
 
     move(0, 0);
-    printw("%d %d %d", year, month, localNow->tm_mday);
-    move(2, 2);
-    printw("%d %d %s", localNow->tm_hour, localNow->tm_min, days[localNow->tm_wday]);
+    printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
+    move(2, 0);
+    printw("%s:%d %s", hours, localNow->tm_min, ampm);
 
     return asctime(localNow);
 }
@@ -35,7 +68,8 @@ char *get_time() {
 int main()
 {	
         setupDays();
-	initscr();			
+        setupMonths();
+	initscr();	
         while (1) {
             //int y, x;
             //getyx(stdscr, y, x);
