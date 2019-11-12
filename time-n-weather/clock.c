@@ -5,6 +5,8 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "numbers/numbers.h"
+
 static char *days[7];
 static char *months[12];
 
@@ -34,6 +36,44 @@ void setupMonths() {
     months[11] = "December";
 }
 
+void writeNumber(int x, int y, int num) {
+
+    switch(num) {
+        case 0: 
+             writeZero(x, y);
+            break;
+        case 1: 
+             writeOne(x, y);
+            break;
+        case 2: 
+             writeTwo(x, y);
+            break;
+        case 3: 
+             writeThree(x, y);
+            break;
+        case 4: 
+             writeFour(x, y);
+            break;
+        case 5: 
+             writeFive(x, y);
+            break;
+        case 6: 
+             writeSix(x, y);
+            break;
+        case 7: 
+             writeSeven(x, y);
+            break;
+        case 8: 
+             writeEight(x, y);
+            break;
+        case 9: 
+             writeNine(x, y);
+            break;
+        default: 
+            break;
+    }
+}
+
 char *get_time() {
 
     time_t now = time(NULL);
@@ -42,12 +82,11 @@ char *get_time() {
     int year = 1900 + localNow->tm_year;
     int month = localNow->tm_mon;
 
-    char hours[3], 
-        ampm[3];
+    char ampm[3];
 
-    memset(hours, '\0', sizeof(hours));
     memset(ampm, '\0', sizeof(ampm));
 
+    int imin = localNow->tm_min;
     int ihours = localNow->tm_hour;
     if (ihours > 12) {
         ihours -=12;
@@ -56,16 +95,33 @@ char *get_time() {
         sprintf(ampm, "%s", "AM");
     }
 
-    if (ihours < 10) {
-        sprintf(hours, "0%d", ihours);
-    } else {
-        sprintf(hours, "%d", ihours);
-    } 
-
-    move(0, 0);
+    move(1, 2);
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
-    move(2, 0);
-    printw("%s:%d %s", hours, localNow->tm_min, ampm);
+
+    if (ihours < 10) {
+        writeNumber(4, 4, 0);
+        writeNumber(8, 4, ihours);
+    } else {
+        writeNumber(4, 4, 1);
+        writeNumber(8, 4, ihours - 10);
+    }
+
+    move(5, 13);
+    addch(ACS_BULLET);
+    move(6, 13);
+    addch(ACS_BULLET);
+
+    if (imin < 10) {
+        writeNumber(15, 4, 0);
+        writeNumber(19, 4, imin);
+    } else {
+        int x = imin / 10;
+        writeNumber(15, 4, x);
+        writeNumber(19, 4, imin - (x * 10));
+    }
+
+    move(6, 23);
+    printw("%s", ampm);
 
     return asctime(localNow);
 }
@@ -75,6 +131,8 @@ int main()
         setupDays();
         setupMonths();
 	initscr();	
+        //attron(A_BOLD);
+        //attron(A_STANDOUT);
         while (1) {
             //int y, x;
             //getyx(stdscr, y, x);
