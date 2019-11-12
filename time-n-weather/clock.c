@@ -142,10 +142,11 @@ int main()
                 attron(COLOR_PAIR(1));
             }*/
 	    //printw("Time %s", get_time());	
-	    get_time();
             /*if (has_colors() == TRUE) {
                 attroff(COLOR_PAIR(1));
             }*/
+            clear();
+	    get_time();
 	    refresh();		
             sleep(1);
         }
