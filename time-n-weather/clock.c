@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -170,6 +171,8 @@ void read_in_file(char *filename, long x, long y) {
      } 
 }
 
+static char *args[] = {"node", "./weather-api.js"};
+
 int main()
 {	
         setupDays();
@@ -177,6 +180,7 @@ int main()
 	initscr();	
         //attron(A_BOLD);
         //attron(A_STANDOUT);
+        int i = 0;
         while (1) {
             //int y, x;
             //getyx(stdscr, y, x);
@@ -191,9 +195,18 @@ int main()
             }*/
             clear();
 	    get_time();
+            if (i == 0) {  
+                //int rc  = execvp(args[0], args);
+            } else if (i > 1800) {
+                // reset every 30 minutes
+                // minus 1 because it will get ++ at the end of loop 
+                i = -1;
+            } 
+            
             read_in_file("/tmp/hourly.txt", 4, 8);       
 	    refresh();		
             sleep(1);
+            i++;
         }
 	//getch();			/* Wait for user input */
 	endwin();		

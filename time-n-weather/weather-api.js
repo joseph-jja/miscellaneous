@@ -76,3 +76,6 @@ async function start() {
 }
 
 start();
+
+process.exit(0);
+
