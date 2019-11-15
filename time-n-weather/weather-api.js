@@ -1,6 +1,8 @@
 const baseDir = process.cwd();
 
-const request = require('https').request;
+const request = require('https').request, 
+    fs = require('fs'),
+    os = require('os');
 
 const API_HOSTNAME = 'api.weather.gov';
 
@@ -59,14 +61,17 @@ async function start() {
     options.path = props.forecastHourly.split(API_HOSTNAME)[1];
     const forecast = await makeRequest(options);
 
+    let details = ''; 
     forecast.periods.filter((period, index) => {
         // 8 hours only 
         return (index < 8); 
     }).forEach(period => {
         const startTime = period.startTime.split('T')[1].split('-')[0],
             endTime = period.endTime.split('T')[1].split('-')[0];
-        const details = `Hourly (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection}`; 
-        console.log(details);
+        details += `Hourly (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`; 
+    });
+    fs.writeFile('/tmp/hourly.txt', details, (errx) => {
+        // TODO handle error?
     });
 }
 

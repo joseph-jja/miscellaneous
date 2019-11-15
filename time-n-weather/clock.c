@@ -1,9 +1,13 @@
 #include <ncurses.h>
 
 #include <string.h>
+#include <stdlib.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include <time.h>
-#include <unistd.h>
 
 #include "numbers/numbers.h"
 
@@ -126,6 +130,46 @@ char *get_time() {
     return asctime(localNow);
 }
 
+long stat_file(char *filename) {
+
+    struct stat sb;
+
+    if (stat(filename, &sb) == -1) {
+        return 0;
+    }
+    return (long long) sb.st_size;
+}
+
+void read_in_file(char *filename, long x, long y) {
+
+     long readSize = stat_file(filename) + 1;
+     if (readSize <= 0) { 
+        return;
+     }
+     
+     FILE *pFile;
+
+     long posy = y;
+     move(posy, x);
+     printw("Weather");
+     if ((pFile = fopen(filename, "r")) != NULL) {
+         char *buffer = (char *)malloc(readSize); 
+         if (buffer == NULL) {
+             return;
+         }
+         memset(buffer, '\0', readSize);
+         while (fgets(buffer, readSize -1, pFile) != NULL) {
+             posy++;
+             move(posy, x);
+             printw("%s", buffer);
+             memset(buffer, '\0', readSize);
+         }
+         free(buffer);
+
+         fclose(pFile);
+     } 
+}
+
 int main()
 {	
         setupDays();
@@ -147,6 +191,7 @@ int main()
             }*/
             clear();
 	    get_time();
+            read_in_file("/tmp/hourly.txt", 4, 8);       
 	    refresh();		
             sleep(1);
         }
