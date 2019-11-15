@@ -70,7 +70,7 @@ function toFahrenheit(kelvin) {
 
 async function start() {
 
-    //const results = require('./data.js');
+    //const results = require('/tmp/full.js');
     const results = await makeRequest(options);
     const main = results.main;
 
@@ -80,11 +80,13 @@ async function start() {
 
     const tempRange = `Low: ${tempMin} - High: ${tempMax}`;
     const humidity = `Humidity: ${main.humidity}%`;
+    const cloudy =  `Clouds: ${results.clouds['all'] || 0}%`;
+    const rain = `Rain: ${results.rain['1h'] || 0} / ${results.rain['3h'] || 0}`;
 
-    const data = `${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}`;
+    const data = `${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}${cloudy}${os.EOL}${rain}${os.EOL}`;
 
     fs.writeFile('/tmp/details.txt', data, () => {}) ;
-    fs.writeFile('/tmp/full.js', JSON.stringify(results), () => {}) ;
+    fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {}) ;
 }
 
 start();
