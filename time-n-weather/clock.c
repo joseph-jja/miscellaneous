@@ -201,7 +201,8 @@ int main()
                 i = -1;
             } 
             
-            read_in_file("/tmp/hourly.txt", 4, 8);       
+            read_in_file("/tmp/details.txt", 4, 8);       
+            read_in_file("/tmp/hourly.txt", 34, 8);       
 	    refresh();		
             sleep(1);
             i++;

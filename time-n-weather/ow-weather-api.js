@@ -1,6 +1,7 @@
 const baseDir = process.cwd();
 
 const request = require('https').request, 
+    os = require('os'), 
     fs = require('fs'), 
     {
         promisify
@@ -62,11 +63,32 @@ async function makeRequest(options) {
     });
 }
 
+function toFahrenheit(kelvin) {
+    const raw = (9/5 * kelvin - 459.67);
+    return `${(Math.round(raw * 10) / 10)}F`;
+}
+
 async function start() {
 
-    const props = await makeRequest(options);
+    //const results = require('./data.js');
+    const results = await makeRequest(options);
+    const main = results.main;
 
-    console.log(props);
+    const temp = `Current: ${toFahrenheit(main.temp)}`;
+    const tempMin = toFahrenheit(main.temp_min);
+    const tempMax = toFahrenheit(main.temp_max);
+
+    const tempRange = `Low: ${tempMin} - High: ${tempMax}`;
+    const humidity = `Humidity: ${main.humidity}%`;
+
+    const data = `${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}`;
+
+    fs.writeFile('/tmp/details.txt', data, () => {}) ;
+    fs.writeFile('/tmp/full.js', JSON.stringify(results), () => {}) ;
 }
 
 start();
+
+
+
+
