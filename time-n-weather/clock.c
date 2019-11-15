@@ -151,8 +151,6 @@ void read_in_file(char *filename, long x, long y) {
      FILE *pFile;
 
      long posy = y;
-     move(posy, x);
-     printw("Weather");
      if ((pFile = fopen(filename, "r")) != NULL) {
          char *buffer = (char *)malloc(readSize); 
          if (buffer == NULL) {
@@ -160,10 +158,10 @@ void read_in_file(char *filename, long x, long y) {
          }
          memset(buffer, '\0', readSize);
          while (fgets(buffer, readSize -1, pFile) != NULL) {
-             posy++;
              move(posy, x);
              printw("%s", buffer);
              memset(buffer, '\0', readSize);
+             posy++;
          }
          free(buffer);
 
