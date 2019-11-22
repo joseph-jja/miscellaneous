@@ -47,6 +47,7 @@ async function makeRequest(options) {
             });
 
             res.on('error', (e) => {
+                console.error(e);
                 reject(e);
             });
             res.on('end', () => {
@@ -57,6 +58,7 @@ async function makeRequest(options) {
         });
 
         req.on('error', (e) => {
+            console.error(e);
             reject(e);
         });
         req.end();
@@ -81,7 +83,7 @@ async function start() {
     const tempRange = `Low: ${tempMin} - High: ${tempMax}`;
     const humidity = `Humidity: ${main.humidity}%`;
     const cloudy =  `Clouds: ${results.clouds['all'] || 0}%`;
-    const rain = `Rain: ${results.rain['1h'] || 0} / ${results.rain['3h'] || 0}`;
+    const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
 
     const data = `${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}${cloudy}${os.EOL}${rain}${os.EOL}`;
 
