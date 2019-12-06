@@ -15,6 +15,9 @@
 static char *days[7];
 static char *months[12];
 
+#define OPEN_WEATHER_MAP "/home/joea/workspace/miscellaneous/time-n-weather/ow-weather-api.js"
+#define NODE_JS "/home/joea/.nvm/versions/node/v10.15.3/bin/node"
+
 void setupDays() {
    
     days[0] = "Sunday";
@@ -174,6 +177,9 @@ int main()
         setupDays();
         setupMonths();
 	initscr();	
+
+        // child process 
+        
         //attron(A_BOLD);
         //attron(A_STANDOUT);
         while (1) {
