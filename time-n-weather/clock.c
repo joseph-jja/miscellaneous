@@ -15,6 +15,7 @@
 static char *days[7];
 static char *months[12];
 
+#define WEATHER_MAP "/home/joea/workspace/miscellaneous/time-n-weather/weather-api.js"
 #define OPEN_WEATHER_MAP "/home/joea/workspace/miscellaneous/time-n-weather/ow-weather-api.js"
 #define NODE_JS "/home/joea/.nvm/versions/node/v10.15.3/bin/node"
 
@@ -176,12 +177,27 @@ int main()
 {	
         setupDays();
         setupMonths();
-	initscr();	
 
-        // child process 
+        // child process for open weather map
+        pid_t pID = fork();
+        char *owmap[] = { NODE_JS, OPEN_WEATHER_MAP, NULL};
+        if ( pID == 0 ) {
+            execvp(owmap[0], owmap);
+            exit(0);
+        }
         
+        // child process for weather map
+        pid_t wpID = fork();
+        char *wmap[] = { NODE_JS, WEATHER_MAP, NULL};
+        if ( wpID == 0 ) {
+            execvp(wmap[0], wmap);
+            exit(0);
+        }
+        
+	initscr();	
         //attron(A_BOLD);
         //attron(A_STANDOUT);
+        int i = 0;
         while (1) {
             //int y, x;
             //getyx(stdscr, y, x);
@@ -194,12 +210,26 @@ int main()
             /*if (has_colors() == TRUE) {
                 attroff(COLOR_PAIR(1));
             }*/
+            if ( i > 3600 ) { 
+                pid_t xpID = fork();
+                if ( xpID == 0 ) {
+                    execvp(owmap[0], owmap);
+                    exit(0);
+                }
+
+                pid_t xwID = fork();
+                if ( xwID == 0 ) {
+                    execvp(wmap[0], wmap);
+                    exit(0);
+                }
+            }
             clear();
 	    get_time();
             read_in_file("/tmp/details.txt", 4, 8);       
             read_in_file("/tmp/hourly.txt", 34, 8);       
 	    refresh();		
             sleep(1);
+            i++;
         }
 	//getch();			/* Wait for user input */
 	endwin();		
