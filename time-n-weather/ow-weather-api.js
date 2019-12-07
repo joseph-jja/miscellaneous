@@ -14,6 +14,8 @@ const API_HOSTNAME = 'api.openweathermap.org';
 const latitude = '37.7626',
     longitude = '-122.4352';
 
+const RELOAD = 1000 * 60 * 60; 
+
 const USER_AGENT = `"Nozilla/1.0 (console; pios x86_64 ${process.version}) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/70.1.1`;
 
 const DISCOVER_ENDPOINT = `/data/2.5/weather?lat=${latitude}&lon=${longitude}`;
@@ -89,9 +91,11 @@ async function start() {
 
     fs.writeFile('/tmp/details.txt', data, () => {}) ;
     fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {}) ;
+
 }
 
 start();
+setInterval(start, RELOAD);
 
 
 

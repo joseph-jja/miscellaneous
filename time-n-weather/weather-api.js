@@ -9,6 +9,8 @@ const API_HOSTNAME = 'api.weather.gov';
 const latitude = '37.7626',
     longitude = '-122.4352';
 
+const RELOAD = 1000 * 60 * 60;
+
 const USER_AGENT = `"Nozilla/1.0 (console; pios x86_64 ${process.version}) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/70.1.1`;
 
 const DISCOVER_ENDPOINT = `/points/${latitude},${longitude}`;
@@ -78,5 +80,6 @@ async function start() {
 }
 
 start();
+setInterval(start, RELOAD);
 
 

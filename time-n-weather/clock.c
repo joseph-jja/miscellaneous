@@ -197,7 +197,6 @@ int main()
 	initscr();	
         //attron(A_BOLD);
         //attron(A_STANDOUT);
-        int i = 0;
         while (1) {
             //int y, x;
             //getyx(stdscr, y, x);
@@ -210,26 +209,12 @@ int main()
             /*if (has_colors() == TRUE) {
                 attroff(COLOR_PAIR(1));
             }*/
-            if ( i > 3600 ) { 
-                pid_t xpID = fork();
-                if ( xpID == 0 ) {
-                    execvp(owmap[0], owmap);
-                    exit(0);
-                }
-
-                pid_t xwID = fork();
-                if ( xwID == 0 ) {
-                    execvp(wmap[0], wmap);
-                    exit(0);
-                }
-            }
             clear();
 	    get_time();
             read_in_file("/tmp/details.txt", 4, 8);       
             read_in_file("/tmp/hourly.txt", 34, 8);       
 	    refresh();		
             sleep(1);
-            i++;
         }
 	//getch();			/* Wait for user input */
 	endwin();		
