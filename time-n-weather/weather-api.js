@@ -80,6 +80,9 @@ async function start() {
 }
 
 start();
-setInterval(start, RELOAD);
+setInterval(() => { 
+    start();
+}, RELOAD);
+
 
 
