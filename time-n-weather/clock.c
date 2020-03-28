@@ -11,13 +11,13 @@
 #include <time.h>
 
 #include "numbers/numbers.h"
+#include "whichnodejs.h"
 
 static char *days[7];
 static char *months[12];
 
 #define WEATHER_MAP "/home/joea/workspace/miscellaneous/time-n-weather/weather-api.js"
 #define OPEN_WEATHER_MAP "/home/joea/workspace/miscellaneous/time-n-weather/ow-weather-api.js"
-#define NODE_JS "/home/joea/.nvm/versions/node/v10.15.3/bin/node"
 
 void setupDays() {
    
