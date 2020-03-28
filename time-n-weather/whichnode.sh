@@ -1,5 +1,5 @@
 #! /bin/sh
 
-which node > whichnodejs.h
+echo "#define NODE_JS \"`which node`\"" > whichnodejs.h
 
 
