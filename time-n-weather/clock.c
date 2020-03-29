@@ -13,6 +13,11 @@
 #include "numbers/numbers.h"
 #include "whichnodejs.h"
 
+#define WEATHER_MAP "/weather-api.js"
+#define WEATHER_MAP_LEN strlen(WEATHER_MAP)
+#define OPEN_WEATHER_MAP "/ow-weather-api.js"
+#define OPEN_WEATHER_MAP_LEN strlen(OPEN_WEATHER_MAP)
+
 static char *days[7];
 static char *months[12];
 
@@ -78,6 +83,29 @@ void writeNumber(int x, int y, int num) {
         default: 
             break;
     }
+}
+
+char *get_nodejs_path() {
+    return "";
+}
+
+char *get_weather_api() {
+   
+    char *pwd = getenv("PWD"); 
+    int wsize = strlen(pwd) + WEATHER_MAP_LEN + 1;
+    char *weather = malloc(wsize);
+    memset(weather, '\0', wsize);
+    sprintf(weather, "%s%s", pwd, WEATHER_MAP);
+    return weather;
+}
+
+char *get_ow_weather_api() {
+    char *pwd = getenv("PWD"); 
+    int wsize = strlen(pwd) + OPEN_WEATHER_MAP_LEN + 1;
+    char *weather = malloc(wsize);
+    memset(weather, '\0', wsize);
+    sprintf(weather, "%s%s", pwd, OPEN_WEATHER_MAP);
+    return weather;
 }
 
 char *get_time() {
@@ -175,9 +203,12 @@ int main()
         setupDays();
         setupMonths();
 
+        char *weather = get_weather_api();
+        char *owweather = get_ow_weather_api();
+
         // child process for open weather map
         pid_t pID = fork();
-        char *owmap[] = { NODE_JS, OPEN_WEATHER_MAP, NULL};
+        char *owmap[] = { NODE_JS, owweather, NULL};
         if ( pID == 0 ) {
             execvp(owmap[0], owmap);
             exit(0);
@@ -185,7 +216,7 @@ int main()
         
         // child process for weather map
         pid_t wpID = fork();
-        char *wmap[] = { NODE_JS, WEATHER_MAP, NULL};
+        char *wmap[] = { NODE_JS, weather, NULL};
         if ( wpID == 0 ) {
             execvp(wmap[0], wmap);
             exit(0);
