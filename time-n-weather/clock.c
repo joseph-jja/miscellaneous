@@ -16,9 +16,6 @@
 static char *days[7];
 static char *months[12];
 
-#define WEATHER_MAP "weather-api.js"
-#define OPEN_WEATHER_MAP "ow-weather-api.js"
-
 void setupDays() {
    
     days[0] = "Sunday";
@@ -179,20 +176,16 @@ int main()
         setupMonths();
 
         // child process for open weather map
-        char owweather[1024];
-        sprintf(owweather, "%s/%s", getenv("PWD"), OPEN_WEATHER_MAP);
         pid_t pID = fork();
-        char *owmap[] = { NODE_JS, owweather, NULL};
+        char *owmap[] = { NODE_JS, OPEN_WEATHER_MAP, NULL};
         if ( pID == 0 ) {
             execvp(owmap[0], owmap);
             exit(0);
         }
         
         // child process for weather map
-        char weather[1024];
-        sprintf(weather, "%s/%s", getenv("PWD"), WEATHER_MAP);
         pid_t wpID = fork();
-        char *wmap[] = { NODE_JS, weather, NULL};
+        char *wmap[] = { NODE_JS, WEATHER_MAP, NULL};
         if ( wpID == 0 ) {
             execvp(wmap[0], wmap);
             exit(0);
