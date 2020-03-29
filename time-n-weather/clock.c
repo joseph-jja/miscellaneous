@@ -86,7 +86,14 @@ void writeNumber(int x, int y, int num) {
 }
 
 char *get_nodejs_path() {
-    return "";
+     
+    if (getenv("CLOCK_NODEJS_BIN")) { 
+        printf("Try setting CLOCK_NODEJS_BIN if node.js is not in your path\n");
+        sleep(5);
+        return getenv("CLOCK_NODEJS_BIN");
+    } else {
+        return NODE_JS;
+    }
 }
 
 char *get_weather_api() {
@@ -205,10 +212,11 @@ int main()
 
         char *weather = get_weather_api();
         char *owweather = get_ow_weather_api();
+        char *nodejsBin = get_nodejs_path();
 
         // child process for open weather map
         pid_t pID = fork();
-        char *owmap[] = { NODE_JS, owweather, NULL};
+        char *owmap[] = { nodejsBin, owweather, NULL};
         if ( pID == 0 ) {
             execvp(owmap[0], owmap);
             exit(0);
@@ -216,7 +224,7 @@ int main()
         
         // child process for weather map
         pid_t wpID = fork();
-        char *wmap[] = { NODE_JS, weather, NULL};
+        char *wmap[] = { nodejsBin, weather, NULL};
         if ( wpID == 0 ) {
             execvp(wmap[0], wmap);
             exit(0);
