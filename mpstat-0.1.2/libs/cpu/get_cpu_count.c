@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "get_cpu_count.h"
+#include "cpu.h"
 
 #define BUFFER_SIZE 2048
 #define PROCESSOR "processor"
