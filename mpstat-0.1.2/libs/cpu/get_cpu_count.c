@@ -5,9 +5,6 @@
 
 #include "cpu.h"
 
-#define BUFFER_SIZE 2048
-#define PROCESSOR "processor"
-
 int get_cpu_count() {
 
     FILE *cpuinfofile;
@@ -25,6 +22,7 @@ int get_cpu_count() {
                 cpu_count++;
             }
         }
+        fclose(cpuinfofile);
     }
     return cpu_count;
 }
