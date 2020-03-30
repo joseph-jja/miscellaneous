@@ -6,6 +6,6 @@ int get_count();
 
 void get_identifiers(char **);
 
-char **get_stats(char **);
+void get_stats(char **, char **);
 
 
