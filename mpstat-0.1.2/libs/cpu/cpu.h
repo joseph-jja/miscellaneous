@@ -4,7 +4,7 @@
 
 int get_count();
 
-void get_identifiers(char **);
+void get_identifiers(char **, int);
 
 void get_stats(char **, char **);
 

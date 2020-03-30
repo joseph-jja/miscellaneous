@@ -6,11 +6,10 @@
 
 #define CPU_PREFIX "cpu"
 
-void get_identifiers(char **cpuid) {
+void get_identifiers(char **cpuid, int count) {
 
     FILE *cpuinfofile;
     int i = 0;
-    int count = strlen(*cpuid);
 
     if (count == 1) {
 	    cpuid[0] = malloc(strlen(CPU_PREFIX) + 1);
