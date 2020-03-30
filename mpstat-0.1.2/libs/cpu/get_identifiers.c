@@ -10,6 +10,16 @@ void get_identifiers(char **cpuid) {
 
     FILE *cpuinfofile;
     int i = 0;
+    int count = strlen(*cpuid);
+
+    if (count == 1) {
+	    cpuid[0] = malloc(strlen(CPU_PREFIX) + 1);
+	    if (cpuid[0] != NULL) {
+		    memset(cpuid[i], '\0', strlen(CPU_PREFIX) + 1);
+		    memcpy(cpuid[i], CPU_PREFIX, strlen(CPU_PREFIX));
+        }
+        return;
+    }
 
     cpuinfofile = fopen("/proc/cpuinfo","r");
     if (cpuinfofile == NULL ) {
