@@ -6,7 +6,7 @@
 
 #define CPU_PREFIX "cpu"
 
-void get_cpu_identifiers(char **cpuid) {
+void get_identifiers(char **cpuid) {
 
     FILE *cpuinfofile;
     int i = 0;

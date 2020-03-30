@@ -5,7 +5,7 @@
 
 #include "cpu.h"
 
-int get_cpu_count() {
+int get_count() {
 
     FILE *cpuinfofile;
     int cpu_count = 0;
