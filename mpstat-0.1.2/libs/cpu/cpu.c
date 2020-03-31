@@ -5,9 +5,10 @@
 
 #include "cpu.h"
 
-void init_cpus(int cpu_ct, char **cpuids, float **last, float **current, float **cpustats) {
+void init_cpus(int cpu_ct, char **cpuids, float last[][4], float cpustats[][4]) {
 
     char *results[cpu_ct];
+    float current[cpu_ct][10];
 
     get_stats(cpuids, results);
 
