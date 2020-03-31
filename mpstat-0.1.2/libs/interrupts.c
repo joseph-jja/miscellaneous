@@ -8,16 +8,18 @@ void get_inter (unsigned *inters, int number_cpus) {
 	unsigned i = 1 ,k, j =0, l=0, m=0;
 	unsigned *cpu;
 	
-	cpu = (unsigned *)calloc(number_cpus + 1, sizeof(ONEBITE));
+	cpu = (unsigned *)calloc(number_cpus + 1, sizeof(unsigned));
 	*inters = 0;
+
+        int buffer_size = (number_cpus * 11) + 35;
 	
 	if (((pFile=fopen("/proc/interrupts", "r")) == NULL)
 		|| (cpu == NULL)) {
 		printf("error file not found\n");
 	} else {
 		char *buffer, *tempbuffer;
-		buffer = (char*)calloc(4+(number_cpus*11)+30+1,sizeof(ONEBITE));
-		tempbuffer = (char*)calloc(11+1,sizeof(ONEBITE));
+		buffer = (char*)calloc(buffer_size,sizeof(unsigned));
+		tempbuffer = (char*)calloc(12,sizeof(unsigned));
 				
 		if (buffer != NULL && tempbuffer != NULL) { 
            fgets(buffer, 4+(number_cpus*11)+30, pFile);
