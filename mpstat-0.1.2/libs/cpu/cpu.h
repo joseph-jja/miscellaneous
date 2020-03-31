@@ -8,4 +8,6 @@ void get_identifiers(char **, int);
 
 void get_stats(char **, char **);
 
+void init_cpus(int, char **, float **, float **, float **);
+
 
