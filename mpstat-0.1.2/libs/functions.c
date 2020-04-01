@@ -1,4 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <sys/ioctl.h>
+
+#include "functions.h"
 
 void usage(void) {
   fprintf(stderr,"usage: %s [-V] [-n] [delay [count]]\n",PROGNAME);

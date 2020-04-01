@@ -1,4 +1,6 @@
 
+#define PROGNAME "mpstat"
+
 void usage(void);
 
 void crash(char *filename);
