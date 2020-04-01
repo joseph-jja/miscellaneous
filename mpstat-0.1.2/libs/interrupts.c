@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 
-void get_inter (unsigned *inters, int number_cpus) {
+void get_inter (unsigned inters[], int number_cpus) {
 	
 	FILE *pFile;
 	unsigned i = 1 ,k, j =0, l=0, m=0;
 	unsigned *cpu;
 	
 	cpu = (unsigned *)calloc(number_cpus + 1, sizeof(unsigned));
-	*inters = 0;
 
         int buffer_size = (number_cpus * 11) + 35;
 	
@@ -28,9 +27,7 @@ void get_inter (unsigned *inters, int number_cpus) {
 			if(strncmp(buffer,"NMI: ",5) == 0) {		
 			   break;
 			}
-#ifdef __SMP__
 			for (j = 1; j<=number_cpus; j++) {
-#endif
 			   for (i=6+l; i<=16+l;i++) {
 				   tempbuffer[m] = buffer[i];
 				   m++;
@@ -38,11 +35,9 @@ void get_inter (unsigned *inters, int number_cpus) {
 			   k = strtoul(tempbuffer, NULL,0);
 			   cpu[j] = cpu[j] + k;
 			   m=0;
-#ifdef __SMP__
 			   l=l+11;
 		    }	
 			l=0;
-#endif
 		   }
 		   free(tempbuffer);
 		   free(buffer); 
@@ -50,14 +45,10 @@ void get_inter (unsigned *inters, int number_cpus) {
 		fclose(pFile);
 	}
 	/* set value of pointer to value of array */
-#ifdef __SMP__
 	for (i = 1; i<= number_cpus; i++) {
 		*inters = cpu[i];
 		inters++;
 	}
-#else
-		*inters = cpu[0];
-#endif
 	free(cpu);
 } 
 
