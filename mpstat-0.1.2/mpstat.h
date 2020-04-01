@@ -33,6 +33,5 @@ void showheader(void);
 void usage(void);
 void crash(char *);
 int read_nr_cpus(int *); /* used to get number of cpus from /proc/cpuinfo */
-void get_inter (unsigned *, int); /*gets interrupts per processor */
 void getfaults(unsigned *i, unsigned *, int, int *); /* this is used to get major and minuor faults */
 static char buff[BUFFSIZE]; /* used in the procedures */

@@ -7,6 +7,7 @@ multiple cpu handling.*/
 /* Feb 23, 2001 ump fixes, fixes for kernel 2.4 */
 
 #include "mpstat.h"
+#include "libs/interrupts.h"
 
 #define BOOLTRUE 1
 #define BOOLFALSE 0

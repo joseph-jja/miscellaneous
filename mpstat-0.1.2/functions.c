@@ -58,63 +58,6 @@ int read_nr_cpus(int *cpurealid) {
 	return(cpunum);			
 }
 
-void get_inter (unsigned *inters, int number_cpus) {
-	
-	FILE *pFile;
-	unsigned i = 1 ,k, j =0, l=0, m=0;
-	unsigned *cpu;
-	
-	cpu = (unsigned *)calloc(MAX_NR_CPUS+1, sizeof(ONEBITE));
-	*inters = 0;
-	
-	if (((pFile=fopen("/proc/interrupts", "r")) == NULL)
-		|| (cpu == NULL)) {
-		printf("error file not found\n");
-	} else {
-		char *buffer, *tempbuffer;
-		buffer = (char*)calloc(4+(number_cpus*11)+30+1,sizeof(ONEBITE));
-		tempbuffer = (char*)calloc(11+1,sizeof(ONEBITE));
-				
-		if (buffer != NULL && tempbuffer != NULL) { 
-           fgets(buffer, 4+(number_cpus*11)+30, pFile);
-		   while (!feof(pFile)) {
-			fgets(buffer,4+(number_cpus*11)+30,pFile);
-			if(strncmp(buffer,"NMI: ",5) == 0) {		
-			   break;
-			}
-#ifdef __SMP__
-			for (j = 1; j<=number_cpus; j++) {
-#endif
-			   for (i=6+l; i<=16+l;i++) {
-				   tempbuffer[m] = buffer[i];
-				   m++;
-			   }
-			   k = strtoul(tempbuffer, NULL,0);
-			   cpu[j] = cpu[j] + k;
-			   m=0;
-#ifdef __SMP__
-			   l=l+11;
-		    }	
-			l=0;
-#endif
-		   }
-		   free(tempbuffer);
-		   free(buffer); 
-		}
-		fclose(pFile);
-	}
-	/* set value of pointer to value of array */
-#ifdef __SMP__
-	for (i = 1; i<= number_cpus; i++) {
-		*inters = cpu[i];
-		inters++;
-	}
-#else
-		*inters = cpu[0];
-#endif
-	free(cpu);
-} 
-
 void getfaults(unsigned int *majorflt, unsigned int *minorflt, int maxnumcpus, int *cpurealid ) { 
 		
   static struct direct *ent;
