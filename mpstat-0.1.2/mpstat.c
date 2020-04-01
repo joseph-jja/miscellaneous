@@ -8,6 +8,7 @@ multiple cpu handling.*/
 
 #include "mpstat.h"
 #include "libs/interrupts.h"
+#include "libs/cpu/cpu.h"
 
 #define BOOLTRUE 1
 #define BOOLFALSE 0
@@ -30,11 +31,9 @@ int main(int argc, char *argv[]) {
   unsigned long int args[2]={0,0};
   unsigned int moreheaders=TRUE;
   unsigned int tog=0; /* toggle switch for cleaner code */
-#ifdef __SMP__
   /* SMP tog switches */
   int status_tog = 0;
   int status_nottog;
-#endif
   unsigned int i,hz;
   unsigned int running[MAX_NR_CPUS],blocked[MAX_NR_CPUS]; /* running and blocked processes */	
   unsigned int memfree = 0; /* dummy var set to zero for space holder */
@@ -98,7 +97,7 @@ int main(int argc, char *argv[]) {
   /* here we get the number of cpus and also get the cpu id 
    * the number of cpu's is returned by the function while the 
    * the cpu id is passed by reference */
-  num_cpus = read_nr_cpus(cpuid); 
+  num_cpus = get_count();
   if (num_cpus == 0) {
 	  printf("NO CPUS DETECTED!!!! FATAL ERROR EXITING!!!\n");
 	  exit (-1);
@@ -117,11 +116,11 @@ int main(int argc, char *argv[]) {
   pero2=(per/2); 
 
   showheader();
-  getfaults(running,blocked, num_cpus, cpuid);
-  getstat(inter,ticks,ctxt);
+  //getfaults(running,blocked, num_cpus, cpuid);
+  //getstat(inter,ticks,ctxt);
   get_inter(cpu_inter,num_cpus);
-  getcpu_prcnt(BOOLFALSE, num_cpus, cpu_useage, 
-		  cpu_nicage, cpu_sysage, cpu_idlage); 
+  //getcpu_prcnt(BOOLFALSE, num_cpus, cpu_useage, 
+//		  cpu_nicage, cpu_sysage, cpu_idlage); 
   hz=sysconf(_SC_CLK_TCK); /* get ticks/s from system */
  // code here needs to be cleaned up here
 
