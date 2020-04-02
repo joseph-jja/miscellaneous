@@ -33,31 +33,6 @@ void showheader(void){
 	 "smtx","srw","syscl","us","sy","wt","idl");
 }
 
-int read_nr_cpus(int *cpurealid) {
-	FILE *cpuinfofile;
-	int cpunum = 0;
-	
-	if ((cpuinfofile = fopen("/proc/cpuinfo","r")) == NULL ) {
-		printf("could not find /proc/cpuinfo!!!\n");
-	} else {
-		char *buffer;
-		int nchars;
-		buffer = calloc(BUFFSIZE,sizeof(ONEBITE)); 
-		while (!feof(cpuinfofile)) 
-		{
-			fscanf(cpuinfofile,"%s       : %d",buffer,&nchars);
-			if ((strncmp(PROCESSOR,buffer, strlen(PROCESSOR)) == 0)) {
-				*cpurealid = nchars;
-				cpurealid++;
-				cpunum++;
-			}
-		}
-		free(buffer); 
-	}
-//printf("cpu num = %d\n", cpunum);
-	return(cpunum);			
-}
-
 void getfaults(unsigned int *majorflt, unsigned int *minorflt, int maxnumcpus, int *cpurealid ) { 
 		
   static struct direct *ent;
