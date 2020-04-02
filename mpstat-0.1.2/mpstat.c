@@ -129,12 +129,13 @@ main (int argc, char *argv[])
   for (ii = 0; ii < num_cpus; ii++) {
     duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
        dsystem[0] = cpu_stats[ii][1];
-       //didle[0] = (cpu_stats[ii][3])%UINT_MAX;
-       //divid[0] = (duser[0] + dsystem[0] + didle[0]);
-       //divo22[0] = divid[0]/2;
-       //cpu_wait[ii]=0; */
+       didle[0] = ((long)cpu_stats[ii][3])%UINT_MAX;
+       divid[0] = (duser[0] + dsystem[0] + didle[0]);
+       divo22[0] = divid[0]/2;
+       cpu_wait[0]=0;
 
-    printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree, cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
+    printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree, cpu_inter[ii], 
+          0, //(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
 	    memfree, memfree, memfree, memfree, memfree, cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
   }
 
@@ -150,12 +151,12 @@ main (int argc, char *argv[])
     //getstat(inter,ticks,ctxt);
 
     for (ii = 0; ii < num_cpus; ii++) {
-      /*duser[ii] = cpu_useage[ii]+cpu_nicage[ii];
-         dsystem[ii] = (cpu_sysage[ii]);
-         didle[ii] = (cpu_idlage[ii])%UINT_MAX;
-         divid[ii] = (duser[ii] + dsystem[ii] + didle[ii]);
-         divo22[ii] = divid[ii]/2;
-         cpu_wait[ii]=0; */
+    duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
+       dsystem[0] = cpu_stats[ii][1];
+       didle[0] = ((long)cpu_stats[ii][3])%UINT_MAX;
+       divid[0] = (duser[0] + dsystem[0] + didle[0]);
+       divo22[0] = divid[0]/2;
+       cpu_wait[0]=0;
 
       printf (format, cpu_ids[ii], running[ii], blocked[ii],memfree,
 	      cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
