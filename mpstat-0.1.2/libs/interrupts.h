@@ -1,2 +1,2 @@
 
-void get_inter (unsigned [], int);
+void get_inter (unsigned[], int);

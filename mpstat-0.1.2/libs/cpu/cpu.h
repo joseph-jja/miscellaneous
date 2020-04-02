@@ -6,6 +6,6 @@ int get_count ();
 
 void get_identifiers (char **, int);
 
-void get_stats (char **, char **);
+void get_stats (char **, char **, unsigned *, unsigned *, unsigned *);
 
-void get_cpu_percent (int, char **, float[][4], float[][4]);
+void get_cpu_percent (int, char **, float[][4], float[][4], unsigned *, unsigned *, unsigned *);

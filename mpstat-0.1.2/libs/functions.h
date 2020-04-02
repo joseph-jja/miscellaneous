@@ -1,11 +1,10 @@
 
 #define PROGNAME "mpstat"
 
-void usage(void);
+void usage (void);
 
-void crash(char *filename);
+void crash (char *filename);
 
-int winhi(void);
+int winhi (void);
 
-void showheader(void);
-
+void showheader (void);

@@ -12,4 +12,8 @@ echo "void init_cpu_ids()" > cpucount.c
 grep processor /proc/cpuinfo | sed 's/ //g' | awk -F\: '{print "\tCPU_IDS["$2"] = \42cpu"$2"\42;"}' >> cpucount.c
 echo "}" >> cpucount.c
 
+#for II in `find libs type f`; do
+    #indent --braces-on-if-line --line-length185 $II
+#done
+
 

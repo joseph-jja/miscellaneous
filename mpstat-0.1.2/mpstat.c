@@ -25,15 +25,12 @@ int
 main (int argc, char *argv[])
 {
 
-  const char format[] =
-    "%s %6u %6u %4u %9u %3u %4u %4u %4u %3u %5u %3.0f %3.0f %3.0f %3.0f\n";
+  const char format[] = "%s %6u %6u %4u %9u %3u %4u %4u %4u %3u %5u %3.0f %3.0f %3.0f %3.0f\n";
   unsigned int height = 22;	/* window height, reset later if needed. */
   unsigned long int args[2] = { 0, 0 };
   unsigned int moreheaders = TRUE;
   unsigned int tog = 0;		/* toggle switch for cleaner code */
   /* SMP tog switches */
-  int status_tog = 0;
-  int status_nottog;
   unsigned int i, hz;
   unsigned int running[MAX_NR_CPUS], blocked[MAX_NR_CPUS];	/* running and blocked processes */
   unsigned int memfree = 0;	/* dummy var set to zero for space holder */
@@ -42,108 +39,117 @@ main (int argc, char *argv[])
   unsigned long num = 0;
   unsigned int cpu_wait[MAX_NR_CPUS], cpu_inter[MAX_NR_CPUS];
   static int num_cpus;
-  unsigned int cpu_useage[MAX_NR_CPUS], cpu_nicage[MAX_NR_CPUS],
-    cpu_sysage[MAX_NR_CPUS];
+  unsigned int cpu_useage[MAX_NR_CPUS], cpu_nicage[MAX_NR_CPUS], cpu_sysage[MAX_NR_CPUS];
   unsigned long cpu_idlage[MAX_NR_CPUS];
   int ret_stat;
   int ii;
-  unsigned int duser[MAX_NR_CPUS], dsystem[MAX_NR_CPUS],
-    didle[MAX_NR_CPUS], divid[MAX_NR_CPUS], divo22[MAX_NR_CPUS];
+  unsigned int duser[MAX_NR_CPUS], dsystem[MAX_NR_CPUS], didle[MAX_NR_CPUS], divid[MAX_NR_CPUS], divo22[MAX_NR_CPUS];
   int *cpuid;
 
   cpuid = (int *) calloc (sizeof (MAX_NR_CPUS + 1), sizeof (TWOBITE));
-  if (cpuid == NULL)
-    {
-      printf ("could not allocate memory exiting \n");
-      exit (-1);
-    }
+  if (cpuid == NULL) {
+    printf ("could not allocate memory exiting \n");
+    exit (-1);
+  }
 
   setlinebuf (stdout);
   argc = 0;			/* redefined as number of integer arguments */
-  for (argv++; *argv; argv++)
-    {
-      if ('-' == (**argv))
-	{
-	  switch (*(++(*argv)))
-	    {
-	    case 'V':
-	      printf ("%s\n%s\n%s\n", PROGNAME, VERSION, REQUIRES);
-	      exit (0);
-	    case 'n':
-	      /* print only one header */
-	      moreheaders = FALSE;
-	      break;
-	    default:
-	      /* no other aguments defined yet. */
-	      usage ();
-	    }
-	}
-      else
-	{
-	  if (!sscanf (*argv, "%lu", args + argc++))
-	    usage ();
-	}
+  for (argv++; *argv; argv++) {
+    if ('-' == (**argv)) {
+      switch (*(++(*argv))) {
+      case 'V':
+	printf ("%s\n%s\n%s\n", PROGNAME, VERSION, REQUIRES);
+	exit (0);
+      case 'n':
+	/* print only one header */
+	moreheaders = FALSE;
+	break;
+      default:
+	/* no other aguments defined yet. */
+	usage ();
+      }
     }
-  switch (argc)
-    {
-    case 0:			/* no numeric args */
-      per = 1;
-      num = 0;
-      break;
-    case 1:
-      per = (unsigned) args[0];
-      num = ULONG_MAX;
-      break;
-    case 2:
-      per = (unsigned) args[0];
-      num = args[1];
-      break;
-    default:
-      usage ();
-      break;
+    else {
+      if (!sscanf (*argv, "%lu", args + argc++))
+	usage ();
     }
+  }
+  switch (argc) {
+  case 0:			/* no numeric args */
+    per = 1;
+    num = 0;
+    break;
+  case 1:
+    per = (unsigned) args[0];
+    num = ULONG_MAX;
+    break;
+  case 2:
+    per = (unsigned) args[0];
+    num = args[1];
+    break;
+  default:
+    usage ();
+    break;
+  }
   /* here we get the number of cpus and also get the cpu id 
    * the number of cpu's is returned by the function while the 
    * the cpu id is passed by reference */
   num_cpus = get_count ();
-  if (num_cpus == 0)
-    {
-      printf ("NO CPUS DETECTED!!!! FATAL ERROR EXITING!!!\n");
-      exit (-1);
-    }
-  else if (num_cpus > MAX_NR_CPUS)
-    {
-      printf ("***************WARNING!!!***************\n");
-      printf
-	("This version of mpstat only accepts %d cpu's and may segfault \n",
-	 MAX_NR_CPUS);
-      printf ("or show improper information.\n");
-      exit (-1);
-    }
+  if (num_cpus == 0) {
+    printf ("NO CPUS DETECTED!!!! FATAL ERROR EXITING!!!\n");
+    exit (-1);
+  }
+  else if (num_cpus > MAX_NR_CPUS) {
+    printf ("***************WARNING!!!***************\n");
+    printf ("This version of mpstat only accepts %d cpu's and may segfault \n", MAX_NR_CPUS);
+    printf ("or show improper information.\n");
+    exit (-1);
+  }
 
   char *cpu_ids[num_cpus];
   get_identifiers (cpu_ids, num_cpus);
 
   float last[num_cpus][4], cpu_stats[num_cpus][4];
 
-  if (moreheaders)
-    {
-      int tmp = winhi () - 3;
-      height = (((tmp > 0) ? tmp : 22) / num_cpus);
-    }
+  if (moreheaders) {
+    int tmp = winhi () - 3;
+    height = (((tmp > 0) ? tmp : 22) / num_cpus);
+  }
 
   pero2 = (per / 2);
 
   showheader ();
-  //getfaults(running,blocked, num_cpus, cpuid);
+  getfaults(running,blocked, num_cpus, cpuid);
   //getstat(inter,ticks,ctxt);
   get_inter (cpu_inter, num_cpus);
-  get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats);
+  get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats, inter, ticks, ctxt);
   hz = sysconf (_SC_CLK_TCK);	/* get ticks/s from system */
   // code here needs to be cleaned up here
 
-  for (ii = 0; ii < num_cpus; ii++)
-    {
+  for (ii = 0; ii < num_cpus; ii++) {
+    duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
+       dsystem[0] = cpu_stats[ii][1];
+       //didle[0] = (cpu_stats[ii][3])%UINT_MAX;
+       //divid[0] = (duser[0] + dsystem[0] + didle[0]);
+       //divo22[0] = divid[0]/2;
+       //cpu_wait[ii]=0; */
+
+    printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree, cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
+	    memfree, memfree, memfree, memfree, memfree, cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
+  }
+
+  for (i = 1; i < num; i++) {	/* \\\\\\\\\\\\\\\\\\\\ main loop ////////////////// */
+    sleep (per);
+
+    if (moreheaders && ((i % height) == 0))
+      showheader ();
+    tog = !tog;
+    getfaults(running,blocked, num_cpus, cpuid);
+    get_inter (cpu_inter, num_cpus);
+    get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats, inter, ticks, ctxt);
+    //getstat(inter,ticks,ctxt);
+
+    for (ii = 0; ii < num_cpus; ii++) {
       /*duser[ii] = cpu_useage[ii]+cpu_nicage[ii];
          dsystem[ii] = (cpu_sysage[ii]);
          didle[ii] = (cpu_idlage[ii])%UINT_MAX;
@@ -151,41 +157,12 @@ main (int argc, char *argv[])
          divo22[ii] = divid[ii]/2;
          cpu_wait[ii]=0; */
 
-      printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree, cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
-	      memfree, memfree, memfree, memfree, memfree,
-	      cpu_stats[ii][0],
-	      cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
+      printf (format, cpu_ids[ii], running[ii], blocked[ii],memfree,
+	      cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
+	      memfree, memfree, memfree, memfree, memfree, cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
+
     }
-
-  for (i = 1; i < num; i++)
-    {				/* \\\\\\\\\\\\\\\\\\\\ main loop ////////////////// */
-      sleep (per);
-
-      if (moreheaders && ((i % height) == 0))
-	showheader ();
-      tog = !tog;
-      //getfaults(running,blocked, num_cpus, cpuid);
-      get_inter (cpu_inter, num_cpus);
-      get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats);
-      //getstat(inter+tog,ticks+tog,ctxt+tog);
-
-      for (ii = 0; ii < num_cpus; ii++)
-	{
-	  /*duser[ii] = cpu_useage[ii]+cpu_nicage[ii];
-	     dsystem[ii] = (cpu_sysage[ii]);
-	     didle[ii] = (cpu_idlage[ii])%UINT_MAX;
-	     divid[ii] = (duser[ii] + dsystem[ii] + didle[ii]);
-	     divo22[ii] = divid[ii]/2;
-	     cpu_wait[ii]=0; */
-
-	  printf (format, cpu_ids[ii], 0, 0,	//running[ii], blocked[ii],memfree,
-		  cpu_inter[ii], 0,	//(*(ctxt)*hz+divo22[ii+1])/divid[ii+1],
-		  memfree, memfree, memfree, memfree, memfree,
-		  cpu_stats[ii][0],
-		  cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
-
-	}
-    }
+  }
   free (cpuid);
   exit (EXIT_SUCCESS);
 }
@@ -198,22 +175,20 @@ getstat (unsigned *itot, unsigned *i1, unsigned *ct)
 {
   static int stat;
 
-  if ((stat = open ("/proc/stat", O_RDONLY, 0)) != -1)
-    {
-      char *b;
-      buff[BUFFSIZE - 1] = 0;	/* ensure null termination in buffer */
-      read (stat, buff, BUFFSIZE - 1);
-      close (stat);
-      *itot = 0;
-      *i1 = 1;			/* ensure assert below will fail if the sscanf bombs */
-      b = strstr (buff, "intr ");
-      sscanf (b, "intr %u %u", itot, i1);
-      b = strstr (buff, "ctxt ");
-      sscanf (b, "ctxt %u", ct);
-      //assert(*itot>*i1);
-    }
-  else
-    {
-      crash ("/proc/stat");
-    }
+  if ((stat = open ("/proc/stat", O_RDONLY, 0)) != -1) {
+    char *b;
+    buff[BUFFSIZE - 1] = 0;	/* ensure null termination in buffer */
+    read (stat, buff, BUFFSIZE - 1);
+    close (stat);
+    *itot = 0;
+    *i1 = 1;			/* ensure assert below will fail if the sscanf bombs */
+    b = strstr (buff, "intr ");
+    sscanf (b, "intr %u %u", itot, i1);
+    b = strstr (buff, "ctxt ");
+    sscanf (b, "ctxt %u", ct);
+    //assert(*itot>*i1);
+  }
+  else {
+    crash ("/proc/stat");
+  }
 }
