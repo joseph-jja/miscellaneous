@@ -5,7 +5,7 @@
 
 #include "cpu.h"
 
-void init_cpus(int cpu_ct, char **cpuids, float last[][4], float cpustats[][4]) {
+void get_cpu_percent(int cpu_ct, char **cpuids, float last[][4], float cpustats[][4]) {
 
     char *results[cpu_ct];
     float current[cpu_ct][10];

@@ -26,7 +26,7 @@ void getcpu_prcnt(int, int, unsigned *,
 
 int main(int argc, char *argv[]) {
 
-  const char format[]="cpu%-2d %6u %6u %4u %9u %3u %4u %4u %4u %3u %5u %3u %3u %3u %3u\n";
+  const char format[]="%s %6u %6u %4u %9u %3u %4u %4u %4u %3u %5u %3u %3u %3u %3u\n";
   unsigned int height=22; /* window height, reset later if needed. */
   unsigned long int args[2]={0,0};
   unsigned int moreheaders=TRUE;
@@ -108,6 +108,12 @@ int main(int argc, char *argv[]) {
       exit (-1);
   }
 
+  char *cpu_ids[num_cpus];
+  get_identifiers(cpu_ids, num_cpus); 
+  
+  float last[num_cpus][4], 
+      cpu_stats[num_cpus][4];
+  
   if (moreheaders) {
       int tmp=winhi()-3;
       height=(((tmp>0)?tmp:22)/num_cpus);
@@ -119,6 +125,7 @@ int main(int argc, char *argv[]) {
   //getfaults(running,blocked, num_cpus, cpuid);
   //getstat(inter,ticks,ctxt);
   get_inter(cpu_inter,num_cpus);
+  get_cpu_percent(num_cpus, cpu_ids, last, cpu_stats);
   //getcpu_prcnt(BOOLFALSE, num_cpus, cpu_useage, 
 //		  cpu_nicage, cpu_sysage, cpu_idlage); 
   hz=sysconf(_SC_CLK_TCK); /* get ticks/s from system */
@@ -134,7 +141,7 @@ int main(int argc, char *argv[]) {
               divo22[ii] = divid[ii]/2;
               cpu_wait[ii]=0;
 	      
-  printf(format, (int)cpuid[ii-1], running[ii-1], blocked[ii-1],memfree,
+  printf(format, cpu_ids[ii-1], running[ii-1], blocked[ii-1],memfree,
 	 cpu_inter[ii-1], (*(ctxt)*hz+divo22[ii])/divid[ii],
 	 memfree, memfree,memfree, memfree,memfree,
 	 (100*duser[ii]+divo22[ii])/divid[ii],
@@ -151,7 +158,7 @@ int main(int argc, char *argv[]) {
         divo22[0] = divid[0]/2;
         cpu_wait[0]=0;
 	
-  printf(format, (int)cpuid[0],running[0], blocked[0],
+  printf(format, cpu_ids[0],running[0], blocked[0],
 	 memfree,
 	 cpu_inter[0],
 	 (*(ctxt)*hz+divo22[0])/divid[0],
@@ -181,6 +188,7 @@ int main(int argc, char *argv[]) {
     tog= !tog;
     getfaults(running,blocked, num_cpus, cpuid);
     get_inter(cpu_inter,num_cpus);
+    get_cpu_percent(num_cpus, cpu_ids, last, cpu_stats);
     getstat(inter+tog,ticks+tog,ctxt+tog);
 
 #ifdef __SMP__
@@ -205,7 +213,7 @@ int main(int argc, char *argv[]) {
               divo22[ii] = divid[ii]/2;
               cpu_wait[ii]=0;
 	      
-               printf(format,(int)cpuid[ii-1], running[ii-1], blocked[ii-1], 
+               printf(format,cpu_ids[ii-1], running[ii-1], blocked[ii-1], 
 	   memfree,
 	   cpu_inter[ii-1],
 	   (*(ctxt+tog)-*(ctxt+(!tog))+pero2)/per,
@@ -226,7 +234,7 @@ int main(int argc, char *argv[]) {
           divo22[0] = divid[0]/2;
           cpu_wait[0] = 0;
 	  
-          printf(format,(int)cpuid[0], running[0], blocked[0],
+          printf(format, cpu_ids[0], running[0], blocked[0],
 	   memfree,
 	   cpu_inter[0],
 	   (*(ctxt+tog)-*(ctxt+(!tog))+pero2)/per,

@@ -8,6 +8,6 @@ void get_identifiers(char **, int);
 
 void get_stats(char **, char **);
 
-void init_cpus(int, char **, float [][4], float [][4]);
+void get_cpu_percent(int, char **, float [][4], float [][4]);
 
 
