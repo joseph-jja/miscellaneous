@@ -5,13 +5,11 @@ multiple cpu handling.*/
 /* June 11, 1999 added function to get per processor interupts */
 /* June 18, 1999 combined intr and ithr see FAQ.txt */
 /* Feb 23, 2001 ump fixes, fixes for kernel 2.4 */
+/* April xx 2020 refactor */
 
 #include "mpstat.h"
 #include "libs/interrupts.h"
 #include "libs/cpu/cpu.h"
-
-#define BOOLTRUE 1
-#define BOOLFALSE 0
 
 int main (int, char **);
 
