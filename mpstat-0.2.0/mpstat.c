@@ -64,8 +64,7 @@ main (int argc, char *argv[])
 	/* no other aguments defined yet. */
 	usage ();
       }
-    }
-    else {
+    } else {
       if (!sscanf (*argv, "%lu", args + argc++))
 	usage ();
     }
@@ -94,8 +93,7 @@ main (int argc, char *argv[])
   if (num_cpus == 0) {
     printf ("NO CPUS DETECTED!!!! FATAL ERROR EXITING!!!\n");
     exit (-1);
-  }
-  else if (num_cpus > MAX_NR_CPUS) {
+  } else if (num_cpus > MAX_NR_CPUS) {
     printf ("***************WARNING!!!***************\n");
     printf ("This version of mpstat only accepts %d cpu's and may segfault \n", MAX_NR_CPUS);
     printf ("or show improper information.\n");
@@ -115,7 +113,7 @@ main (int argc, char *argv[])
   pero2 = (per / 2);
 
   showheader ();
-  getfaults(running,blocked, num_cpus, cpuid);
+  getfaults (running, blocked, num_cpus, cpuid);
   get_inter (cpu_inter, num_cpus);
   get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats, inter, ticks, &ctxt);
   hz = sysconf (_SC_CLK_TCK);	/* get ticks/s from system */
@@ -123,15 +121,15 @@ main (int argc, char *argv[])
 
   for (ii = 0; ii < num_cpus; ii++) {
     duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
-       dsystem[0] = cpu_stats[ii][1];
-       didle[0] = ((long)cpu_stats[ii][3])%UINT_MAX;
-       divid[0] = (duser[0] + dsystem[0] + didle[0]);
-       divo22[0] = divid[0]/2;
-       cpu_wait[0]=0;
+    dsystem[0] = cpu_stats[ii][1];
+    didle[0] = ((long) cpu_stats[ii][3]) % UINT_MAX;
+    divid[0] = (duser[0] + dsystem[0] + didle[0]);
+    divo22[0] = divid[0] / 2;
+    cpu_wait[0] = 0;
 
-    printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree, cpu_inter[ii], 
-          (ctxt*hz+divo22[0])/divid[0],
-	    memfree, memfree, memfree, memfree, memfree, cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
+    printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree,
+	    cpu_inter[ii], (ctxt * hz + divo22[0]) / divid[0], memfree, memfree, memfree, memfree, memfree,
+	    cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
   }
 
   for (i = 1; i < num; i++) {	/* \\\\\\\\\\\\\\\\\\\\ main loop ////////////////// */
@@ -140,25 +138,24 @@ main (int argc, char *argv[])
     if (moreheaders && ((i % height) == 0))
       showheader ();
     tog = !tog;
-    getfaults(running,blocked, num_cpus, cpuid);
+    getfaults (running, blocked, num_cpus, cpuid);
     get_inter (cpu_inter, num_cpus);
     get_cpu_percent (num_cpus, cpu_ids, last, cpu_stats, inter, ticks, &ctxt);
 
     for (ii = 0; ii < num_cpus; ii++) {
-    duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
-       dsystem[0] = cpu_stats[ii][1];
-       didle[0] = ((long)cpu_stats[ii][3])%UINT_MAX;
-       divid[0] = (duser[0] + dsystem[0] + didle[0]);
-       divo22[0] = divid[0]/2;
-       cpu_wait[0]=0;
+      duser[0] = cpu_stats[ii][0] + cpu_stats[ii][2];
+      dsystem[0] = cpu_stats[ii][1];
+      didle[0] = ((long) cpu_stats[ii][3]) % UINT_MAX;
+      divid[0] = (duser[0] + dsystem[0] + didle[0]);
+      divo22[0] = divid[0] / 2;
+      cpu_wait[0] = 0;
 
-      printf (format, cpu_ids[ii], running[ii], blocked[ii],memfree,
-	      cpu_inter[ii], (ctxt*hz+divo22[0])/divid[0],
-	      memfree, memfree, memfree, memfree, memfree, cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
+      printf (format, cpu_ids[ii], running[ii], blocked[ii], memfree,
+	      cpu_inter[ii], (ctxt * hz + divo22[0]) / divid[0], memfree, memfree, memfree, memfree, memfree,
+	      cpu_stats[ii][0], cpu_stats[ii][1], cpu_stats[ii][2], cpu_stats[ii][3]);
 
     }
   }
   free (cpuid);
   exit (EXIT_SUCCESS);
 }
-

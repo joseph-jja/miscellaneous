@@ -24,8 +24,7 @@ get_stats (char **cpuids, char **lines, unsigned *itot, unsigned *i1, unsigned *
   cpustatfile = fopen ("/proc/stat", "r");
   if (cpustatfile == NULL) {
     printf ("could not find /proc/cpustat!!!\n");
-  }
-  else {
+  } else {
     char buffer[BUFFER_SIZE + 1];
     while (!feof (cpustatfile)) {
       // read a line
@@ -34,11 +33,9 @@ get_stats (char **cpuids, char **lines, unsigned *itot, unsigned *i1, unsigned *
       if (cpu_idx < count && (strncmp (cpuids[cpu_idx], buffer, strlen (cpuids[cpu_idx])) == 0)) {
 	lines[cpu_idx] = strdup (buffer);
 	cpu_idx++;
-      }
-      else if (strncmp ("intr ", buffer, strlen ("intr ") == 0)) {
+      } else if (strncmp ("intr ", buffer, strlen ("intr ") == 0)) {
 	sscanf (buffer, "intr %u %u", itot, i1);
-      }
-      else if (strncmp ("ctxt ", buffer, strlen ("ctxt ") == 0)) {
+      } else if (strncmp ("ctxt ", buffer, strlen ("ctxt ") == 0)) {
 	sscanf (buffer, "ctxt %u", ct);
       }
     }

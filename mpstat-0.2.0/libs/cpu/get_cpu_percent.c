@@ -6,7 +6,8 @@
 #include "cpu.h"
 
 void
-get_cpu_percent (int cpu_ct, char **cpuids, float last[][4], float cpustats[][4], unsigned *itot, unsigned *i1, unsigned *ct)
+get_cpu_percent (int cpu_ct, char **cpuids, float last[][4], float cpustats[][4], unsigned *itot, unsigned *i1,
+		 unsigned *ct)
 {
 
   char *results[cpu_ct];
@@ -19,7 +20,8 @@ get_cpu_percent (int cpu_ct, char **cpuids, float last[][4], float cpustats[][4]
 
     sscanf (results[i] + strlen (cpuids[i]) + 1,
 	    "%f %f %f %f %f %f %f %f %f %f",
-	    &current[i][0], &current[i][1], &current[i][2], &current[i][3], &current[i][4], &current[i][5], &current[i][6], &current[i][7], &current[i][8], &current[i][9]);
+	    &current[i][0], &current[i][1], &current[i][2], &current[i][3], &current[i][4], &current[i][5],
+	    &current[i][6], &current[i][7], &current[i][8], &current[i][9]);
 
     float user = current[i][0] - last[i][0];
     float nice = current[i][1] - last[i][1];

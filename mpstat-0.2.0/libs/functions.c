@@ -41,5 +41,6 @@ void
 showheader (void)
 {
   printf ("%-5s %6s %6s %4s %8s %3s %4s %4s %4s %3s %5s %3s %3s %3s %3s\n",
-	  "cpuid", "majf", "minf", "xcal", "intr/ithr", "csw", "icsw", "migr", "smtx", "srw", "syscl", "us", "sy", "wt", "idl");
+	  "cpuid", "majf", "minf", "xcal", "intr/ithr", "csw", "icsw", "migr", "smtx", "srw", "syscl", "us", "sy", "wt",
+	  "idl");
 }

@@ -22,8 +22,7 @@ get_inter (unsigned inters[], int number_cpus)
   pFile = fopen ("/proc/interrupts", "r");
   if (pFile == NULL) {
     printf ("error file not found\n");
-  }
-  else {
+  } else {
     char *buffer, *tempbuffer;
     buffer = (char *) calloc (buffer_size + 1, sizeof (char));
     tempbuffer = (char *) calloc (12, sizeof (unsigned));
@@ -51,8 +50,7 @@ get_inter (unsigned inters[], int number_cpus)
 	      k = 1;
 	      tempbuffer[x] = idx[j];
 	      x++;
-	    }
-	    else {
+	    } else {
 	      k = 0;
 	      if (x > 0) {
 		unsigned num = strtoul (tempbuffer, NULL, 0);
