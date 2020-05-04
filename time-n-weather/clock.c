@@ -231,26 +231,47 @@ int main()
         }
         
 	initscr();	
-        //attron(A_BOLD);
-        //attron(A_STANDOUT);
+        initscr();
+        cbreak();
+        noecho();
+        curs_set(0);
+        attron(A_BOLD);
+        int i = 0;
+        if (has_colors() == TRUE) {
+            start_color();
+            init_pair(1, COLOR_RED, COLOR_BLACK);
+            init_pair(2, COLOR_WHITE, COLOR_BLACK);
+            init_pair(3, COLOR_CYAN, COLOR_BLACK);
+            init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+            init_pair(5, COLOR_GREEN, COLOR_BLACK);
+            init_pair(6, COLOR_BLUE, COLOR_BLACK);
+        }
         while (1) {
-            //int y, x;
-            //getyx(stdscr, y, x);
-            /*if (has_colors() == TRUE) {
-                start_color();	
-	        init_pair(1, COLOR_RED, COLOR_BLACK);
-                attron(COLOR_PAIR(1));
-            }*/
-	    //printw("Time %s", get_time());	
-            /*if (has_colors() == TRUE) {
-                attroff(COLOR_PAIR(1));
-            }*/
+            if (has_colors() == TRUE) {
+                if ( i == 0 ) {
+                    attron(COLOR_PAIR(1));
+                } else if ( i == 1 ) {
+                    attron(COLOR_PAIR(2));
+                } else if ( i == 2 ) {
+                    attron(COLOR_PAIR(3));
+                } else if ( i == 3 ) {
+                    attron(COLOR_PAIR(4));
+                } else if ( i == 4 ) {
+                    attron(COLOR_PAIR(5));
+                } else if ( i == 5 ) {
+                    attron(COLOR_PAIR(6));
+                } else {
+                    i = 0;
+                    attron(COLOR_PAIR(1));
+                }
+            }
             clear();
 	    get_time();
             read_in_file("/tmp/details.txt", 4, 8);       
             read_in_file("/tmp/hourly.txt", 34, 8);       
 	    refresh();		
             sleep(1);
+            i++;
         }
 	//getch();			/* Wait for user input */
 	endwin();		
