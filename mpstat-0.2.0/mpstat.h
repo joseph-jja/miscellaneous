@@ -19,7 +19,7 @@
 
 #define FALSE 0
 #define TRUE 1
-#define VERSION "Version: 0.2.0, last modified 30 Aug 2009: INCOMPLETE" 
+#define VERSION "Version: 0.2.0, last modified 4 April 2020: INCOMPLETE" 
 #define PROGNAME "mpstat"
 #define REQUIRES "modified for 2.6.28+ kernels."
 #define ONEBITE 1

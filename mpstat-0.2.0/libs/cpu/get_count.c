@@ -15,8 +15,7 @@ get_count ()
   cpuinfofile = fopen ("/proc/cpuinfo", "r");
   if (cpuinfofile == NULL) {
     printf ("could not find /proc/cpuinfo!!!\n");
-  }
-  else {
+  } else {
     char buffer[BUFFER_SIZE + 1];
     while (!feof (cpuinfofile)) {
       memset (buffer, '\0', BUFFER_SIZE + 1);
