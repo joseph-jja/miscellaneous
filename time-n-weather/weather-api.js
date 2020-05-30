@@ -1,78 +1,41 @@
 const baseDir = process.cwd();
 
-const request = require('https').request, 
-    fs = require('fs'),
+const fs = require('fs'),
     os = require('os');
 
-const API_HOSTNAME = 'api.weather.gov';
+const {
+    getOptions,
+    request
+} = require(`${baseDir}/node-libs/get`);
 
-const latitude = '37.7626',
-    longitude = '-122.4352';
+const latitude = '37.7464',
+    longitude = '-122.4442';
 
 const RELOAD = 1000 * 60 * 60;
 
-const USER_AGENT = `"Nozilla/1.0 (console; pios x86_64 ${process.version}) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/70.1.1`;
+const API_HOSTNAME = 'api.weather.gov',
+    DISCOVER_ENDPOINT = `/points/${latitude},${longitude}`;
 
-const DISCOVER_ENDPOINT = `/points/${latitude},${longitude}`;
-
-const options = {
-    hostname: API_HOSTNAME,
-    port: 443,
-    path: DISCOVER_ENDPOINT,
-    method: 'GET',
-    headers: {
-        'User-Agent': USER_AGENT
-    }
-};
-
-async function makeRequest(options) {
-
-    return new Promise((resolve, reject) => {
-
-        const req = request(options, (res) => {
-            //  console.log('statusCode:', res.statusCode);
-            //  console.log('headers:', res.headers);
-
-            const chunks = [];
-            res.on('data', (d) => {
-                chunks.push(d);
-            });
-
-            res.on('error', (e) => {
-                reject(e);
-            });
-            res.on('end', () => {
-                const results = JSON.parse(Buffer.concat(chunks));
-
-                resolve(results.properties);
-            });
-        });
-
-        req.on('error', (e) => {
-            reject(e);
-        });
-        req.end();
-    });
-}
+const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
 
 async function start() {
 
-    const props = await makeRequest(options);
-    //console.log(props);
+    const props = await request(options);
 
-    options.path = props.forecastHourly.split(API_HOSTNAME)[1];
-    const forecast = await makeRequest(options);
+    options.path = props.properties.forecastHourly.split(API_HOSTNAME)[1];
+    const forecast = await request(options);
+    //console.log(forecast);
 
-    let details = `Hourly: ${os.EOL}`; 
-    forecast.periods.filter((period, index) => {
+    let details = `Hourly: ${os.EOL}`;
+    forecast.properties.periods.filter((period, index) => {
         // 8 hours only 
-        return (index < 8); 
+        return (index < 8);
     }).forEach(period => {
         const startTime = period.startTime.split('T')[1].split('-')[0],
             endTime = period.endTime.split('T')[1].split('-')[0];
-        details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`; 
+        details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
     });
-    
+
     //console.log(details);
     fs.writeFile('/tmp/hourly.txt', details, (errx) => {
         // TODO handle error?
@@ -80,9 +43,6 @@ async function start() {
 }
 
 start();
-setInterval(() => { 
+setInterval(() => {
     start();
 }, RELOAD);
-
-
-
