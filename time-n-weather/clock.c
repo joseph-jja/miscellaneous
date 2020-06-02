@@ -267,8 +267,8 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 4, 8);       
-            read_in_file("/tmp/hourly.txt", 34, 8);       
+            read_in_file("/tmp/details.txt", 2, 8);       
+            read_in_file("/tmp/hourly.txt", 22, 8);       
 	    refresh();		
             sleep(1);
             i++;
