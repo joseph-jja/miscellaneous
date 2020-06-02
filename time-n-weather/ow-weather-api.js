@@ -43,7 +43,7 @@ async function start() {
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
 
-    const tempRange = `Low: ${tempMin} - High: ${tempMax}`;
+    const tempRange = `Low: ${tempMin}${os.EOL}High: ${tempMax}`;
     const humidity = `Humidity: ${main.humidity}%`;
     const cloudy = `Clouds: ${results.clouds['all'] || 0}%`;
     const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
