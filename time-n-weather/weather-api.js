@@ -53,7 +53,15 @@ async function start() {
     const err = await writeFile('/tmp/hourly.txt', details);
 }
 
-start();
-setInterval(() => {
+try {
     start();
+} catch (e) {
+    console.log(e);
+}
+setInterval(() => {
+    try {
+        start();
+    } catch (e) {
+        console.log(e);
+    }
 }, RELOAD);
