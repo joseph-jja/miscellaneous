@@ -35,9 +35,13 @@ async function request(options) {
                 reject(e);
             });
             res.on('end', () => {
-                const results = JSON.parse(Buffer.concat(chunks));
+                try {
+                    const results = JSON.parse(Buffer.concat(chunks));
 
-                resolve(results);
+                    resolve(results);
+                } catch (e) {
+                    reject(e);
+                }
             });
         });
 
