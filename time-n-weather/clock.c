@@ -214,19 +214,19 @@ int main()
         char *owweather = get_ow_weather_api();
         char *nodejsBin = get_nodejs_path();
 
-        // child process for open weather map
-        pid_t pID = fork();
-        char *owmap[] = { nodejsBin, owweather, NULL};
-        if ( pID == 0 ) {
-            execvp(owmap[0], owmap);
-            exit(0);
-        }
-        
         // child process for weather map
         pid_t wpID = fork();
         char *wmap[] = { nodejsBin, weather, NULL};
         if ( wpID == 0 ) {
             execvp(wmap[0], wmap);
+            exit(0);
+        }
+        
+        // child process for open weather map
+        pid_t pID = fork();
+        char *owmap[] = { nodejsBin, owweather, NULL};
+        if ( pID == 0 ) {
+            execvp(owmap[0], owmap);
             exit(0);
         }
         
