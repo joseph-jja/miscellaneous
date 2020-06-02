@@ -1,12 +1,17 @@
 const baseDir = process.cwd();
 
 const fs = require('fs'),
+    {
+        promisify
+    } = require('util'),
     os = require('os');
 
 const {
     getOptions,
     request
 } = require(`${baseDir}/node-libs/get`);
+
+const writeFile = promisify(fs.writeFile);
 
 const latitude = '37.7464',
     longitude = '-122.4442';
@@ -21,6 +26,14 @@ const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
 async function start() {
 
     const props = await request(options);
+
+    if (!props || !props.properties || !props.properties.forecastHourly) {
+        return;
+    }
+
+    if (props.properties.forecastHourly.indexOf(API_HOSTNAME) < 0) {
+        return;
+    }
 
     options.path = props.properties.forecastHourly.split(API_HOSTNAME)[1];
     const forecast = await request(options);
@@ -37,9 +50,7 @@ async function start() {
     });
 
     //console.log(details);
-    fs.writeFile('/tmp/hourly.txt', details, (errx) => {
-        // TODO handle error?
-    });
+    const err = await writeFile('/tmp/hourly.txt', details);
 }
 
 start();
