@@ -34,6 +34,7 @@ async function start() {
     if (props.properties.forecastHourly.indexOf(API_HOSTNAME) < 0) {
         return;
     }
+    await writeFile('/tmp/forecast.json', JSON.stringify(props));
 
     options.path = props.properties.forecastHourly.split(API_HOSTNAME)[1];
     const forecast = await request(options);
