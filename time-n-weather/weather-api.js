@@ -37,8 +37,12 @@ async function start() {
         if (props.properties.forecastHourly.indexOf(API_HOSTNAME) < 0) {
             return;
         }
-        options.path = props.properties.forecastHourly.split(API_HOSTNAME)[1];
-        const forecast = await request(options);
+
+        const newPath =  props.properties.forecastHourly.split(API_HOSTNAME)[1];
+        const foptions = Object.assign({}, options, {
+            path: newPath
+        });
+        const forecast = await request(foptions);
         await writeFile('/tmp/hourlyForecast.json', JSON.stringify(forecast));
 
         let details = `Hourly: ${os.EOL}`;
