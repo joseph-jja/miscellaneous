@@ -161,7 +161,7 @@ char *get_time() {
         writeNumber(22, 2, imin - (x * 10));
     }
 
-    move(4, 26);
+    move(5, 28);
     printw("%s", ampm);
 
     return asctime(localNow);
