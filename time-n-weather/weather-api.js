@@ -54,8 +54,8 @@ async function start() {
             // 4 hours only 
             return (index < 4);
         }).forEach(period => {
-            const startTime = period.startTime.split('T')[1].split('-')[0],
-                endTime = period.endTime.split('T')[1].split('-')[0];
+            const startTime = period.startTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, ''),
+                endTime = period.endTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, '');
             details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
         });
 
