@@ -140,28 +140,28 @@ char *get_time() {
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
-        writeNumber(4, 4, 0);
-        writeNumber(8, 4, ihours);
+        writeNumber(4, 3, 0);
+        writeNumber(8, 3, ihours);
     } else {
-        writeNumber(4, 4, 1);
-        writeNumber(8, 4, ihours - 10);
+        writeNumber(4, 3, 1);
+        writeNumber(8, 3, ihours - 10);
     }
 
-    move(5, 13);
+    move(4, 13);
     addch(ACS_BULLET);
-    move(6, 13);
+    move(5, 13);
     addch(ACS_BULLET);
 
     if (imin < 10) {
-        writeNumber(15, 4, 0);
-        writeNumber(19, 4, imin);
+        writeNumber(15, 3, 0);
+        writeNumber(19, 3, imin);
     } else {
         int x = imin / 10;
-        writeNumber(15, 4, x);
-        writeNumber(19, 4, imin - (x * 10));
+        writeNumber(15, 3, x);
+        writeNumber(19, 3, imin - (x * 10));
     }
 
-    move(6, 23);
+    move(5, 23);
     printw("%s", ampm);
 
     return asctime(localNow);
@@ -267,8 +267,8 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 2, 8);       
-            read_in_file("/tmp/hourly.txt", 22, 8);       
+            read_in_file("/tmp/details.txt", 2, 7);       
+            read_in_file("/tmp/hourly.txt", 22, 10);       
 	    refresh();		
             sleep(1);
             i++;

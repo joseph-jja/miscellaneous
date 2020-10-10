@@ -23,8 +23,7 @@ const RELOAD = 1000 * 60 * 60;
 
 
 function toFahrenheit(kelvin) {
-    const raw = (9 / 5 * kelvin - 459.67);
-    return `${(Math.round(raw * 10) / 10)}F`;
+    return `${Math.round(9 / 5 * kelvin - 459.67)}F`;
 }
 
 async function start() {
@@ -39,16 +38,21 @@ async function start() {
     const results = await request(options);
     const main = results.main;
 
+    const updateTime = new Date(), 
+        formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`, 
+        formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
+
+    const updated = `Last Updated: ${formattedDate} @ ${formattedTime}`;
     const temp = `Current: ${toFahrenheit(main.temp)}`;
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
 
-    const tempRange = `Low: ${tempMin}${os.EOL}High: ${tempMax}`;
+    const tempRange = `High/Low: ${tempMax}/${tempMin}`;
     const humidity = `Humidity: ${main.humidity}%`;
     const cloudy = `Clouds: ${results.clouds['all'] || 0}%`;
     const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
 
-    const data = `${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}${cloudy}${os.EOL}${rain}${os.EOL}`;
+    const data = `${updated}${os.EOL}${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}${cloudy}${os.EOL}${rain}${os.EOL}`;
 
     fs.writeFile('/tmp/details.txt', data, () => {});
     fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {});
