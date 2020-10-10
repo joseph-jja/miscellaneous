@@ -140,11 +140,11 @@ char *get_time() {
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
-        writeNumber(4, 3, 0);
-        writeNumber(8, 3, ihours);
+        writeNumber(4, 2, 0);
+        writeNumber(8, 2, ihours);
     } else {
-        writeNumber(4, 3, 1);
-        writeNumber(8, 3, ihours - 10);
+        writeNumber(4, 2, 1);
+        writeNumber(8, 2, ihours - 10);
     }
 
     move(4, 13);
@@ -153,15 +153,15 @@ char *get_time() {
     addch(ACS_BULLET);
 
     if (imin < 10) {
-        writeNumber(15, 3, 0);
-        writeNumber(19, 3, imin);
+        writeNumber(15, 2, 0);
+        writeNumber(19, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(15, 3, x);
-        writeNumber(19, 3, imin - (x * 10));
+        writeNumber(15, 2, x);
+        writeNumber(19, 2, imin - (x * 10));
     }
 
-    move(5, 23);
+    move(4, 23);
     printw("%s", ampm);
 
     return asctime(localNow);
