@@ -45,10 +45,14 @@ async function start() {
         const forecast = await request(foptions);
         await writeFile('/tmp/hourlyForecast.json', JSON.stringify(forecast));
 
-        let details = `Hourly: ${os.EOL}`;
+        const updateTime = new Date(), 
+            formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`,
+            formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
+        let details = `Last Updated ${formattedDate} @ ${formattedTime} ${os.EOL}`;
+        details += `Hourly: ${os.EOL}`;
         forecast.properties.periods.filter((period, index) => {
-            // 8 hours only 
-            return (index < 8);
+            // 4 hours only 
+            return (index < 4);
         }).forEach(period => {
             const startTime = period.startTime.split('T')[1].split('-')[0],
                 endTime = period.endTime.split('T')[1].split('-')[0];
