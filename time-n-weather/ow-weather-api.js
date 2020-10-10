@@ -43,16 +43,16 @@ async function start() {
         formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
 
     const updated = `Last Updated: ${formattedDate} @ ${formattedTime}`;
-    const temp = `Current: ${toFahrenheit(main.temp)}`;
+    const temp = `Current:  ${toFahrenheit(main.temp)}`;
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
 
     const tempRange = `High/Low: ${tempMax}/${tempMin}`;
     const humidity = `Humidity: ${main.humidity}%`;
-    const cloudy = `Clouds: ${results.clouds['all'] || 0}%`;
+    const cloudy = `Clouds:   ${results.clouds['all'] || 0}%`;
     const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
 
-    const data = `${temp}    ${tempRange}${os.EOL}${humidity}    ${cloudy}    ${rain}${os.EOL}${updated}`;
+    const data = `${temp}    ${tempRange}${os.EOL}${humidity}    ${cloudy}     ${rain}${os.EOL}${updated}`;
 
     fs.writeFile('/tmp/details.txt', data, () => {});
     fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {});
