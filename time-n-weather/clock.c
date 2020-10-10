@@ -141,27 +141,27 @@ char *get_time() {
 
     if (ihours < 10) {
         writeNumber(4, 2, 0);
-        writeNumber(8, 2, ihours);
+        writeNumber(10, 2, ihours);
     } else {
         writeNumber(4, 2, 1);
-        writeNumber(8, 2, ihours - 10);
+        writeNumber(10, 2, ihours - 10);
     }
 
-    move(4, 13);
+    move(4, 15);
     addch(ACS_BULLET);
-    move(5, 13);
+    move(5, 15);
     addch(ACS_BULLET);
 
     if (imin < 10) {
-        writeNumber(15, 2, 0);
-        writeNumber(19, 2, imin);
+        writeNumber(16, 2, 0);
+        writeNumber(22, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(15, 2, x);
-        writeNumber(19, 2, imin - (x * 10));
+        writeNumber(16, 2, x);
+        writeNumber(22, 2, imin - (x * 10));
     }
 
-    move(4, 23);
+    move(4, 26);
     printw("%s", ampm);
 
     return asctime(localNow);
