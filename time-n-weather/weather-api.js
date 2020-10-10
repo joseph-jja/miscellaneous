@@ -48,8 +48,7 @@ async function start() {
         const updateTime = new Date(), 
             formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`,
             formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
-        let details = `Last Updated: ${formattedDate} @ ${formattedTime} ${os.EOL}`;
-        details += `Hourly: ${os.EOL}`;
+        let details = `Hourly: ${os.EOL}`;
         forecast.properties.periods.filter((period, index) => {
             // 4 hours only 
             return (index < 4);
@@ -58,6 +57,7 @@ async function start() {
                 endTime = period.endTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, '');
             details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
         });
+        details += `Last Updated: ${formattedDate} @ ${formattedTime}`;
 
         //console.log(details);
         const err = await writeFile('/tmp/hourly.txt', details);

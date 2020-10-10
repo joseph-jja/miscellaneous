@@ -52,7 +52,7 @@ async function start() {
     const cloudy = `Clouds: ${results.clouds['all'] || 0}%`;
     const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
 
-    const data = `${updated}${os.EOL}${temp}${os.EOL}${tempRange}${os.EOL}${humidity}${os.EOL}${cloudy}${os.EOL}${rain}${os.EOL}`;
+    const data = `${temp}    ${tempRange}${os.EOL}${humidity}    ${cloudy}    ${rain}${os.EOL}${updated}`;
 
     fs.writeFile('/tmp/details.txt', data, () => {});
     fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {});
