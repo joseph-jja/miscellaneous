@@ -48,7 +48,7 @@ async function start() {
         const updateTime = new Date(), 
             formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`,
             formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
-        let details = `Last Updated ${formattedDate} @ ${formattedTime} ${os.EOL}`;
+        let details = `Last Updated: ${formattedDate} @ ${formattedTime} ${os.EOL}`;
         details += `Hourly: ${os.EOL}`;
         forecast.properties.periods.filter((period, index) => {
             // 4 hours only 
