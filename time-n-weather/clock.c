@@ -22,7 +22,7 @@ static char *days[7];
 static char *months[12];
 
 void setupDays() {
-   
+
     days[0] = "Sunday";
     days[1] = "Monday";
     days[2] = "Tuesday";
@@ -50,44 +50,44 @@ void setupMonths() {
 void writeNumber(int x, int y, int num) {
 
     switch(num) {
-        case 0: 
+        case 0:
              writeZero(x, y);
             break;
-        case 1: 
+        case 1:
              writeOne(x, y);
             break;
-        case 2: 
+        case 2:
              writeTwo(x, y);
             break;
-        case 3: 
+        case 3:
              writeThree(x, y);
             break;
-        case 4: 
+        case 4:
              writeFour(x, y);
             break;
-        case 5: 
+        case 5:
              writeFive(x, y);
             break;
-        case 6: 
+        case 6:
              writeSix(x, y);
             break;
-        case 7: 
+        case 7:
              writeSeven(x, y);
             break;
-        case 8: 
+        case 8:
              writeEight(x, y);
             break;
-        case 9: 
+        case 9:
              writeNine(x, y);
             break;
-        default: 
+        default:
             break;
     }
 }
 
 char *get_nodejs_path() {
-     
-    if (getenv("CLOCK_NODEJS_BIN")) { 
+
+    if (getenv("CLOCK_NODEJS_BIN")) {
         printf("Try setting CLOCK_NODEJS_BIN if node.js is not in your path\n");
         sleep(5);
         return getenv("CLOCK_NODEJS_BIN");
@@ -97,8 +97,8 @@ char *get_nodejs_path() {
 }
 
 char *get_weather_api() {
-   
-    char *pwd = getenv("PWD"); 
+
+    char *pwd = getenv("PWD");
     int wsize = strlen(pwd) + WEATHER_MAP_LEN + 1;
     char *weather = malloc(wsize);
     memset(weather, '\0', wsize);
@@ -107,7 +107,7 @@ char *get_weather_api() {
 }
 
 char *get_ow_weather_api() {
-    char *pwd = getenv("PWD"); 
+    char *pwd = getenv("PWD");
     int wsize = strlen(pwd) + OPEN_WEATHER_MAP_LEN + 1;
     char *weather = malloc(wsize);
     memset(weather, '\0', wsize);
@@ -147,21 +147,21 @@ char *get_time() {
         writeNumber(10, 2, ihours - 10);
     }
 
-    move(4, 15);
+    move(4, 16);
     addch(ACS_BULLET);
-    move(5, 15);
+    move(5, 16);
     addch(ACS_BULLET);
 
     if (imin < 10) {
-        writeNumber(16, 2, 0);
-        writeNumber(22, 2, imin);
+        writeNumber(18, 2, 0);
+        writeNumber(24, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(16, 2, x);
-        writeNumber(22, 2, imin - (x * 10));
+        writeNumber(18, 2, x);
+        writeNumber(24, 2, imin - (x * 10));
     }
 
-    move(5, 28);
+    move(5, 30);
     printw("%s", ampm);
 
     return asctime(localNow);
@@ -180,15 +180,15 @@ long stat_file(char *filename) {
 void read_in_file(char *filename, long x, long y) {
 
      long readSize = stat_file(filename) + 1;
-     if (readSize <= 0) { 
+     if (readSize <= 0) {
         return;
      }
-     
+
      FILE *pFile;
 
      long posy = y;
      if ((pFile = fopen(filename, "r")) != NULL) {
-         char *buffer = (char *)malloc(readSize); 
+         char *buffer = (char *)malloc(readSize);
          if (buffer == NULL) {
              return;
          }
@@ -202,11 +202,11 @@ void read_in_file(char *filename, long x, long y) {
          free(buffer);
 
          fclose(pFile);
-     } 
+     }
 }
 
 int main()
-{	
+{
         setupDays();
         setupMonths();
 
@@ -221,7 +221,7 @@ int main()
             execvp(wmap[0], wmap);
             exit(0);
         }
-        
+
         // child process for open weather map
         pid_t pID = fork();
         char *owmap[] = { nodejsBin, owweather, NULL};
@@ -229,8 +229,8 @@ int main()
             execvp(owmap[0], owmap);
             exit(0);
         }
-        
-	initscr();	
+
+	initscr();
         initscr();
         cbreak();
         noecho();
@@ -267,14 +267,14 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 6, 8);       
-            read_in_file("/tmp/hourly.txt", 10, 12);       
-	    refresh();		
+            read_in_file("/tmp/details.txt", 6, 8);
+            read_in_file("/tmp/hourly.txt", 10, 12);
+	    refresh();
             sleep(1);
             i++;
         }
 	//getch();			/* Wait for user input */
-	endwin();		
+	endwin();
 
 	return 0;
 }
