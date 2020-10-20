@@ -9,7 +9,10 @@ const os = require('os'),
 const {
     getOptions,
     request
-} = require(`${baseDir}/node-libs/get`);
+} = require(`${baseDir}/node-libs/get`), {
+    formatTime,
+    formatDate
+} = require(`${baseDir}/node-libs/format.js`);
 
 const readFile = promisify(fs.readFile);
 
@@ -38,9 +41,9 @@ async function start() {
     const results = await request(options);
     const main = results.main;
 
-    const updateTime = new Date(), 
-        formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`, 
-        formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
+    const updateTime = new Date(),
+        formattedDate = formatDate(updateTime),
+        formattedTime = formatTime(updateTime);
 
     const updated = `Last Updated: ${formattedDate} @ ${formattedTime}`;
     const temp = `Current:  ${toFahrenheit(main.temp)}`;

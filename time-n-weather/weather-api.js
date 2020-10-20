@@ -9,7 +9,10 @@ const fs = require('fs'),
 const {
     getOptions,
     request
-} = require(`${baseDir}/node-libs/get`);
+} = require(`${baseDir}/node-libs/get`), {
+    formatTime,
+    formatDate
+} = require(`${baseDir}/node-libs/format.js`);
 
 const writeFile = promisify(fs.writeFile);
 
@@ -38,19 +41,19 @@ async function start() {
             return;
         }
 
-        const newPath =  props.properties.forecastHourly.split(API_HOSTNAME)[1];
+        const newPath = props.properties.forecastHourly.split(API_HOSTNAME)[1];
         const foptions = Object.assign({}, options, {
             path: newPath
         });
         const forecast = await request(foptions);
         await writeFile('/tmp/hourlyForecast.json', JSON.stringify(forecast));
 
-        const updateTime = new Date(), 
-            formattedDate = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`,
-            formattedTime = `${updateTime.getHours()}:${updateTime.getMinutes() + 1}`;
+        const updateTime = new Date(),
+            formattedDate = formatDate(updateTime),
+            formattedTime = formatTime(updateTime);
         let details = `Hourly: ${os.EOL}`;
         forecast.properties.periods.filter((period, index) => {
-            // 4 hours only 
+            // 4 hours only
             return (index < 4);
         }).forEach(period => {
             const startTime = period.startTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, ''),
