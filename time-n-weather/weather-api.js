@@ -49,7 +49,7 @@ async function start() {
     const foptions = Object.assign({}, options, {
         path: newPath
     });
-    const [ferr, forcast] = await asyncwrapper(request(foptions));
+    const [ferr, forecast] = await asyncwrapper(request(foptions));
     if (ferr) {
         return;
     }
