@@ -6,13 +6,15 @@ const os = require('os'),
         promisify
     } = require('util');
 
-const {
-    getOptions,
-    request
-} = require(`${baseDir}/node-libs/get`), {
-    formatTime,
-    formatDate
-} = require(`${baseDir}/node-libs/format.js`);
+const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
+    {
+        getOptions,
+        request
+    } = require(`${baseDir}/node-libs/get`),
+    {
+        formatTime,
+        formatDate
+    } = require(`${baseDir}/node-libs/format.js`);
 
 const readFile = promisify(fs.readFile);
 
@@ -38,7 +40,10 @@ async function start() {
     const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
     options.path += `&APPID=${key}`;
 
-    const results = await request(options);
+    const [rerr, results] = await asyncwrapper(request(options));
+    if (rerr) {
+        return;
+    }
     const main = results.main;
 
     const updateTime = new Date(),
