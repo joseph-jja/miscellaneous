@@ -6,13 +6,15 @@ const fs = require('fs'),
     } = require('util'),
     os = require('os');
 
-const {
-    getOptions,
-    request
-} = require(`${baseDir}/node-libs/get`), {
-    formatTime,
-    formatDate
-} = require(`${baseDir}/node-libs/format.js`);
+const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
+    {
+        getOptions,
+        request
+    } = require(`${baseDir}/node-libs/get`),
+    {
+        formatTime,
+        formatDate
+    } = require(`${baseDir}/node-libs/format.js`);
 
 const writeFile = promisify(fs.writeFile);
 
@@ -28,45 +30,47 @@ const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
 
 async function start() {
 
-    try {
-        const props = await request(options);
-
-        await writeFile('/tmp/forecast.json', JSON.stringify(props));
-
-        if (!props || !props.properties || !props.properties.forecastHourly) {
-            return;
-        }
-
-        if (props.properties.forecastHourly.indexOf(API_HOSTNAME) < 0) {
-            return;
-        }
-
-        const newPath = props.properties.forecastHourly.split(API_HOSTNAME)[1];
-        const foptions = Object.assign({}, options, {
-            path: newPath
-        });
-        const forecast = await request(foptions);
-        await writeFile('/tmp/hourlyForecast.json', JSON.stringify(forecast));
-
-        const updateTime = new Date(),
-            formattedDate = formatDate(updateTime),
-            formattedTime = formatTime(updateTime);
-        let details = `Hourly: ${os.EOL}`;
-        forecast.properties.periods.filter((period, index) => {
-            // 4 hours only
-            return (index < 4);
-        }).forEach(period => {
-            const startTime = period.startTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, ''),
-                endTime = period.endTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, '');
-            details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
-        });
-        details += `Last Updated: ${formattedDate} @ ${formattedTime}`;
-
-        //console.log(details);
-        const err = await writeFile('/tmp/hourly.txt', details);
-    } catch (e) {
-        console.log(e);
+    const [rerr, props] = await asyncwrapper(request(options));
+    if (rerr) {
+        return;
     }
+
+    await writeFile('/tmp/forecast.json', JSON.stringify(props));
+
+    if (!props || !props.properties || !props.properties.forecastHourly) {
+        return;
+    }
+
+    if (props.properties.forecastHourly.indexOf(API_HOSTNAME) < 0) {
+        return;
+    }
+
+    const newPath = props.properties.forecastHourly.split(API_HOSTNAME)[1];
+    const foptions = Object.assign({}, options, {
+        path: newPath
+    });
+    const [ferr, forcast] = await asyncwrapper(request(foptions));
+    if (ferr) {
+        return;
+    }
+    await writeFile('/tmp/hourlyForecast.json', JSON.stringify(forecast));
+
+    const updateTime = new Date(),
+        formattedDate = formatDate(updateTime),
+        formattedTime = formatTime(updateTime);
+    let details = `Hourly: ${os.EOL}`;
+    forecast.properties.periods.filter((period, index) => {
+        // 4 hours only
+        return (index < 4);
+    }).forEach(period => {
+        const startTime = period.startTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, ''),
+            endTime = period.endTime.split('T')[1].split('-')[0].replace(/\:\d\d$/, '');
+        details += `  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
+    });
+    details += `Last Updated: ${formattedDate} @ ${formattedTime}`;
+
+    //console.log(details);
+    const err = await writeFile('/tmp/hourly.txt', details);
 }
 
 start();
