@@ -14,7 +14,7 @@ void writeZero(int x, int y) {
     int xp = x;
     int yp = y;
     
-    int i, j;
+    int i;
     
     move(yp, xp);
 
@@ -28,14 +28,12 @@ void writeZero(int x, int y) {
     move(yp, xp);
     addch(ACS_URCORNER);
 
-    for ( j = 0; j < height; j++ ) {
+    for ( i = 0; i < height; i++ ) {
         xp = x;
         yp++;
         move(yp, xp);
         addch(ACS_VLINE);
-        for ( i = 0; i < width; i++ ) {
-            xp++;
-        }
+        xp += width;
         xp++;
         move(yp, xp);
         addch(ACS_VLINE);
@@ -64,7 +62,7 @@ void writeOne(int x, int y) {
     int xp = x;
     int yp = y;
     
-    int j;
+    int i;
 
     move(yp, xp);
 
@@ -72,7 +70,7 @@ void writeOne(int x, int y) {
     move(yp, xp);
     addch(ACS_URCORNER);
 
-    for ( j = 0; j < height; j++ ) {
+    for ( i = 0; i < height; i++ ) {
         xp = x;
         yp++;
         xp += width;
@@ -408,57 +406,38 @@ void writeSix(int x, int y) {
 
 void writeSeven(int x, int y) {
 
+    int width = NUMBER_WIDTH - 2;
+    int height = NUMBER_HEIGHT - 2;
+
     int xp = x;
     int yp = y;
+    
+    int i;
 
     move(yp, xp);
 
     addch(ACS_ULCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_URCORNER);
 
     xp = x;
-    yp++;
+    xp += width;
     xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
+    for ( i = 0; i < height; i++ ) {
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
 
     xp = x;
     yp++;
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    xp++;
-    xp++;
-    xp++;
+    xp += width;
     xp++;
     move(yp, xp);
     addch(ACS_BTEE);
