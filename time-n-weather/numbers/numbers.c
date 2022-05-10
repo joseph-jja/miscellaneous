@@ -297,7 +297,7 @@ void writeFive(int x, int y) {
     }
     xp++;
     move(yp, xp);
-    addch(ACS_HLINE);
+    addch(ACS_URCORNER);
 
     for ( i =0; i < height; i++ ) {
         xp = x;
@@ -331,7 +331,7 @@ void writeFive(int x, int y) {
     xp = x;
     yp++;
     move(yp, xp);
-    addch(ACS_HLINE);
+    addch(ACS_LLCORNER);
     for ( i =0; i < width; i++ ) {
         xp++;
         move(yp, xp);
