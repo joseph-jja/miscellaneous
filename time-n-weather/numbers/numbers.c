@@ -451,7 +451,7 @@ void writeSeven(int x, int y) {
 void writeEight(int x, int y) {
 
     int width = NUMBER_WIDTH - 2;
-    int height = NUMBER_HEIGHT - 2;
+    int height = (NUMBER_HEIGHT - 3) / 2;
 
     int xp = x;
     int yp = y;
