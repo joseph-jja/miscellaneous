@@ -2,6 +2,7 @@
 
 #include "numbers.h"
 
+// height should be odd number like 5 7 for numbers like 2 and 3
 #define NUMBER_WIDTH 5
 #define NUMBER_HEIGHT 5
 
@@ -88,69 +89,65 @@ void writeOne(int x, int y) {
 
 void writeTwo(int x, int y) {
 
+    int width = NUMBER_WIDTH - 2;
+    int height = (NUMBER_HEIGHT - 3) / 2;
+    
     int xp = x;
     int yp = y;
+    
+    int i;
 
     move(yp, xp);
 
     addch(ACS_ULCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_URCORNER);
 
+    
     xp = x;
-    yp++;
+    xp += width;
     xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
+    for ( i = 0; i < height; i++ ) {
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
+    
     xp = x;
     yp++;
     move(yp, xp);
     addch(ACS_ULCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_LRCORNER);
 
     xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
+    for ( i = 0; i < height; i++ ) {
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
 
     xp = x;
     yp++;
     move(yp, xp);
-    addch(ACS_LLCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    addch(ACS_LLCORNER);   
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_LRCORNER);
