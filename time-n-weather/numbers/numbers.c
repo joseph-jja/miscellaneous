@@ -2,11 +2,19 @@
 
 #include "numbers.h"
 
+#define NUMBER_WIDTH 5
+#define NUMBER_HEIGHT 5
+
 void writeZero(int x, int y) {
+
+    int width = NUMBER_WIDTH - 2;
+    int height = NUMBER_HEIGHT - 2;
 
     int xp = x;
     int yp = y;
-
+    
+    int i, j;
+    
     move(yp, xp);
 
     addch(ACS_ULCORNER);
