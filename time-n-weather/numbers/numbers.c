@@ -161,6 +161,8 @@ void writeThree(int x, int y) {
     int xp = x;
     int yp = y;
 
+    int i;
+    
     move(yp, xp);
 
     addch(ACS_HLINE);
