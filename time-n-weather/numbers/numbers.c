@@ -18,15 +18,11 @@ void writeZero(int x, int y) {
     move(yp, xp);
 
     addch(ACS_ULCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+       xp++;
+       move(yp, xp);
+       addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_URCORNER);
