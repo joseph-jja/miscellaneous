@@ -332,7 +332,7 @@ void writeFive(int x, int y) {
     
     xp = x;
     yp++;
-        for ( i =0; i < width; i++ ) {
+    for ( i =0; i < width; i++ ) {
         xp++;
         move(yp, xp);
         addch(ACS_HLINE);
@@ -344,68 +344,63 @@ void writeFive(int x, int y) {
 
 void writeSix(int x, int y) {
 
+    int width = NUMBER_WIDTH - 2;
+    int height = (NUMBER_HEIGHT - 3) / 2;
+    
     int xp = x;
     int yp = y;
+    
+    int i;
 
     move(yp, xp);
 
     addch(ACS_ULCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i =0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
 
-    xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
+    for ( i =0; i < height; i++ ) {
+        xp = x;
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
+    
     xp = x;
     yp++;
     move(yp, xp);
     addch(ACS_LTEE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i =0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_URCORNER);
 
-    xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
+    for ( i =0; i < height; i++ ) {
+        xp = x;
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+        xp += width;
+        xp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
+    
     xp = x;
     yp++;
     move(yp, xp);
     addch(ACS_LLCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i =0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_LRCORNER);
