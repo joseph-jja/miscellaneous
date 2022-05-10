@@ -155,70 +155,64 @@ void writeTwo(int x, int y) {
 
 void writeThree(int x, int y) {
 
+    int width = NUMBER_WIDTH - 2;
+    int height = (NUMBER_HEIGHT - 3) / 2;
+
     int xp = x;
     int yp = y;
 
     move(yp, xp);
 
     addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_URCORNER);
 
     xp = x;
-    yp++;
+    xp += width;
     xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
+    for ( i = 0; i < height; i++ ) {
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
+    
     xp = x;
     yp++;
     move(yp, xp);
     xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width - 1; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_RTEE);
 
     xp = x;
-    yp++;
+    xp += width;
     xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
+    for ( i = 0; i < height; i++ ) {
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
 
     xp = x;
     yp++;
     move(yp, xp);
     addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_LRCORNER);
