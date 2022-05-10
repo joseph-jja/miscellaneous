@@ -207,7 +207,7 @@ void writeThree(int x, int y) {
     xp = x;
     yp++;
     move(yp, xp);
-    addch(ACS_HLINE);
+    addch(ACS_LRCORNER);
     for ( i = 0; i < width; i++ ) {
         xp++;
         move(yp, xp);
@@ -360,6 +360,9 @@ void writeSix(int x, int y) {
         move(yp, xp);
         addch(ACS_HLINE);
     }
+    xp++;
+    move(yp, xp);
+    addch(ACS_URCORNER);
 
     for ( i =0; i < height; i++ ) {
         xp = x;
