@@ -57,46 +57,29 @@ void writeZero(int x, int y) {
 
 void writeOne(int x, int y) {
 
+    int width = NUMBER_WIDTH - 2;
+    int height = NUMBER_HEIGHT - 2;
+
     int xp = x;
     int yp = y;
 
     move(yp, xp);
 
-    xp++;
-    xp++;
-    xp++;
+    xp += width;
     move(yp, xp);
     addch(ACS_URCORNER);
 
+    for ( j = 0; j < height; j++ ) {
+        xp = x;
+        yp++;
+        xp += width;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    }
+    
     xp = x;
     yp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    xp++;
-    xp++;
-    xp++;
+    xp += width;
     move(yp, xp);
     addch(ACS_BTEE);
 }
