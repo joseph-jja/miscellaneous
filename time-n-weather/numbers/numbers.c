@@ -27,52 +27,29 @@ void writeZero(int x, int y) {
     move(yp, xp);
     addch(ACS_URCORNER);
 
-    xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-
-    xp = x;
-    yp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
-    xp++;
-    xp++;
-    xp++;
-    xp++;
-    move(yp, xp);
-    addch(ACS_VLINE);
+    for ( j = 0; j < height; j++ ) {
+        xp = x;
+        yp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+        for ( i = 0; i < width; i++ ) {
+            xp++;
+        }
+        xp++;
+        move(yp, xp);
+        addch(ACS_VLINE);
+    
+    }
 
     xp = x;
     yp++;
     move(yp, xp);
     addch(ACS_LLCORNER);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
-    xp++;
-    move(yp, xp);
-    addch(ACS_HLINE);
+    for ( i = 0; i < width; i++ ) {
+        xp++;
+        move(yp, xp);
+        addch(ACS_HLINE);
+    }
     xp++;
     move(yp, xp);
     addch(ACS_LRCORNER);
