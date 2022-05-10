@@ -62,6 +62,8 @@ void writeOne(int x, int y) {
 
     int xp = x;
     int yp = y;
+    
+    int j;
 
     move(yp, xp);
 
