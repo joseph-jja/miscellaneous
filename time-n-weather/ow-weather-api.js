@@ -57,7 +57,7 @@ async function start() {
                 return (i.family.toLowerCase() === 'ipv4');
             });
             if (addr && addr.length > 0) {
-                ipaddr = addr.map(a => a.address)[0];
+                ipaddr = addr.map(a => a.address)[0].split(/\./)[3];
             }
         }
     });
@@ -66,7 +66,7 @@ async function start() {
         formattedDate = formatDate(updateTime),
         formattedTime = formatTime(updateTime);
 
-    const updated = `Last Updated: ${formattedDate} @ ${formattedTime} on ${hostname}/${ipaddr}`;
+    const updated = `Last Updated: ${formattedDate} @ ${formattedTime} on ${hostname}-${ipaddr}`;
     const temp = `Current:  ${toFahrenheit(main.temp)}`;
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
