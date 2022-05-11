@@ -161,7 +161,7 @@ char *get_time() {
         writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin - (x * 10));
     }
 
-    move(2, 4 + (4 * CLOCK_FONT_WIDTH) + 4);
+    move(3, 4 + (4 * CLOCK_FONT_WIDTH) + 5);
     printw("%s", ampm);
 
     return asctime(localNow);
@@ -267,8 +267,8 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 38, 12);
-            read_in_file("/tmp/hourly.txt", 42, 4);
+            read_in_file("/tmp/details.txt", 4 + (4 * CLOCK_FONT_WIDTH) + 6, 12);
+            read_in_file("/tmp/hourly.txt", 4 + (4 * CLOCK_FONT_WIDTH) + 8, 4);
 	    refresh();
             sleep(1);
             i++;
