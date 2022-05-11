@@ -267,8 +267,8 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 4 + (4 * CLOCK_FONT_WIDTH) + 6, 12);
-            read_in_file("/tmp/hourly.txt", 4 + CLOCK_FONT_WIDTH + 2, 4 + CLOCK_FONT_HEIGHT);
+            read_in_file("/tmp/details.txt", 4 + CLOCK_FONT_WIDTH + 2, 4 + CLOCK_FONT_HEIGHT);
+            read_in_file("/tmp/hourly.txt", 4 + (4 * CLOCK_FONT_WIDTH) + 6, 12);
 	    refresh();
             sleep(1);
             i++;
