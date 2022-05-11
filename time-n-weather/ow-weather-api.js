@@ -46,12 +46,27 @@ async function start() {
         return;
     }
     const main = results.main;
+    
+    const ifaces = os.networkInterfaces();
+    
+    let ipaddr = '0.0.0.0';
+    Object.keys(ifaces).forEach(iface => {
+        // skip loopback
+        if (iface !== 'lo' ) { 
+            const addr = ifaces[iface].filter(i => {
+                return (i.family.toLowerCase() === 'ipv4');
+            });
+            if (addr && arr.length > 0) {
+                ipaddr = addr.map(a => return a.address)[0];
+            }
+        }
+    });
 
     const updateTime = new Date(),
         formattedDate = formatDate(updateTime),
         formattedTime = formatTime(updateTime);
 
-    const updated = `Last Updated: ${formattedDate} @ ${formattedTime} on ${hostname}`;
+    const updated = `Last Updated: ${formattedDate} @ ${formattedTime} on ${hostname}/${ipaddr}`;
     const temp = `Current:  ${toFahrenheit(main.temp)}`;
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
