@@ -57,7 +57,7 @@ async function start() {
                 return (i.family.toLowerCase() === 'ipv4');
             });
             if (addr && arr.length > 0) {
-                ipaddr = addr.map(a => return a.address)[0];
+                ipaddr = addr.map(a => a.address)[0];
             }
         }
     });
