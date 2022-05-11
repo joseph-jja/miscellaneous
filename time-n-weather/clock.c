@@ -146,10 +146,10 @@ char *get_time() {
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
-        writeNumber(4 + LEFT_NUMBER_OFFSET, 2, 0);
+        writeNumber(4, 2, 0);
         writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours);
     } else {
-        writeNumber(4 + LEFT_NUMBER_OFFSET, 2, 1);
+        writeNumber(4, 2, 1);
         writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours - 10);
     }
 
