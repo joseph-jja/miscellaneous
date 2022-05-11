@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "js-beautify": "^1.11.0"
+    "js-beautify": "1.14.3"
   }
 }
