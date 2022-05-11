@@ -20,7 +20,11 @@
 
 #ifdef CLOCK_FONT_WIDTH
 #define LEFT_NUMBER_OFFSET (CLOCK_FONT_WIDTH - 6)
+#define LEFT_NUMBER_OFFSET_M (LEFT_NUMBER_OFFSET + 1)
+#define LEFT_NUMBER_OFFSET_MM (LEFT_NUMBER_OFFSET + 2)
 #elif
+#define LEFT_NUMBER_OFFSET_M 0
+#define LEFT_NUMBER_OFFSET_MM 0
 #define LEFT_NUMBER_OFFSET 0 
 #endif
 
@@ -159,12 +163,12 @@ char *get_time() {
     addch(ACS_CKBOARD);
 
     if (imin < 10) {
-        writeNumber(18 + LEFT_NUMBER_OFFSET, 2, 0);
-        writeNumber(24 + LEFT_NUMBER_OFFSET, 2, imin);
+        writeNumber(18 + LEFT_NUMBER_OFFSET_M, 2, 0);
+        writeNumber(24 + LEFT_NUMBER_OFFSET_MM, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(18 + LEFT_NUMBER_OFFSET, 2, x);
-        writeNumber(24 + LEFT_NUMBER_OFFSET, 2, imin - (x * 10));
+        writeNumber(18 + LEFT_NUMBER_OFFSET_M, 2, x);
+        writeNumber(24 + LEFT_NUMBER_OFFSET_MM, 2, imin - (x * 10));
     }
 
     move(4, 29);
