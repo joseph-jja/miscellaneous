@@ -8,7 +8,7 @@
 #endif
 
 #ifndef CLOCK_FONT_HEIGHT
-#define CLOCK_FONT_HEIGHT 5   
+#define CLOCK_FONT_HEIGHT 7  
 #endif
 
 void writeZero(int x, int y) {
