@@ -147,9 +147,9 @@ char *get_time() {
         writeNumber(4 + CLOCK_FONT_WIDTH + 1, 2, ihours - 10);
     }
 
-    move(3, 4 + (2 * CLOCK_FONT_WIDTH) + 2);
+    move(3, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
     addch(ACS_CKBOARD);
-    move(5, 4 + (2 * CLOCK_FONT_WIDTH) + 2);
+    move(5, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
     addch(ACS_CKBOARD);
 	
     if (imin < 10) {
@@ -161,7 +161,7 @@ char *get_time() {
         writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin - (x * 10));
     }
 
-    move(4, 29);
+    move(4, 4 + (3 * CLOCK_FONT_WIDTH) + 4);
     printw("%s", ampm);
 
     return asctime(localNow);
