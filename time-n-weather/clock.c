@@ -148,9 +148,9 @@ char *get_time() {
     }
 
     int height = (CLOCK_FONT_HEIGHT - 3) / 2 - 1;
-    move(2 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
+    move(3 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
     addch(ACS_CKBOARD);
-    move(4 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
+    move(5 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
     addch(ACS_CKBOARD);
 	
     if (imin < 10) {
