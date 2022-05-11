@@ -2,15 +2,6 @@
 
 #include "numbers.h"
 
-// height should be odd number like 5 7 for numbers like 2 and 3
-#ifndef CLOCK_FONT_WIDTH
-#define CLOCK_FONT_WIDTH 5
-#endif
-
-#ifndef CLOCK_FONT_HEIGHT
-#define CLOCK_FONT_HEIGHT 7  
-#endif
-
 void writeZero(int x, int y) {
 
     int width = CLOCK_FONT_WIDTH - 2;
