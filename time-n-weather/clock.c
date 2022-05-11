@@ -18,16 +18,6 @@
 #define OPEN_WEATHER_MAP "/ow-weather-api.js"
 #define OPEN_WEATHER_MAP_LEN strlen(OPEN_WEATHER_MAP)
 
-#ifdef CLOCK_FONT_WIDTH
-#define LEFT_NUMBER_OFFSET (CLOCK_FONT_WIDTH - 6)
-#define LEFT_NUMBER_OFFSET_M (LEFT_NUMBER_OFFSET + 1)
-#define LEFT_NUMBER_OFFSET_MM (LEFT_NUMBER_OFFSET + 2)
-#else
-#define LEFT_NUMBER_OFFSET_M 0
-#define LEFT_NUMBER_OFFSET_MM 0
-#define LEFT_NUMBER_OFFSET 0 
-#endif
-
 static char *days[7];
 static char *months[12];
 
@@ -151,24 +141,25 @@ char *get_time() {
 
     if (ihours < 10) {
         writeNumber(4, 2, 0);
-        writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours);
+        writeNumber(4 + CLOCK_FONT_WIDTH + 1, 2, ihours);
     } else {
         writeNumber(4, 2, 1);
-        writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours - 10);
+        writeNumber(4 + CLOCK_FONT_WIDTH + 1, 2, ihours - 10);
     }
 
-    move(3, 16);
+    move(3, 4 + (2 * CLOCK_FONT_WIDTH) * + 2);
     addch(ACS_CKBOARD);
-    move(5, 16);
+    move(5, 4 + (2 * CLOCK_FONT_WIDTH) * + 2);
     addch(ACS_CKBOARD);
 
+	
     if (imin < 10) {
-        writeNumber(18 + LEFT_NUMBER_OFFSET_M, 2, 0);
-        writeNumber(24 + LEFT_NUMBER_OFFSET_MM, 2, imin);
+        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 3, 2, 0);
+        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(18 + LEFT_NUMBER_OFFSET_M, 2, x);
-        writeNumber(24 + LEFT_NUMBER_OFFSET_MM, 2, imin - (x * 10));
+        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 3, 2, x);
+        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin - (x * 10));
     }
 
     move(4, 29);
