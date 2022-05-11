@@ -18,6 +18,12 @@
 #define OPEN_WEATHER_MAP "/ow-weather-api.js"
 #define OPEN_WEATHER_MAP_LEN strlen(OPEN_WEATHER_MAP)
 
+#ifdef CLOCK_FONT_WIDTH
+#define LEFT_NUMBER_OFFSET (CLOCK_FONT_WIDTH - 6)
+#elif
+#define LEFT_NUMBER_OFFSET 0 
+#endif
+
 static char *days[7];
 static char *months[12];
 
@@ -140,11 +146,11 @@ char *get_time() {
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
-        writeNumber(4, 2, 0);
-        writeNumber(10, 2, ihours);
+        writeNumber(4 + LEFT_NUMBER_OFFSET, 2, 0);
+        writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours);
     } else {
-        writeNumber(4, 2, 1);
-        writeNumber(10, 2, ihours - 10);
+        writeNumber(4 + LEFT_NUMBER_OFFSET, 2, 1);
+        writeNumber(10 + LEFT_NUMBER_OFFSET, 2, ihours - 10);
     }
 
     move(3, 16);
@@ -153,12 +159,12 @@ char *get_time() {
     addch(ACS_CKBOARD);
 
     if (imin < 10) {
-        writeNumber(18, 2, 0);
-        writeNumber(24, 2, imin);
+        writeNumber(18 + LEFT_NUMBER_OFFSET, 2, 0);
+        writeNumber(24 + LEFT_NUMBER_OFFSET, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(18, 2, x);
-        writeNumber(24, 2, imin - (x * 10));
+        writeNumber(18 + LEFT_NUMBER_OFFSET, 2, x);
+        writeNumber(24 + LEFT_NUMBER_OFFSET, 2, imin - (x * 10));
     }
 
     move(4, 29);
