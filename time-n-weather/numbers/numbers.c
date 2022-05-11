@@ -3,13 +3,18 @@
 #include "numbers.h"
 
 // height should be odd number like 5 7 for numbers like 2 and 3
-#define NUMBER_WIDTH 5
-#define NUMBER_HEIGHT 5
+#ifndef CLOCK_FONT_WIDTH
+#define CLOCK_FONT_WIDTH 5
+#endif
+
+#ifndef CLOCK_FONT_HEIGHT
+#define CLOCK_FONT_HEIGHT 5   
+#endif
 
 void writeZero(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = NUMBER_HEIGHT - 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = CLOCK_FONT_HEIGHT - 2;
 
     int xp = x;
     int yp = y;
@@ -56,8 +61,8 @@ void writeZero(int x, int y) {
 
 void writeOne(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = NUMBER_HEIGHT - 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = CLOCK_FONT_HEIGHT - 2;
 
     int xp = x;
     int yp = y;
@@ -87,8 +92,8 @@ void writeOne(int x, int y) {
 
 void writeTwo(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
     
     int xp = x;
     int yp = y;
@@ -153,8 +158,8 @@ void writeTwo(int x, int y) {
 
 void writeThree(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
 
     int xp = x;
     int yp = y;
@@ -220,8 +225,8 @@ void writeThree(int x, int y) {
 
 void writeFour(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
     
     int xp = x;
     int yp = y;
@@ -279,8 +284,8 @@ void writeFour(int x, int y) {
 
 void writeFive(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2; 
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2; 
     
     int xp = x;
     int yp = y;
@@ -344,8 +349,8 @@ void writeFive(int x, int y) {
 
 void writeSix(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
     
     int xp = x;
     int yp = y;
@@ -411,8 +416,8 @@ void writeSix(int x, int y) {
 
 void writeSeven(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = NUMBER_HEIGHT - 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = CLOCK_FONT_HEIGHT - 2;
 
     int xp = x;
     int yp = y;
@@ -450,8 +455,8 @@ void writeSeven(int x, int y) {
 
 void writeEight(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
 
     int xp = x;
     int yp = y;
@@ -521,8 +526,8 @@ void writeEight(int x, int y) {
 
 void writeNine(int x, int y) {
 
-    int width = NUMBER_WIDTH - 2;
-    int height = (NUMBER_HEIGHT - 3) / 2;
+    int width = CLOCK_FONT_WIDTH - 2;
+    int height = (CLOCK_FONT_HEIGHT - 3) / 2;
 
     int xp = x;
     int yp = y;
