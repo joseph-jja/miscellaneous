@@ -56,7 +56,7 @@ async function start() {
             const addr = ifaces[iface].filter(i => {
                 return (i.family.toLowerCase() === 'ipv4');
             });
-            if (addr && arr.length > 0) {
+            if (addr && addr.length > 0) {
                 ipaddr = addr.map(a => a.address)[0];
             }
         }
