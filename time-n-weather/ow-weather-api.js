@@ -18,6 +18,8 @@ const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
 
 const readFile = promisify(fs.readFile);
 
+const hostname = os.hostname();
+
 const latitude = '37.7464',
     longitude = '-122.4442';
 
@@ -25,7 +27,6 @@ const API_HOSTNAME = 'api.openweathermap.org',
     DISCOVER_ENDPOINT = `/data/2.5/weather?lat=${latitude}&lon=${longitude}`;
 
 const RELOAD = 1000 * 60 * 60;
-
 
 function toFahrenheit(kelvin) {
     return `${Math.round(9 / 5 * kelvin - 459.67)}F`;
@@ -50,7 +51,7 @@ async function start() {
         formattedDate = formatDate(updateTime),
         formattedTime = formatTime(updateTime);
 
-    const updated = `Last Updated: ${formattedDate} @ ${formattedTime}`;
+    const updated = `Last Updated: ${formattedDate} @ ${formattedTime} on ${hostname}`;
     const temp = `Current:  ${toFahrenheit(main.temp)}`;
     const tempMin = toFahrenheit(main.temp_min);
     const tempMax = toFahrenheit(main.temp_max);
@@ -59,7 +60,7 @@ async function start() {
     const humidity = `Humidity: ${main.humidity}%`;
     const cloudy = `Clouds:   ${results.clouds['all'] || 0}%`;
     const rain = `Rain: ${results.rain && results.rain['1h'] || 0} / ${results.rain && results.rain['3h'] || 0}`;
-
+    
     const data = `${temp}    ${tempRange}${os.EOL}${humidity}    ${cloudy}     ${rain}${os.EOL}${updated}`;
 
     fs.writeFile('/tmp/details.txt', data, () => {});
