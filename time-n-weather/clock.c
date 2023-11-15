@@ -245,7 +245,7 @@ int main()
             init_pair(3, COLOR_CYAN, COLOR_BLACK);
             init_pair(4, COLOR_YELLOW, COLOR_BLACK);
             init_pair(5, COLOR_GREEN, COLOR_BLACK);
-            init_pair(6, COLOR_BLUE, COLOR_BLACK);
+            init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
         }
         while (1) {
             if (has_colors() == TRUE) {
