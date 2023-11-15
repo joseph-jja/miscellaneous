@@ -136,7 +136,9 @@ char *get_time() {
         sprintf(ampm, "%s", "AM");
     }
 
-    move(1, 2);
+    int clockWidth = 4 + (4 * CLOCK_FONT_WIDTH) + 5;
+
+    move(1, clockWidth);
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
@@ -162,7 +164,7 @@ char *get_time() {
         writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin - (x * 10));
     }
 
-    move(3, 4 + (4 * CLOCK_FONT_WIDTH) + 5);
+    move(3, clockWidth);
     printw("%s", ampm);
 
     return asctime(localNow);
