@@ -136,32 +136,32 @@ char *get_time() {
         sprintf(ampm, "%s", "AM");
     }
 
-    int clockWidth = 4 + (4 * CLOCK_FONT_WIDTH) + 5;
+    int clockWidth = 4 + (4 * CLOCK_FONT_WIDTH) + 10;
 
     move(1, clockWidth);
     printw("%s, %s %d, %d", days[localNow->tm_wday], months[month], localNow->tm_mday, year);
 
     if (ihours < 10) {
         writeNumber(4, 2, 0);
-        writeNumber(4 + CLOCK_FONT_WIDTH + 1, 2, ihours);
+        writeNumber(5 + CLOCK_FONT_WIDTH + 1, 2, ihours);
     } else {
         writeNumber(4, 2, 1);
-        writeNumber(4 + CLOCK_FONT_WIDTH + 1, 2, ihours - 10);
+        writeNumber(5 + CLOCK_FONT_WIDTH + 1, 2, ihours - 10);
     }
 
     int height = (CLOCK_FONT_HEIGHT - 3) / 2 - 1;
-    move(3 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
+    move(3 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 4);
     addch(ACS_CKBOARD);
-    move(5 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 1);
+    move(5 + height, 4 + (2 * CLOCK_FONT_WIDTH) + 4);
     addch(ACS_CKBOARD);
 	
     if (imin < 10) {
-        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 3, 2, 0);
-        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin);
+        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 7, 2, 0);
+        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 9, 2, imin);
     } else {
         int x = imin / 10;
-        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 3, 2, x);
-        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 4, 2, imin - (x * 10));
+        writeNumber(4 + (2 * CLOCK_FONT_WIDTH) + 7, 2, x);
+        writeNumber(4 + (3 * CLOCK_FONT_WIDTH) + 9, 2, imin - (x * 10));
     }
 
     move(3, clockWidth);
@@ -270,8 +270,8 @@ int main()
             }
             clear();
 	    get_time();
-            read_in_file("/tmp/details.txt", 4 + CLOCK_FONT_WIDTH + 1, 4 + CLOCK_FONT_HEIGHT);
-            read_in_file("/tmp/hourly.txt", 4 + (4 * CLOCK_FONT_WIDTH) + 6, 6);
+            read_in_file("/tmp/details.txt", 8 + CLOCK_FONT_WIDTH + 1, 4 + CLOCK_FONT_HEIGHT);
+            read_in_file("/tmp/hourly.txt", 8 + (4 * CLOCK_FONT_WIDTH) + 6, 6);
 	    refresh();
             sleep(1);
             i++;
