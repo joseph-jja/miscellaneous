@@ -11,8 +11,8 @@ TEXTLIB = gxtext
 MESSAGEBOXLIB = gxmessagebox
 SOCKETLIB = gxsocket
 
-GNOMELIBS = `pkg-config gtk+-2.0 --cflags`
-GNOMEFLAGS = `pkg-config gtk+-2.0 --cflags --libs`
+GNOMELIBS = `pkg-config --cflags gtk4`
+GNOMEFLAGS = `pkg-config --cflags gtk4 --libs`
 
 INCLUDES = -I./gxsearch -I./ -I./gxtext -I./gxmessagebox -I./gxsocket
 

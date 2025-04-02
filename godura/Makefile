@@ -6,7 +6,7 @@ prefix = /usr/local
 exec_prefix = /usr/local
 bindir = /usr/local/bin
 
-INSTALL = /usr/bin/install -c
+INSTALL = /bin/install -c
 
 MAKE_COMMAND = 
 

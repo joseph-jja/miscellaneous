@@ -3,7 +3,7 @@
 CFLAGS = -Wall -g -O2 
 CC = gcc $(CFLAGS)
 
-GTKOPTIONS = `pkg-config gtk+-2.0 --cflags `
+GTKOPTIONS = `pkg-config --cflags gtk4`
 
 INCLUDES = ./
 
