@@ -30,7 +30,7 @@ fn build_window(app: &Application) { //-> MainWindow {
     };
         
     // menu bar and scroll text area
-    let menu_bar = menu::menubar::create_menu(app);
+    let menu_bar = menu::menubar::create_menu(app, &main_refs.window);
     let scroll_textarea = scrollarea::textarea::build_text_area(main_refs.buffer);
 
     let main_box = gtk4::Box::builder()

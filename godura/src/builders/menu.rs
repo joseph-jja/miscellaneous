@@ -33,7 +33,7 @@ pub mod menubar {
         });*/
     }
 
-    pub fn create_menu(app: &Application) -> PopoverMenuBar {
+    pub fn create_menu(app: &Application, window: &ApplicationWindow) -> PopoverMenuBar {
 
         let file_menu = gio::Menu::new();
         file_menu.append(Some("New..."), Some("app.New"));
@@ -54,16 +54,12 @@ pub mod menubar {
         menubar_menu.append_submenu(Some("Edit"), &edit_menu);
         menubar_menu.append_submenu(Some("Search"), &search_menu);
 
-        if let Some(active_window) = app.active_window() {
-            if let Ok(app_window) = active_window.downcast::<gtk4::ApplicationWindow>() {
-            let win = app_window;
-            let open_action = gio::SimpleAction::new("Open", None);
-            open_action.connect_activate(move |_ ,_| {
-                create_file_dialog(&win);
-            });
-            app.add_action(&open_action);
-            }
-        }
+        //let win = window.clone();
+        let open_action = gio::SimpleAction::new("Open", None);
+        open_action.connect_activate(move |_ ,_| {
+            //create_file_dialog(&win);
+        });
+        app.add_action(&open_action);
 
         let save_action = gio::SimpleAction::new("Save", None);
         let saveas_action = gio::SimpleAction::new("Save As...", None);
