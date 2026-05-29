@@ -1,47 +1,80 @@
-
 use gtk4 as gtk;
+use gtk::gio;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, TextBuffer, Text };
-use gtk::gio; 
+use gtk::{Application, ApplicationWindow, Text, TextBuffer};
+
+pub mod builders;
+use crate::builders::scrollarea;
+use crate::builders::menu;
 
 const APP_ID: &str = "Godura";
 
 struct MainWindow {
-    app: Application,
     window: ApplicationWindow,
     buffer: TextBuffer,
-    position: Text
+    position: Text,
 }
 
-fn main() {
-   
-   let args: Vec<String> = std::env::args().collect();
+fn build_window(app: &Application) { //-> MainWindow {
 
-   if args.len() > 0 {
-       println!("Got args {} {}!", args.len(), args[0])
-   }  
-
-    let refs: MainWindow = MainWindow {
-        app: Application::builder().application_id(APP_ID)
-            .flags(gio::ApplicationFlags::HANDLES_OPEN)
-            .build(),
+    // Create a new ApplicationWindow tied to the application
+    let main_refs: MainWindow = MainWindow {
         window: ApplicationWindow::builder()
+            .application(app)
             .title(APP_ID)
             .default_width(600)
             .default_height(400)
             .build(),
-        buffer: TextBuffer::new(None),
+        buffer: scrollarea::textarea::create_gtk_buffer(),
         position: Text::new()
     };
-
-    app.connect_activate(move |app| {
-        refs.window.set_application(Some(refs.app));
         
-        // 3. Display the window
-        refs.window.present();
+    // menu bar and scroll text area
+    let menu_bar = menu::menubar::create_menu(app);
+    let scroll_textarea = scrollarea::textarea::build_text_area(main_refs.buffer);
+
+    let main_box = gtk4::Box::builder()
+        .orientation(gtk4::Orientation::Vertical)
+        .spacing(6)
+        .hexpand(true)  // Expand horizontally to fill window
+        .vexpand(true)  // Expand vertically to fill window
+        .build();
+        
+    // Create a layout and add the menubar to the window
+    let box_layout = gtk4::Box::new(gtk4::Orientation::Vertical, 0);
+    box_layout.append(&menu_bar);
+    
+    main_box.append(&box_layout);
+    main_box.append(&scroll_textarea);
+    
+    main_refs.window.set_child(Some(&main_box));
+
+    main_refs.window.present();
+
+    //return main_refs.clone();
+}
+
+fn main() {
+    let args: Vec<String> = std::env::args().collect();
+
+    if args.len() > 0 {
+        println!("Got args {} {}!", args.len(), args[0])
+    }
+
+    let app = Application::builder()
+        .application_id(APP_ID)
+        .flags(gio::ApplicationFlags::HANDLES_OPEN)
+        .build();
+    
+    //let mut main_refs: MainWindow;
+    app.connect_activate(move |app| {
+            //let main_refs: MainWindow = 
+                build_window(&app);
     });
 
-   // Ensure your main window is created/presented here if needed
+    //println!("Got {:?}", main_refs.window);
+
+    // Ensure your main window is created/presented here if needed
     /*app.connect_activate(move |app| {
         build_window(app, &buffer);
     });
@@ -78,17 +111,16 @@ fn main() {
     });*/
 
     //app.connect_activate(|_app| {
-        // Fallback UI initialization if no files were explicitly requested
+    // Fallback UI initialization if no files were explicitly requested
     //});
 
-//   let text = scroll_textarea.child().and_downcast::<gtk4::TextView>();
-            //text.buffer().set_text(text_data);
-        //}*/
-       
-        // Present the window
+    //   let text = scroll_textarea.child().and_downcast::<gtk4::TextView>();
+    //text.buffer().set_text(text_data);
+    //}*/
+    // Present the window
     //});
 
-    refs.app.run_with_args(&std::env::args().collect::<Vec<String>>());
+    app.run(); //_with_args(&std::env::args().collect::<Vec<String>>());
 
-    println!("App Start {}", APP_ID)
+    println!("App Start {}", APP_ID);
 }
