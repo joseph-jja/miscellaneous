@@ -1,5 +1,5 @@
 [package]
-name = "godura_rust"
+name = "godura"
 version = "0.0.2"
 edition = "2021"
 authors = ["Your Name <you@example.com>"]
