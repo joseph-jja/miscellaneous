@@ -1,8 +1,10 @@
 
 use gtk4 as gtk;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow};
+use gtk::{Application, ApplicationWindow, TextBuffer, Text };
 use gtk::gio; 
+
+const APP_ID: &str = "Godura";
 
 struct MainWindow {
     app: Application,
@@ -10,7 +12,6 @@ struct MainWindow {
     buffer: TextBuffer,
     position: Text
 }
-
 
 fn main() {
    
@@ -20,14 +21,28 @@ fn main() {
        println!("Got args {} {}!", args.len(), args[0])
    }  
 
-   let app = Application::builder().application_id(APP_ID)
-        .flags(gio::ApplicationFlags::HANDLES_OPEN)
-        .build();
+    let refs: MainWindow = MainWindow {
+        app: Application::builder().application_id(APP_ID)
+            .flags(gio::ApplicationFlags::HANDLES_OPEN)
+            .build(),
+        window: ApplicationWindow::builder()
+            .title(APP_ID)
+            .default_width(600)
+            .default_height(400)
+            .build(),
+        buffer: TextBuffer::new(None),
+        position: Text::new()
+    };
 
-    let buffer: gtk::TextBuffer = textarea::create_gtk_buffer();
+    app.connect_activate(move |app| {
+        refs.window.set_application(Some(refs.app));
+        
+        // 3. Display the window
+        refs.window.present();
+    });
 
    // Ensure your main window is created/presented here if needed
-    app.connect_activate(move |app| {
+    /*app.connect_activate(move |app| {
         build_window(app, &buffer);
     });
 
@@ -40,7 +55,7 @@ fn main() {
             println!("Window found with title: {:?}", app_window.title());
             main_window = app_window;
         }
-    }
+    }*/
 
     // 2. Connect the "open" signal
     /*let buff_clone = buffer.clone();
@@ -73,7 +88,7 @@ fn main() {
         // Present the window
     //});
 
-    app.run_with_args(&std::env::args().collect::<Vec<String>>());
+    refs.app.run_with_args(&std::env::args().collect::<Vec<String>>());
 
     println!("App Start {}", APP_ID)
 }
