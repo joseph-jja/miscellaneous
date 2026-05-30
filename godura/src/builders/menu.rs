@@ -21,10 +21,11 @@ pub mod menubar {
             .build();
 
         if let Some(window) = app.active_window() { 
-            let results: Future<Output = Result<gio::File, glib::Error>> = match file_dialog.open_future(Some(&window)).await {
+            let results = match file_dialog.open_future(Some(&window)).await {
                 Ok(file) => println!("Selected: {:?}", file.path()),
                 Err(err) => println!("User canceled or error occurred: {}", err),
             }
+            println!("got {:?}", results);
         }
 
         //if let Some(buffer) = get_text_buffer(&app_clone) {
