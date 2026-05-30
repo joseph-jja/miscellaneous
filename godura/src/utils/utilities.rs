@@ -3,7 +3,7 @@ pub mod utilities {
     use gtk4 as gtk;
     use gtk::prelude::*;
     use gtk::{  
-        ApplicationWindow,
+        Application,
         Widget,
         TextView,
         TextBuffer
@@ -26,15 +26,17 @@ pub mod utilities {
       None
   }
 
-  pub fn get_text_buffer(window: &ApplicationWindow) -> Option<TextBuffer> {
+  pub fn get_text_buffer(app: &Application) -> Option<TextBuffer> {
 
-    let app_widget: Widget = window.upcast::<Widget>();
-    if let Some(text_widget) = find_widget_by_name(&app_widget, "main_text_buffer") {
-        let text_view = text_widget.downcast::<gtk::TextView>()
-            .expect("The widget was not a TextView");
-        
-        let buffer = text_view.buffer();
-        return Some(buffer);
+    if let Some(window) = app.active_window() { 
+        let app_widget: Widget = window.upcast::<Widget>();
+        if let Some(text_widget) = find_widget_by_name(&app_widget, "main_text_buffer") {
+            let text_view = text_widget.downcast::<gtk::TextView>()
+                .expect("The widget was not a TextView");
+            
+            let buffer = text_view.buffer();
+            return Some(buffer);
+        }
     }
     return None;
   }
