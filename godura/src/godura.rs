@@ -52,23 +52,15 @@ fn main() {
         .flags(gio::ApplicationFlags::HANDLES_OPEN)
         .build();
 
-    app.connect_activate(build_window);
-
-    // Ensure your main window is created/presented here if needed
-    /*app.connect_activate(move |app| {
-        build_window(app, &buffer);
-    });
 
     let windows = app.windows();
-
     let mut main_window: gtk::ApplicationWindow;
-    println!("Wind {:?}", app);
     for window in windows {
         if let Ok(app_window) = window.downcast::<gtk::ApplicationWindow>() {
             println!("Window found with title: {:?}", app_window.title());
             main_window = app_window;
         }
-    }*/
+    }
 
     // 2. Connect the "open" signal
     /*let buff_clone = buffer.clone();
@@ -90,17 +82,9 @@ fn main() {
         println!("Now here, reactivate?");
     });*/
 
-    //app.connect_activate(|_app| {
-    // Fallback UI initialization if no files were explicitly requested
-    //});
-
-    //   let text = scroll_textarea.child().and_downcast::<gtk4::TextView>();
-    //text.buffer().set_text(text_data);
-    //}*/
-    // Present the window
-    //});
-
-    app.run(); //_with_args(&std::env::args().collect::<Vec<String>>());
+    app.connect_activate(build_window);
+    
+    app.run_with_args(&std::env::args().collect::<Vec<String>>());
 
     println!("App Start {}", APP_ID);
 }
