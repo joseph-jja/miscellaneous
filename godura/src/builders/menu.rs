@@ -21,15 +21,21 @@ pub mod menubar {
             .build();
 
         if let Some(window) = app.active_window() { 
-            let results = match file_dialog.open_future(Some(&window)).await {
-                Ok(file) => println!("Selected: {:?}", file.path()),
-                Err(err) => println!("User canceled or error occurred: {}", err),
+            if let Some(buffer) = get_text_buffer(&app) {
+               file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
+                    // Evaluate the operation within the callback closure
+                    match result {
+                        Ok(file) => {
+                            let path = file.path().unwrap();
+                            println!("User selected file: {:?}", path);
+                        }
+                        Err(err) => {
+                            println!("Dialog dismissed or failed: {:?}", err);
+                        }
+                    }
+                });
             }
-            println!("got {:?}", results);
         }
-
-        //if let Some(buffer) = get_text_buffer(&app_clone) {
-            
     }
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
