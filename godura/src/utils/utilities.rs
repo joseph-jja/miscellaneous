@@ -1,4 +1,4 @@
-pub mod utils {
+pub mod utilities {
 
   use crate::gtk;
   use gtk::prelude::*;
