@@ -1,11 +1,14 @@
 use gtk::gio;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Text, TextBuffer};
+use gtk::{Application, ApplicationWindow, Widget};
 use gtk4 as gtk;
 
 pub mod builders;
 use crate::builders::menu;
 use crate::builders::scrollarea;
+
+pub mod utils;
+use crate::utils::utils::find_widget_by_name;
 
 const APP_ID: &str = "Godura";
 
@@ -52,16 +55,6 @@ fn main() {
         .flags(gio::ApplicationFlags::HANDLES_OPEN)
         .build();
 
-
-    let windows = app.windows();
-    let mut main_window: gtk::ApplicationWindow;
-    for window in windows {
-        if let Ok(app_window) = window.downcast::<gtk::ApplicationWindow>() {
-            println!("Window found with title: {:?}", app_window.title());
-            main_window = app_window;
-        }
-    }
-
     // 2. Connect the "open" signal
     app.connect_open(|app, files, _hint| {
         build_window(app);
@@ -70,11 +63,11 @@ fn main() {
             if let Some(path) = file.path() {
                 println!("- Opening: {:?}", path);
                 let path_string: String = path.to_string_lossy().into_owned();
+                if let Some(window) = app.active_window() { 
+                    let app_widget: Widget = window.upcast::<Widget>();
+                    let widget = find_widget_by_name(&app_widget, "main_text_buffer");
                 //let text_data: String = read_in_file(&path_string);
-                if let Some(window) = app.active_window() {
-                    if let Some(view) = window.child() {
-                        println!("Got data and view {:?}", view);
-                    }
+                    println!("Got data and view {:?}", widget);
                 }
             }
         }
