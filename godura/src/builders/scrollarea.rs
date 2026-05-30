@@ -3,8 +3,8 @@ pub mod textarea {
     use crate::gtk;
     use gtk::prelude::*;
 
-    pub const width: i32 = 600;
-    pub const height: i32 = 400;
+    pub const DEFAULT_WIDTH: i32 = 600;
+    pub const DEFAULT_HEIGHT: i32 = 400;
 
     pub fn build_text_area() -> gtk::ScrolledWindow {
         
@@ -19,8 +19,8 @@ pub mod textarea {
         let scrolled_window = gtk::ScrolledWindow::builder()
             .hscrollbar_policy(gtk4::PolicyType::Automatic) // Show horizontal bar if needed
             .vscrollbar_policy(gtk4::PolicyType::Automatic) // Show vertical bar if needed
-            .min_content_height(height) // Enforce a starting size
-            .min_content_width(width)
+            .min_content_height(DEFAULT_HEIGHT) // Enforce a starting size
+            .min_content_width(DEFAULT_WIDTH)
             .hexpand(true)
             .vexpand(true)
             .child(&text_view)
