@@ -64,10 +64,12 @@ fn main() {
             if let Some(path) = file.path() {
                 println!("- Opening: {:?}", path);
                 let path_string: String = path.to_string_lossy().into_owned();
-                if let Some(buffer) = get_text_buffer(&app) {
-                    let text_data: String = read_in_file(&path_string);
-                    buffer.set_text(&text_data);
-                    break;
+                if let Some(window) = app.active_window() { 
+                    if let Some(buffer) = get_text_buffer(&window) {
+                        let text_data: String = read_in_file(&path_string);
+                        buffer.set_text(&text_data);
+                        break;
+                    }
                 }
             }
         }
