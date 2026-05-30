@@ -8,7 +8,7 @@ use crate::builders::menu;
 use crate::builders::scrollarea;
 
 pub mod utils;
-use crate::utils::utilities::utilities::find_widget_by_name;
+use crate::utils::utilities::utilities::get_text_buffer;
 use crate::utils::files::files::read_in_file;
 
 const APP_ID: &str = "Godura";
@@ -64,13 +64,10 @@ fn main() {
             if let Some(path) = file.path() {
                 println!("- Opening: {:?}", path);
                 let path_string: String = path.to_string_lossy().into_owned();
-                if let Some(window) = app.active_window() { 
-                    let app_widget: Widget = window.upcast::<Widget>();
-                    if let Some(text_widget) = find_widget_by_name(&app_widget, "main_text_buffer") {
-                        //let text_view = text_widget::downcast::<gtk::TextView>;
-                        let text_data: String = read_in_file(&path_string);
-                        println!("Got data and view {:?} {:?}", text_widget, text_data );
-                    }
+                if let Some(buffer) = get_text_buffer(&app) {
+                    let text_data: String = read_in_file(&path_string);
+                    buffer.set_text(&text_data);
+                    break;
                 }
             }
         }
