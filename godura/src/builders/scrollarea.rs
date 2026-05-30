@@ -9,9 +9,9 @@ pub mod textarea {
         return gtk::TextBuffer::new(None);
     }
 
-    pub fn build_text_area(buffer: gtk::TextBuffer) -> gtk::ScrolledWindow {
+    pub fn build_text_area(buffer: &gtk::TextBuffer) -> gtk::ScrolledWindow {
         // 2. Create the TextView widget and assign the buffer
-        let text_view = gtk::TextView::with_buffer(&buffer);
+        let text_view = gtk::TextView::with_buffer(buffer);
         //text_view.set_monospace(true); // Useful for code-like text
         text_view.set_wrap_mode(gtk::WrapMode::Word);
 
