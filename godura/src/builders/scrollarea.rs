@@ -1,8 +1,13 @@
 pub mod textarea {
 
-    use crate::gtk;
+    use gtk4 as gtk;
     use gtk::prelude::*;
-
+    use gtk::{
+        ScrolledWindow,
+        TextBuffer,
+        TextView
+    };
+    
     pub const DEFAULT_WIDTH: i32 = 600;
     pub const DEFAULT_HEIGHT: i32 = 400;
 
