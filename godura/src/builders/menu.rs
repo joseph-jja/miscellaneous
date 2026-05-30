@@ -1,6 +1,5 @@
 pub mod menubar {
 
-    use gtk4 as gtk;
     use gtk::prelude::*;
     use gtk::{
         gio,
@@ -10,6 +9,7 @@ pub mod menubar {
         //FileDialog,
         PopoverMenuBar,
     };
+    use gtk4 as gtk;
 
     pub fn create_file_dialog(window: &ApplicationWindow) {
 
@@ -35,23 +35,23 @@ pub mod menubar {
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
         let file_menu = gio::Menu::new();
-        /*file_menu.append(Some("New..."), Some("app.New"));
+        file_menu.append(Some("New..."), Some("app.New"));
         file_menu.append(Some("Open..."), Some("app.Open"));
         file_menu.append(Some("Save"), Some("app.Save"));
-        file_menu.append(Some("Save As..."), Some("app.SaveAs"));*/
+        file_menu.append(Some("Save As..."), Some("app.SaveAs"));
         file_menu.append(Some("Quit"), Some("app.Quit"));
 
         let edit_menu = gio::Menu::new();
-        //edit_menu.append(Some("Cut"), Some("app.New"));
-        //edit_menu.append(Some("Copy"), Some("app.Open"));
-        //edit_menu.append(Some("Paste"), Some("app.Save"));
+        edit_menu.append(Some("Cut"), Some("app.New"));
+        edit_menu.append(Some("Copy"), Some("app.Open"));
+        edit_menu.append(Some("Paste"), Some("app.Save"));
 
         let search_menu = gio::Menu::new();
 
         let menubar_menu = gio::Menu::new();
         menubar_menu.append_submenu(Some("File"), &file_menu);
-        //menubar_menu.append_submenu(Some("Edit"), &edit_menu);
-        //menubar_menu.append_submenu(Some("Search"), &search_menu);
+        menubar_menu.append_submenu(Some("Edit"), &edit_menu);
+        menubar_menu.append_submenu(Some("Search"), &search_menu);
 
         //let win = window.clone();
         //let open_action = gio::SimpleAction::new("Open", None);
