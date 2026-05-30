@@ -63,9 +63,8 @@ fn main() {
     }
 
     // 2. Connect the "open" signal
-    /*let buff_clone = buffer.clone();
     app.connect_open(|app, files, _hint| {
-        build_window(app, &buff_clone);
+        build_window(app);
         println!("Received {} file(s) to open:", files.len());
         for file in files {
             if let Some(path) = file.path() {
@@ -80,7 +79,8 @@ fn main() {
             }
         }
         println!("Now here, reactivate?");
-    });*/
+        //app.connect_activate(build_window);
+    });
 
     app.connect_activate(build_window);
     
