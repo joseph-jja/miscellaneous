@@ -70,7 +70,7 @@ fn main() {
             if let Some(path) = file.path() {
                 println!("- Opening: {:?}", path);
                 let path_string: String = path.to_string_lossy().into_owned();
-                let text_data: String = read_in_file(&path_string);
+                //let text_data: String = read_in_file(&path_string);
                 if let Some(window) = app.active_window() {
                     if let Some(view) = window.child() {
                         println!("Got data and view {:?}", view);
