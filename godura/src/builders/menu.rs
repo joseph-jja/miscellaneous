@@ -13,7 +13,7 @@ pub mod menubar {
     use crate::utils::utilities::utilities::get_text_buffer;
     use crate::utils::files::files::read_in_file;
     
-    pub fn async create_file_dialog(app: &Application) {
+    pub fn create_file_dialog(app: &Application) {
 
         let dialog = FileDialog::builder()
             .title("Select a File")
@@ -22,7 +22,7 @@ pub mod menubar {
 
         if let Some(window) = app.active_window() { 
             if let Some(buffer) = get_text_buffer(&app) {
-               file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
+               /*file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
                     // Evaluate the operation within the callback closure
                     match result {
                         Ok(file) => {
@@ -33,7 +33,7 @@ pub mod menubar {
                             println!("Dialog dismissed or failed: {:?}", err);
                         }
                     }
-                });
+                });*/
             }
         }
     }
