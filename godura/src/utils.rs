@@ -1,9 +1,9 @@
-pub mod utils
+pub mod utils {
 
-  use crate::gtk{Widget};
+  use crate::gtk;
   use gtk::prelude::*;
 
-  fn find_widget_by_name(parent: &Widget, name: &str) -> Option<Widget> {
+  pub fn find_widget_by_name(parent: &gtk::Widget, name: &str) -> Option<gtk::Widget> {
       // Check if the current widget matches the name
       if parent.widget_name() == name {
           return Some(parent.clone());
