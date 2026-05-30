@@ -19,21 +19,23 @@ pub mod menubar {
             .modal(true)
             .build();
 
-        dialog.open(Some(window), gio::Cancellable::NONE, move |result| {
-            match result {
-                Ok(file) => {
-                    // file is a gio::File object
-                    if let Some(path) = file.path() {
-                        if let Some(buffer) = get_text_buffer(&app) {
-                            println!("Selected file path: {:?}", path);
+        if let Some(window) = app.active_window() { 
+            dialog.open(Some(window), gio::Cancellable::NONE, move |result| {
+                match result {
+                    Ok(file) => {
+                        // file is a gio::File object
+                        if let Some(path) = file.path() {
+                            if let Some(buffer) = get_text_buffer(&app) {
+                                println!("Selected file path: {:?}", path);
+                            }
                         }
                     }
+                    Err(err) => {
+                        println!("Dialog cancelled or closed: {}", err);
+                    }
                 }
-                Err(err) => {
-                    println!("Dialog cancelled or closed: {}", err);
-                }
-            }
-        });
+            });
+        }
     }
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
