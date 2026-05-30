@@ -20,7 +20,7 @@ pub mod menubar {
             .build();
 
         if let Some(window) = app.active_window() { 
-            dialog.open(Some(window), gio::Cancellable::NONE, move |result| {
+            dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
                 match result {
                     Ok(file) => {
                         // file is a gio::File object
