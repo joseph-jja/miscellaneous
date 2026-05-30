@@ -1,19 +1,20 @@
 pub mod menubar {
 
+    use gtk4 as gtk;
     use gtk::prelude::*;
     use gtk::{
         gio,
         Application,
         ApplicationWindow,
-        Button,
-        //FileDialog,
+        FileDialog,
         PopoverMenuBar,
     };
-    use gtk4 as gtk;
-
+    use crate::utils::utilities::utilities::get_text_buffer;
+    use crate::utils::files::files::read_in_file;
+    
     pub fn create_file_dialog(window: &ApplicationWindow) {
 
-        /*let dialog = FileDialog::builder()
+        let dialog = FileDialog::builder()
             .title("Select a File")
             .modal(true)
             .build();
@@ -23,14 +24,16 @@ pub mod menubar {
                 Ok(file) => {
                     // file is a gio::File object
                     if let Some(path) = file.path() {
-                        println!("Selected file path: {:?}", path);
+                        if let Some(buffer) = get_text_buffer(&window) {
+                            println!("Selected file path: {:?}", path);
+                        }
                     }
                 }
                 Err(err) => {
                     println!("Dialog cancelled or closed: {}", err);
                 }
             }
-        });*/
+        });
     }
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
@@ -53,12 +56,12 @@ pub mod menubar {
         menubar_menu.append_submenu(Some("Edit"), &edit_menu);
         menubar_menu.append_submenu(Some("Search"), &search_menu);
 
-        //let win = window.clone();
-        //let open_action = gio::SimpleAction::new("Open", None);
-        //open_action.connect_activate(move |_ ,_| {
-        //create_file_dialog(&win);
-        //});
-        //app.add_action(&open_action);
+        let win = window.clone();
+        let open_action = gio::SimpleAction::new("Open", None);
+        open_action.connect_activate(move |_ ,_| {
+            create_file_dialog(&win);
+        });
+        app.add_action(&open_action);
 
         //let save_action = gio::SimpleAction::new("Save", None);
         //let saveas_action = gio::SimpleAction::new("Save As...", None);
