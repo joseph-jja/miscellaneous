@@ -9,12 +9,13 @@ pub mod textarea {
     pub fn build_text_area() -> gtk::ScrolledWindow {
         
         let buffer = gtk::TextBuffer::builder().build();
-        set_widget_name(&buffer, "main_text_buffer");
 
         // 2. Create the TextView widget and assign the buffer
         let text_view = gtk::TextView::with_buffer(&buffer);
         //text_view.set_monospace(true); // Useful for code-like text
         text_view.set_wrap_mode(gtk::WrapMode::Word);
+        // set name 
+        text_view.set_widget_name("main_text_buffer");
 
         // 3. Wrap it in a ScrolledWindow to allow scrolling
         let scrolled_window = gtk::ScrolledWindow::builder()
