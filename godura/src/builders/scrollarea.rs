@@ -7,7 +7,8 @@ pub mod textarea {
     pub const height: i32 = 400;
 
     pub fn build_text_area() -> gtk::ScrolledWindow {
-        let buffer = gtk::TextBuffer::new(None);
+        
+        let buffer = gtk::TextBuffer::builder().build();
 
         // 2. Create the TextView widget and assign the buffer
         let text_view = gtk::TextView::with_buffer(&buffer);
