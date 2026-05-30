@@ -20,12 +20,13 @@ pub mod menubar {
             .build();
 
         if let Some(window) = app.active_window() { 
+            let app_clone = app;
             dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
                 match result {
                     Ok(file) => {
                         // file is a gio::File object
                         if let Some(path) = file.path() {
-                            if let Some(buffer) = get_text_buffer(&app) {
+                            if let Some(buffer) = get_text_buffer(&app_clone) {
                                 println!("Selected file path: {:?}", path);
                             }
                         }
