@@ -20,23 +20,14 @@ pub mod menubar {
             .build();
 
         if let Some(window) = app.active_window() { 
-            let app_clone = app;
-            dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
-                match result {
-                    Ok(file) => {
-                        // file is a gio::File object
-                        if let Some(path) = file.path() {
-                            if let Some(buffer) = get_text_buffer(&app_clone) {
-                                println!("Selected file path: {:?}", path);
-                            }
-                        }
-                    }
-                    Err(err) => {
-                        println!("Dialog cancelled or closed: {}", err);
-                    }
-                }
-            });
+            let results: Future<Output = Result<gio::File, glib::Error>> = match file_dialog.open_future(Some(&window)).await {
+                Ok(file) => println!("Selected: {:?}", file.path()),
+                Err(err) => println!("User canceled or error occurred: {}", err),
+            }
         }
+
+        //if let Some(buffer) = get_text_buffer(&app_clone) {
+            
     }
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
