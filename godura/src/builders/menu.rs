@@ -13,7 +13,7 @@ pub mod menubar {
     use crate::utils::utilities::utilities::get_text_buffer;
     use crate::utils::files::files::read_in_file;
     
-    pub fn create_file_dialog(app: &Application) {
+    pub fn async create_file_dialog(app: &Application) {
 
         let dialog = FileDialog::builder()
             .title("Select a File")
