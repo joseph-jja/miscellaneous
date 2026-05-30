@@ -4,6 +4,7 @@ pub mod menubar {
     use gtk::prelude::*;
     use gtk::{
         gio,
+        glib,
         Application,
         ApplicationWindow,
         FileDialog,
