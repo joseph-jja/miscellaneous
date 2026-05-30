@@ -9,29 +9,12 @@ use crate::builders::menu;
 
 const APP_ID: &str = "Godura";
 
-struct MainWindow {
-    window: ApplicationWindow,
-    buffer: TextBuffer,
-    position: Text,
-}
 
-fn build_window(app: &Application) { //-> MainWindow {
-
-    // Create a new ApplicationWindow tied to the application
-    let main_refs: MainWindow = MainWindow {
-        window: ApplicationWindow::builder()
-            .application(app)
-            .title(APP_ID)
-            .default_width(600)
-            .default_height(400)
-            .build(),
-        buffer: scrollarea::textarea::create_gtk_buffer(),
-        position: Text::new()
-    };
+fn build_window(app: &Application, window: &ApplicationWindow, buffer: &TextBuffer) {
         
     // menu bar and scroll text area
-    let menu_bar = menu::menubar::create_menu(app, &main_refs.window);
-    let scroll_textarea = scrollarea::textarea::build_text_area(main_refs.buffer);
+    let menu_bar = menu::menubar::create_menu(app, window);
+    let scroll_textarea = scrollarea::textarea::build_text_area(buffer);
 
     let main_box = gtk4::Box::builder()
         .orientation(gtk4::Orientation::Vertical)
@@ -47,11 +30,9 @@ fn build_window(app: &Application) { //-> MainWindow {
     main_box.append(&box_layout);
     main_box.append(&scroll_textarea);
     
-    main_refs.window.set_child(Some(&main_box));
+    window.set_child(Some(&main_box));
 
-    main_refs.window.present();
-
-    //return main_refs.clone();
+    window.present();
 }
 
 fn main() {
@@ -65,11 +46,21 @@ fn main() {
         .application_id(APP_ID)
         .flags(gio::ApplicationFlags::HANDLES_OPEN)
         .build();
+
+    let window = ApplicationWindow::builder()
+            .application(&app)
+            .title(APP_ID)
+            .default_width(600)
+            .default_height(400)
+            .build();
+
+    let buffer = scrollarea::textarea::create_gtk_buffer();
     
-    //let mut main_refs: MainWindow;
+    let win = window.clone();
+    let buff = buffer.clone();
     app.connect_activate(move |app| {
             //let main_refs: MainWindow = 
-                build_window(&app);
+                build_window(&app, &win, &buff);
     });
 
     //println!("Got {:?}", main_refs.window);
