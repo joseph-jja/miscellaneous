@@ -1,5 +1,6 @@
 pub mod menubar {
 
+    use gtk4 as gtk;
     use gtk::prelude::*;
     use gtk::{
         gio,
@@ -9,7 +10,6 @@ pub mod menubar {
         //FileDialog,
         PopoverMenuBar,
     };
-    use gtk4 as gtk;
 
     pub fn create_file_dialog(window: &ApplicationWindow) {
 
