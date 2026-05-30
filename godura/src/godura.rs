@@ -31,8 +31,8 @@ fn build_window(app: &Application) {
     let window = ApplicationWindow::builder()
         .application(app)
         .title(APP_ID)
-        .default_width(scrollarea::textarea::width)
-        .default_height(scrollarea::textarea::height)
+        .default_width(scrollarea::textarea::DEFAULT_WIDTH)
+        .default_height(scrollarea::textarea::DEFAULT_HEIGHT)
         .build();
 
     window.set_child(Some(&main_box));
