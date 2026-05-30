@@ -9,7 +9,7 @@ pub mod textarea {
     pub fn build_text_area() -> gtk::ScrolledWindow {
         
         let buffer = gtk::TextBuffer::builder().build();
-        buffer.set_widget_name("main_text_buffer")).
+        buffer.set_widget_name("main_text_buffer");
 
         // 2. Create the TextView widget and assign the buffer
         let text_view = gtk::TextView::with_buffer(&buffer);
