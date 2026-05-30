@@ -12,7 +12,7 @@ pub mod menubar {
     use crate::utils::utilities::utilities::get_text_buffer;
     use crate::utils::files::files::read_in_file;
     
-    pub fn create_file_dialog(window: &ApplicationWindow) {
+    pub fn create_file_dialog(app: &Application) {
 
         let dialog = FileDialog::builder()
             .title("Select a File")
@@ -24,7 +24,7 @@ pub mod menubar {
                 Ok(file) => {
                     // file is a gio::File object
                     if let Some(path) = file.path() {
-                        if let Some(buffer) = get_text_buffer(&window) {
+                        if let Some(buffer) = get_text_buffer(&app) {
                             println!("Selected file path: {:?}", path);
                         }
                     }
@@ -56,14 +56,12 @@ pub mod menubar {
         menubar_menu.append_submenu(Some("Edit"), &edit_menu);
         menubar_menu.append_submenu(Some("Search"), &search_menu);
 
-        if let Some(window) = app.active_window() { 
-            let win = window.clone();
-            let open_action = gio::SimpleAction::new("Open", None);
-            open_action.connect_activate(move |_ ,_| {
-                create_file_dialog(&win);
-            });
-            app.add_action(&open_action);
-        }
+        let open_app_clone = app.clone();
+        let open_action = gio::SimpleAction::new("Open", None);
+        open_action.connect_activate(move |_ ,_| {
+            create_file_dialog(&open_app_clone);
+        });
+        app.add_action(&open_action);
         
         //let save_action = gio::SimpleAction::new("Save", None);
         //let saveas_action = gio::SimpleAction::new("Save As...", None);
