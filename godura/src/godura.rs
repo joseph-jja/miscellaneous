@@ -1,6 +1,6 @@
 use gtk::gio;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Widget};
+use gtk::{Application, ApplicationWindow};
 use gtk4 as gtk;
 
 pub mod builders;
