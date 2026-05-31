@@ -8,8 +8,8 @@ use crate::builders::menu;
 use crate::builders::scrollarea;
 
 pub mod utils;
-use crate::utils::utilities::utilities::get_text_buffer;
 use crate::utils::files::files::read_in_file;
+use crate::utils::utilities::utilities::get_text_buffer;
 
 const APP_ID: &str = "Godura";
 
@@ -76,7 +76,7 @@ fn main() {
     });
 
     app.connect_activate(build_window);
-    
+
     app.run_with_args(&std::env::args().collect::<Vec<String>>());
 
     println!("App Start {}", APP_ID);

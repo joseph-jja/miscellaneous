@@ -1,27 +1,20 @@
 pub mod textarea {
 
-    use gtk4 as gtk;
     use gtk::prelude::*;
-    use gtk::{
-        ScrolledWindow,
-        TextBuffer,
-        TextView,
-        WrapMode,
-        PolicyType
-    };
-    
+    use gtk::{PolicyType, ScrolledWindow, TextBuffer, TextView, WrapMode};
+    use gtk4 as gtk;
+
     pub const DEFAULT_WIDTH: i32 = 600;
     pub const DEFAULT_HEIGHT: i32 = 400;
 
     pub fn build_text_area() -> ScrolledWindow {
-        
         let buffer = TextBuffer::builder().build();
 
         // 2. Create the TextView widget and assign the buffer
         let text_view = TextView::with_buffer(&buffer);
         //text_view.set_monospace(true); // Useful for code-like text
         text_view.set_wrap_mode(WrapMode::Word);
-        // set name 
+        // set name
         text_view.set_widget_name("main_text_buffer");
 
         // 3. Wrap it in a ScrolledWindow to allow scrolling

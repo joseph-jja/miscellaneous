@@ -1,39 +1,36 @@
 pub mod menubar {
 
-    use gtk4 as gtk;
-    use gtk::prelude::*;
-    use gtk::{
-        gio,
-        glib,
-        Application,
-        ApplicationWindow,
-        FileDialog,
-        PopoverMenuBar,
-    };
-    use crate::utils::utilities::utilities::get_text_buffer;
     use crate::utils::files::files::read_in_file;
-    
-    pub fn create_file_dialog(app: &Application) {
+    use crate::utils::utilities::utilities::get_text_buffer;
+    use gtk::prelude::*;
+    use gtk::{gio, glib, Application, ApplicationWindow, FileDialog, PopoverMenuBar};
+    use gtk4 as gtk;
 
-        let dialog = FileDialog::builder()
+    pub fn create_file_dialog(app: &Application) {
+        let file_dialog = FileDialog::builder()
             .title("Select a File")
             .modal(true)
             .build();
 
-        if let Some(window) = app.active_window() { 
+        if let Some(window) = app.active_window() {
             if let Some(buffer) = get_text_buffer(&app) {
-               /*file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
+                let app_clone = app.clone();
+                file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
                     // Evaluate the operation within the callback closure
                     match result {
                         Ok(file) => {
-                            let path = file.path().unwrap();
-                            println!("User selected file: {:?}", path);
+                            let filename = file.path().unwrap().to_string_lossy().into_owned();
+                            if let Some(buffer) = get_text_buffer(&app_clone) {
+                                println!("User selected file: {:?}", filename);
+                                let text_data: String = read_in_file(&filename);
+                                buffer.set_text(&text_data);
+                            }
                         }
                         Err(err) => {
                             println!("Dialog dismissed or failed: {:?}", err);
                         }
                     }
-                });*/
+                });
             }
         }
     }
@@ -60,11 +57,11 @@ pub mod menubar {
 
         let open_app_clone = app.clone();
         let open_action = gio::SimpleAction::new("Open", None);
-        open_action.connect_activate(move |_ ,_| {
+        open_action.connect_activate(move |_, _| {
             create_file_dialog(&open_app_clone);
         });
         app.add_action(&open_action);
-        
+
         //let save_action = gio::SimpleAction::new("Save", None);
         //let saveas_action = gio::SimpleAction::new("Save As...", None);
 
