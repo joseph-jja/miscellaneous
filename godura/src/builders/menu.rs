@@ -3,7 +3,7 @@ pub mod menubar {
     use std::sync::{OnceLock, RwLock};
 
     use gtk::prelude::*;
-    use gtk::{gio, Application, FileDialog, PopoverMenuBar, PathBuf};
+    use gtk::{gio, Application, FileDialog, PopoverMenuBar};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
@@ -80,7 +80,7 @@ pub mod menubar {
                             open_filename.push_str(&filename);
                         }
                         if let Some(buffer) = get_text_buffer(&app_clone) {
-                            save_file(filename, &app_clone);
+                            save_file(&app_clone);
                         }
                     }
                     Err(err) => {
