@@ -21,6 +21,21 @@ pub mod utilities {
         None
     }
 
+    pub fn get_status_buffer(app: &Application) -> Option<TextBuffer> {
+        if let Some(window) = app.active_window() {
+            let app_widget: Widget = window.upcast::<Widget>();
+            if let Some(text_widget) = find_widget_by_name(&app_widget, "status_bar_buffer") {
+                let text_view = text_widget
+                    .downcast::<gtk::TextView>()
+                    .expect("The widget was not a TextView");
+
+                let buffer = text_view.buffer();
+                return Some(buffer);
+            }
+        }
+        return None;
+    }
+
     pub fn get_text_buffer(app: &Application) -> Option<TextBuffer> {
         if let Some(window) = app.active_window() {
             let app_widget: Widget = window.upcast::<Widget>();

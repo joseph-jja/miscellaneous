@@ -6,10 +6,11 @@ use gtk4 as gtk;
 pub mod builders;
 use crate::builders::menu;
 use crate::builders::scrollarea;
+use crate::builders::statusbar;
 
 pub mod utils;
 use crate::utils::files::files::read_in_file;
-use crate::utils::utilities::utilities::get_text_buffer;
+use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
 
 const APP_ID: &str = "Godura";
 
@@ -17,6 +18,7 @@ fn build_window(app: &Application) {
     // menu bar and scroll text area
     let menu_bar = menu::menubar::create_menu(app);
     let scroll_textarea = scrollarea::textarea::build_text_area();
+    let statusbar = statusbar::statusbar::create_status_bar();
 
     let main_box = gtk4::Box::builder()
         .orientation(gtk4::Orientation::Vertical)
@@ -31,6 +33,7 @@ fn build_window(app: &Application) {
 
     main_box.append(&box_layout);
     main_box.append(&scroll_textarea);
+    main_box.append(&statusbar);
 
     let window = ApplicationWindow::builder()
         .application(app)
@@ -67,6 +70,9 @@ fn main() {
                 if let Some(buffer) = get_text_buffer(&app) {
                     let text_data: String = read_in_file(&path_string);
                     buffer.set_text(&text_data);
+                    if let Some(status_buff) = get_status_buffer(&app) {
+                        status_buff.set_text(&path_string);
+                    }
                     break;
                 }
             }

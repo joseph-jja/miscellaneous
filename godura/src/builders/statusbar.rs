@@ -1,10 +1,10 @@
 pub mod statusbar {
 
     use gtk::prelude::*;
-    use gtk::{TextBuffer, TextView};
+    use gtk::{TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
 
-    pub fn create_status_bar() {
+    pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
 
         let text_view = TextView::with_buffer(&buffer);

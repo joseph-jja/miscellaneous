@@ -1,36 +1,51 @@
 pub mod menubar {
 
-    use crate::utils::files::files::read_in_file;
-    use crate::utils::utilities::utilities::get_text_buffer;
     use gtk::prelude::*;
     use gtk::{gio, glib, Application, ApplicationWindow, FileDialog, PopoverMenuBar};
     use gtk4 as gtk;
 
-    pub fn create_file_dialog(app: &Application) {
+    use crate::utils::files::files::{read_in_file, write_outfile};
+    use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
+
+    fn create_file_open_dialog(app: &Application) {
         let file_dialog = FileDialog::builder()
             .title("Select a File")
             .modal(true)
             .build();
 
         if let Some(window) = app.active_window() {
-            if let Some(buffer) = get_text_buffer(&app) {
-                let app_clone = app.clone();
-                file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
-                    // Evaluate the operation within the callback closure
-                    match result {
-                        Ok(file) => {
-                            let filename = file.path().unwrap().to_string_lossy().into_owned();
-                            if let Some(buffer) = get_text_buffer(&app_clone) {
-                                println!("User selected file: {:?}", filename);
-                                let text_data: String = read_in_file(&filename);
-                                buffer.set_text(&text_data);
+            let app_clone = app.clone();
+            file_dialog.open(Some(&window), gio::Cancellable::NONE, move |result| {
+                // Evaluate the operation within the callback closure
+                match result {
+                    Ok(file) => {
+                        let filename = file.path().unwrap().to_string_lossy().into_owned();
+                        if let Some(buffer) = get_text_buffer(&app_clone) {
+                            println!("User selected file: {:?}", filename);
+                            let text_data: String = read_in_file(&filename);
+                            buffer.set_text(&text_data);
+                            if let Some(status_buff) = get_status_buffer(&app_clone) {
+                                status_buff.set_text(&filename);
                             }
                         }
-                        Err(err) => {
-                            println!("Dialog dismissed or failed: {:?}", err);
-                        }
                     }
-                });
+                    Err(err) => {
+                        println!("Dialog dismissed or failed: {:?}", err);
+                    }
+                }
+            });
+        }
+    }
+
+    fn save_file(app: &Application) {
+        if let Some(buffer) = get_text_buffer(&app) {
+            if let Some(status_buff) = get_status_buffer(&app) {
+                let (start, end) = buffer.bounds();
+                let filetext = String::from(buffer.text(&start, &end, false));
+                let (start, end) = status_buff.bounds();
+                let filename = String::from(status_buff.text(&start, &end, false));
+
+                write_outfile(&filename, &filetext);
             }
         }
     }
@@ -58,11 +73,17 @@ pub mod menubar {
         let open_app_clone = app.clone();
         let open_action = gio::SimpleAction::new("Open", None);
         open_action.connect_activate(move |_, _| {
-            create_file_dialog(&open_app_clone);
+            create_file_open_dialog(&open_app_clone);
         });
         app.add_action(&open_action);
 
-        //let save_action = gio::SimpleAction::new("Save", None);
+        let save_app_clone = app.clone();
+        let save_action = gio::SimpleAction::new("Save", None);
+        save_action.connect_activate(move |_, _| {
+            save_file(&save_app_clone);
+        });
+        app.add_action(&save_action);
+
         //let saveas_action = gio::SimpleAction::new("Save As...", None);
 
         let app_clone = app.clone();
@@ -79,19 +100,4 @@ pub mod menubar {
 
         return menu_bar;
     }
-
-    /* fn open_file_dialog(window: &Window) {
-        let dialog = FileDialog::builder()
-            .title("Open File")
-            .modal(true)
-            .build();
-
-        // Use open_future for an async/await flow
-        dialog.open(Some(window), None::<&gio::Cancellable>, move |result| {
-            if let Ok(file) = result {
-                let path = file.path().expect("Failed to get path");
-                println!("Selected file: {:?}", path);
-            }
-        });
-    }*/
 }
