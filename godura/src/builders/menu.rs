@@ -46,6 +46,38 @@ pub mod menubar {
         }
     }
 
+    fn create_save_as_dialog(app: &Application) {
+        let file_dialog = FileDialog::builder()
+            .title("Select a File")
+            .modal(true)
+            .build();
+
+        if let Some(window) = app.active_window() {
+            let app_clone = app.clone();
+            file_dialog.save_future(Some(&window)).then(|result| async move {
+                // Evaluate the operation within the callback closure
+                match result {
+                    Ok(file) => {
+                        /*let filename = file.path().unwrap().to_string_lossy().into_owned();
+                        if let Some(buffer) = get_text_buffer(&app_clone) {
+                            println!("User selected file: {:?}", filename);
+                            //let text_data: String = read_in_file(&filename);
+                            //buffer.set_text(&text_data);
+                            {
+                                let mut open_filename = current_filename_string()
+                                    .write().unwrap();
+                                open_filename.push_str(&filename);
+                            }
+                        }*/
+                    }
+                    Err(err) => {
+                        println!("Dialog dismissed or failed: {:?}", err);
+                    }
+                }
+            });
+        }
+    }
+
     fn save_file(app: &Application) {
         if let Some(buffer) = get_text_buffer(&app) {
             let (start, end) = buffer.bounds();
@@ -88,6 +120,14 @@ pub mod menubar {
             create_file_open_dialog(&open_app_clone);
         });
         app.add_action(&open_action);
+
+        
+        let saveas_app_clone = app.clone();
+        let saveas_action = gio::SimpleAction::new("SaveAs", None);
+        saveas_action.connect_activate(move |_, _| {
+            create_save_as_dialog(&saveas_app_clone);
+        });
+        app.add_action(&saveas_action);
 
         let save_app_clone = app.clone();
         let save_action = gio::SimpleAction::new("Save", None);
