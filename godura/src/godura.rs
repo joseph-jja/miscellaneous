@@ -10,8 +10,7 @@ use crate::builders::statusbar;
 
 pub mod utils;
 use crate::utils::utilities::utilities::{ 
-    get_text_buffer, 
-    get_status_buffer 
+    get_text_buffer
 };
 use crate::utils::files::files::read_in_file;
 
