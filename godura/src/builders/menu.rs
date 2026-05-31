@@ -3,7 +3,7 @@ pub mod menubar {
     use std::sync::{OnceLock, RwLock};
 
     use gtk::prelude::*;
-    use gtk::{gio, Application, FileDialog, PopoverMenuBar};
+    use gtk::{gio, Application, FileDialog, PopoverMenuBar, PathBuf};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
@@ -47,6 +47,19 @@ pub mod menubar {
         }
     }
 
+    fn save_file(app: &Application) {
+        if let Some(buffer) = get_text_buffer(&app) {
+            let (start, end) = buffer.bounds();
+            let filetext = String::from(buffer.text(&start, &end, false));
+            {
+                let filename = current_filename_string().read().unwrap();
+                if filename.len() > 0 { 
+                    let _ = write_outfile(&filename, &filetext);
+                }
+            }
+        }
+    }
+
     fn create_save_as_dialog(app: &Application) {
         let file_dialog = FileDialog::builder()
             .title("Select a File")
@@ -59,36 +72,22 @@ pub mod menubar {
                 // Evaluate the operation within the callback closure
                 match result {
                     Ok(file) => {
-                        /*let filename = file.path().unwrap().to_string_lossy().into_owned();
+                        let filename = file.path().unwrap().to_string_lossy().into_owned();
+                        {
+                            let mut open_filename = current_filename_string()
+                                .write().unwrap();
+                            open_filename.clear();
+                            open_filename.push_str(&filename);
+                        }
                         if let Some(buffer) = get_text_buffer(&app_clone) {
-                            println!("User selected file: {:?}", filename);
-                            //let text_data: String = read_in_file(&filename);
-                            //buffer.set_text(&text_data);
-                            {
-                                let mut open_filename = current_filename_string()
-                                    .write().unwrap();
-                                open_filename.clear().push_str(&filename);
-                            }
-                        }*/
+                            save_file(filename, &app_clone);
+                        }
                     }
                     Err(err) => {
                         println!("Dialog dismissed or failed: {:?}", err);
                     }
                 }
             });
-        }
-    }
-
-    fn save_file(app: &Application) {
-        if let Some(buffer) = get_text_buffer(&app) {
-            let (start, end) = buffer.bounds();
-            let filetext = String::from(buffer.text(&start, &end, false));
-            {
-                let filename = current_filename_string().read().unwrap();
-                if filename.len() > 0 { 
-                    let _ = write_outfile(&filename, &filetext);
-                }
-            }
         }
     }
 
