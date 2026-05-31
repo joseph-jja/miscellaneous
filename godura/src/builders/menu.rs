@@ -7,7 +7,7 @@ pub mod menubar {
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
-    use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
+    use crate::utils::utilities::utilities::{get_text_buffer};
 
     pub fn current_filename_string() -> &'static RwLock<String> {
         static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
@@ -36,9 +36,6 @@ pub mod menubar {
                                     .write().unwrap();
                                 open_filename.push_str(&filename);
                             }
-                            /*if let Some(status_buff) = get_status_buffer(&app_clone) {
-                                status_buff.set_text(&filename);
-                            }*/
                         }
                     }
                     Err(err) => {
