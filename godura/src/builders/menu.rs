@@ -66,9 +66,9 @@ pub mod menubar {
         file_menu.append(Some("Quit"), Some("app.Quit"));
 
         let edit_menu = gio::Menu::new();
-        edit_menu.append(Some("Cut"), Some("app.New"));
-        edit_menu.append(Some("Copy"), Some("app.Open"));
-        edit_menu.append(Some("Paste"), Some("app.Save"));
+        edit_menu.append(Some("Cut"), Some("app.Cut"));
+        edit_menu.append(Some("Copy"), Some("app.Copy"));
+        edit_menu.append(Some("Paste"), Some("app.Paste"));
 
         let search_menu = gio::Menu::new();
         search_menu.append(Some("Find"), Some("app.Find"));
