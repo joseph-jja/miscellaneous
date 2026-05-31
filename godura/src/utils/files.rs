@@ -8,11 +8,14 @@ pub mod files {
         let contents =
             fs::read_to_string(filename).expect("Should have been able to read the file");
 
+        println!("Open file {:?}", filename);
+
         return contents;
     }
 
     pub fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
 
+        println!("Saving file {:?}", filename);
         fs::write(filename, filedata)?;
         Ok(())
     }
