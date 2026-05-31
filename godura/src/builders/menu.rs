@@ -94,7 +94,8 @@ pub mod menubar {
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
         let file_menu = gio::Menu::new();
-        file_menu.append(Some("New..."), Some("app.New"));
+        file_menu.append(Some("New"), Some("app.New"));
+        file_menu.append(Some("New Window"), Some("app.NewWindow"));
         file_menu.append(Some("Open..."), Some("app.Open"));
         file_menu.append(Some("Save"), Some("app.Save"));
         file_menu.append(Some("Save As..."), Some("app.SaveAs"));
