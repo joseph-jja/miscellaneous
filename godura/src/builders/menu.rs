@@ -3,7 +3,7 @@ pub mod menubar {
     use std::sync::{OnceLock, RwLock};
 
     use gtk::prelude::*;
-    use gtk::{gio, Application, ApplicationWindow, FileDialog, PopoverMenuBar};
+    use gtk::{gio, Application, FileDialog, PopoverMenuBar};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
