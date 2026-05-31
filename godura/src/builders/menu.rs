@@ -34,7 +34,8 @@ pub mod menubar {
                             {
                                 let mut open_filename = current_filename_string()
                                     .write().unwrap();
-                                open_filename.clear().push_str(&filename);
+                                open_filename.clear();
+                                open_filename.push_str(&filename);
                             }
                         }
                     }
