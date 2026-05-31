@@ -54,7 +54,7 @@ pub mod menubar {
 
         if let Some(window) = app.active_window() {
             let app_clone = app.clone();
-            file_dialog..save(Some(&window), gio::Cancellable::NONE, move |result| {
+            file_dialog.save(Some(&window), gio::Cancellable::NONE, move |result| {
                 // Evaluate the operation within the callback closure
                 match result {
                     Ok(file) => {
