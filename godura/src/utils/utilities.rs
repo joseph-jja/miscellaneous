@@ -26,7 +26,7 @@ pub mod utilities {
             let app_widget: Widget = window.upcast::<Widget>();
             if let Some(text_widget) = find_widget_by_name(&app_widget, "status_bar_buffer") {
                 let text_view = text_widget
-                    .downcast::<gtk::TextView>()
+                    .downcast::<TextView>()
                     .expect("The widget was not a TextView");
 
                 let buffer = text_view.buffer();
@@ -41,7 +41,7 @@ pub mod utilities {
             let app_widget: Widget = window.upcast::<Widget>();
             if let Some(text_widget) = find_widget_by_name(&app_widget, "main_text_buffer") {
                 let text_view = text_widget
-                    .downcast::<gtk::TextView>()
+                    .downcast::<TextView>()
                     .expect("The widget was not a TextView");
 
                 let buffer = text_view.buffer();
