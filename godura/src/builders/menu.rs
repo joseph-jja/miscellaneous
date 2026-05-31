@@ -71,6 +71,9 @@ pub mod menubar {
         edit_menu.append(Some("Paste"), Some("app.Save"));
 
         let search_menu = gio::Menu::new();
+        search_menu.append(Some("Find"), Some("app.Find"));
+        search_menu.append(Some("Replace"), Some("app.Replace"));
+        search_menu.append(Some("Replace All"), Some("app.ReplaceAll"));
 
         let menubar_menu = gio::Menu::new();
         menubar_menu.append_submenu(Some("File"), &file_menu);
