@@ -55,7 +55,7 @@ pub mod menubar {
             let filetext = String::from(buffer.text(&start, &end, false));
             {
                 let filename = current_filename_string().read().unwrap();
-                write_outfile(&filename, &filetext);
+                let _ = write_outfile(&filename, &filetext);
             }
         }
     }
