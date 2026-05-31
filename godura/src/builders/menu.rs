@@ -51,13 +51,11 @@ pub mod menubar {
 
     fn save_file(app: &Application) {
         if let Some(buffer) = get_text_buffer(&app) {
-            if let Some(status_buff) = get_status_buffer(&app) {
-                let (start, end) = buffer.bounds();
-                let filetext = String::from(buffer.text(&start, &end, false));
-                {
-                    let filename = current_filename_string().read().unwrap();
-                    write_outfile(&filename, &filetext);
-                }
+            let (start, end) = buffer.bounds();
+            let filetext = String::from(buffer.text(&start, &end, false));
+            {
+                let filename = current_filename_string().read().unwrap();
+                write_outfile(&filename, &filetext);
             }
         }
     }
