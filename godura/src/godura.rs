@@ -9,8 +9,11 @@ use crate::builders::scrollarea;
 use crate::builders::statusbar;
 
 pub mod utils;
+use crate::utils::utilities::utilities::{ 
+    get_text_buffer, 
+    get_status_buffer 
+};
 use crate::utils::files::files::read_in_file;
-use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
 
 const APP_ID: &str = "Godura";
 
@@ -70,8 +73,10 @@ fn main() {
                 if let Some(buffer) = get_text_buffer(&app) {
                     let text_data: String = read_in_file(&path_string);
                     buffer.set_text(&text_data);
-                    if let Some(status_buff) = get_status_buffer(&app) {
-                        status_buff.set_text(&path_string);
+                    {
+                        let mut open_filename = menu::menubar::current_filename_string()
+                            .write().unwrap();
+                        open_filename.push_str(&path_string);
                     }
                     break;
                 }
@@ -82,7 +87,7 @@ fn main() {
     });
 
     app.connect_activate(build_window);
-
+    
     app.run_with_args(&std::env::args().collect::<Vec<String>>());
 
     println!("App Start {}", APP_ID);

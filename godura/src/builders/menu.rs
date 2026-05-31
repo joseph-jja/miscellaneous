@@ -1,11 +1,18 @@
 pub mod menubar {
 
+    use std::sync::{OnceLock, RwLock};
+
     use gtk::prelude::*;
     use gtk::{gio, glib, Application, ApplicationWindow, FileDialog, PopoverMenuBar};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
     use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
+
+    pub fn current_filename_string() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
 
     fn create_file_open_dialog(app: &Application) {
         let file_dialog = FileDialog::builder()
@@ -24,9 +31,14 @@ pub mod menubar {
                             println!("User selected file: {:?}", filename);
                             let text_data: String = read_in_file(&filename);
                             buffer.set_text(&text_data);
-                            if let Some(status_buff) = get_status_buffer(&app_clone) {
-                                status_buff.set_text(&filename);
+                            {
+                                let mut open_filename = current_filename_string()
+                                    .write().unwrap();
+                                open_filename.push_str(&filename);
                             }
+                            /*if let Some(status_buff) = get_status_buffer(&app_clone) {
+                                status_buff.set_text(&filename);
+                            }*/
                         }
                     }
                     Err(err) => {
@@ -42,10 +54,10 @@ pub mod menubar {
             if let Some(status_buff) = get_status_buffer(&app) {
                 let (start, end) = buffer.bounds();
                 let filetext = String::from(buffer.text(&start, &end, false));
-                let (start, end) = status_buff.bounds();
-                let filename = String::from(status_buff.text(&start, &end, false));
-
-                write_outfile(&filename, &filetext);
+                {
+                    let filename = current_filename_string().read().unwrap();
+                    write_outfile(&filename, &filetext);
+                }
             }
         }
     }

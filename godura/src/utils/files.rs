@@ -12,6 +12,7 @@ pub mod files {
     }
 
     pub fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
+
         fs::write(filename, filedata)?;
         Ok(())
     }
