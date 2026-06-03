@@ -7,7 +7,7 @@ pub mod menubar {
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
-    use crate::utils::utilities::utilities::{get_text_buffer};
+    use crate::utils::utilities::utilities::get_text_buffer;
 
     pub fn current_filename_string() -> &'static RwLock<String> {
         static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
@@ -32,8 +32,7 @@ pub mod menubar {
                             let text_data: String = read_in_file(&filename);
                             buffer.set_text(&text_data);
                             {
-                                let mut open_filename = current_filename_string()
-                                    .write().unwrap();
+                                let mut open_filename = current_filename_string().write().unwrap();
                                 open_filename.clear();
                                 open_filename.push_str(&filename);
                             }
@@ -53,7 +52,7 @@ pub mod menubar {
             let filetext = String::from(buffer.text(&start, &end, false));
             {
                 let filename = current_filename_string().read().unwrap();
-                if filename.len() > 0 { 
+                if filename.len() > 0 {
                     let _ = write_outfile(&filename, &filetext);
                 }
             }
@@ -74,8 +73,7 @@ pub mod menubar {
                     Ok(file) => {
                         let filename = file.path().unwrap().to_string_lossy().into_owned();
                         {
-                            let mut open_filename = current_filename_string()
-                                .write().unwrap();
+                            let mut open_filename = current_filename_string().write().unwrap();
                             open_filename.clear();
                             open_filename.push_str(&filename);
                         }
@@ -124,7 +122,6 @@ pub mod menubar {
         });
         app.add_action(&open_action);
 
-        
         let saveas_app_clone = app.clone();
         let saveas_action = gio::SimpleAction::new("SaveAs", None);
         saveas_action.connect_activate(move |_, _| {

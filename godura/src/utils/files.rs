@@ -14,7 +14,6 @@ pub mod files {
     }
 
     pub fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
-
         println!("Saving file {:?}", filename);
         fs::write(filename, filedata)?;
         Ok(())
