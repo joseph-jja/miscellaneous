@@ -91,14 +91,21 @@ pub mod menubar {
 
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
         let file_menu = gio::Menu::new();
-        file_menu.append(Some("New"), Some("app.New"));
-        file_menu.append(Some("Open..."), Some("app.Open"));
-        file_menu.append(Some("Save"), Some("app.Save"));
-        file_menu.append(Some("Save As..."), Some("app.SaveAs"));
-        //file_menu.append(SeparatorMenuItem::new());
-        file_menu.append(Some("New Window"), Some("app.NewWindow"));
-        file_menu.append(Some("Quit"), Some("app.Quit"));
-
+        let file_section_one = gio::Menu::new();
+        file_section_one.append(Some("New"), Some("app.New"));
+        let file_section_two = gio::Menu::new();
+        file_section_two.append(Some("Open..."), Some("app.Open"));
+        file_section_two.append(Some("Save"), Some("app.Save"));
+        file_section_two.append(Some("Save As..."), Some("app.SaveAs"));
+        let file_section_three = gio::Menu::new();
+        file_section_three.append(Some("New Window"), Some("app.NewWindow"));
+        let file_section_four = gio::Menu::new();
+        file_section_four.append(Some("Quit"), Some("app.Quit"));
+        file_menu.append_section(None, &file_section_one);
+        file_menu.append_section(None, &file_section_two);
+        file_menu.append_section(None, &file_section_three);
+        file_menu.append_section(None, &file_section_four);
+        
         let edit_menu = gio::Menu::new();
         edit_menu.append(Some("Undo"), Some("app.Undo"));
         edit_menu.append(Some("Redo"), Some("app.Redo"));
