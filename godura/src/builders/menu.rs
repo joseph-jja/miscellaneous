@@ -3,7 +3,7 @@ pub mod menubar {
     use std::sync::{OnceLock, RwLock};
 
     use gtk::prelude::*;
-    use gtk::{gio, Application, FileDialog, PopoverMenuBar};
+    use gtk::{gio, Application, FileDialog, PopoverMenuBar, SeparatorMenuItem};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
@@ -92,10 +92,11 @@ pub mod menubar {
     pub fn create_menu(app: &Application) -> PopoverMenuBar {
         let file_menu = gio::Menu::new();
         file_menu.append(Some("New"), Some("app.New"));
-        file_menu.append(Some("New Window"), Some("app.NewWindow"));
         file_menu.append(Some("Open..."), Some("app.Open"));
         file_menu.append(Some("Save"), Some("app.Save"));
         file_menu.append(Some("Save As..."), Some("app.SaveAs"));
+        file_menu.append(SeparatorMenuItem::new());
+        file_menu.append(Some("New Window"), Some("app.NewWindow"));
         file_menu.append(Some("Quit"), Some("app.Quit"));
 
         let edit_menu = gio::Menu::new();
