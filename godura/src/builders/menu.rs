@@ -95,7 +95,7 @@ pub mod menubar {
         file_menu.append(Some("Open..."), Some("app.Open"));
         file_menu.append(Some("Save"), Some("app.Save"));
         file_menu.append(Some("Save As..."), Some("app.SaveAs"));
-        file_menu.append(SeparatorMenuItem::new());
+        //file_menu.append(SeparatorMenuItem::new());
         file_menu.append(Some("New Window"), Some("app.NewWindow"));
         file_menu.append(Some("Quit"), Some("app.Quit"));
 
