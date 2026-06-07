@@ -4,8 +4,6 @@ pub mod textarea {
     use gtk::{PolicyType, ScrolledWindow, TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
 
-    use crate::utils::utilities::utilities::get_status_buffer;
-
     pub const DEFAULT_WIDTH: i32 = 600;
     pub const DEFAULT_HEIGHT: i32 = 400;
 
