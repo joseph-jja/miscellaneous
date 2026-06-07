@@ -22,9 +22,9 @@ pub mod statusbar {
 
         if let Some(status_buff) = get_status_buffer(&app) {
             if let Some(buffer) = get_text_buffer(&app) {       
-                let mut iter = buffer.start_iter();
-                let mark = buffer.create_mark(Some("position_mark"), &iter, false);
-                buffer.connect_mark_set(move |buffer, _location, mark| {
+                buffer.connect_changed(move |buffer| {
+                    let mut iter = buffer.start_iter();
+                    let mark = buffer.create_mark(Some("position_mark"), &iter, false);
                     if let Some(mark) = buffer.mark("position_mark") {
                         let mut iter = buffer.end_iter();
                         let line = iter.line();
