@@ -4,6 +4,8 @@ pub mod textarea {
     use gtk::{PolicyType, ScrolledWindow, TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
 
+    use crate::utils::utilities::utilities::get_status_buffer;
+
     pub const DEFAULT_WIDTH: i32 = 600;
     pub const DEFAULT_HEIGHT: i32 = 400;
 
@@ -12,7 +14,12 @@ pub mod textarea {
 
         let buff = buffer.clone();
         buffer.connect_changed(move |_| {
-            println!("Text updated! {:?}", &buff);
+            //let status_buff = get_status_buffer
+            let insert_mark = buff.insert();
+            let iter = buff.iter_at_mark(&insert_mark);
+            let line = iter.line();
+            let column = iter.line_offset();
+            println!("Text updated! {} {}", line, column);
         });
 
         // 2. Create the TextView widget and assign the buffer
