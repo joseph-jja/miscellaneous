@@ -38,7 +38,7 @@ pub mod statusbar {
             }
         });
 
-        buffer.connect_notify(Some("cursor-position"), |buffer, _| {
+        /*buffer.connect_notify(Some("cursor-position"), |buffer, _| {
             // Get the updated character offset (0-indexed from the start)
             let cursor_pos = buffer.property::<i32>("cursor-position");
             
@@ -50,6 +50,6 @@ pub mod statusbar {
             let position = fmt_position.as_str();
             status_buff.set_text(&position);
             //println!("Cursor moved to Offset: {}, Line: {}, Column: {}", cursor_pos, line, col);
-        });
+        });*/
     }
 }
