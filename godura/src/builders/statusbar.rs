@@ -1,7 +1,7 @@
 pub mod statusbar {
 
     use gtk::prelude::*;
-    use gtk::{TextBuffer, TextView, WrapMode};
+    use gtk::{Application, TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
 
     use crate::utils::utilities::utilities::{get_text_buffer, get_status_buffer};
