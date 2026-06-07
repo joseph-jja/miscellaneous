@@ -107,11 +107,15 @@ pub mod menubar {
         file_menu.append_section(None, &file_section_four);
         
         let edit_menu = gio::Menu::new();
-        edit_menu.append(Some("Undo"), Some("app.Undo"));
-        edit_menu.append(Some("Redo"), Some("app.Redo"));
-        edit_menu.append(Some("Cut"), Some("app.Cut"));
-        edit_menu.append(Some("Copy"), Some("app.Copy"));
-        edit_menu.append(Some("Paste"), Some("app.Paste"));
+        let edit_section_one = gio::Menu::new();
+        edit_section_one.append(Some("Undo"), Some("app.Undo"));
+        edit_section_one.append(Some("Redo"), Some("app.Redo"));
+        let edit_section_two = gio::Menu::new();
+        edit_section_two.append(Some("Cut"), Some("app.Cut"));
+        edit_section_two.append(Some("Copy"), Some("app.Copy"));
+        edit_section_two.append(Some("Paste"), Some("app.Paste"));
+        edit_menu.append_section(None, &edit_section_one);
+        edit_menu.append_section(None, &edit_section_two);
 
         let search_menu = gio::Menu::new();
         search_menu.append(Some("Find"), Some("app.Find"));
