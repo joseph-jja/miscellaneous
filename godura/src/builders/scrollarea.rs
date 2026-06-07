@@ -10,6 +10,10 @@ pub mod textarea {
     pub fn build_text_area() -> ScrolledWindow {
         let buffer = TextBuffer::builder().build();
 
+        buffer.connect_changed(move |_| {
+            println!("Text updated! {:?}", buffer);
+        });
+
         // 2. Create the TextView widget and assign the buffer
         let text_view = TextView::with_buffer(&buffer);
         //text_view.set_monospace(true); // Useful for code-like text
