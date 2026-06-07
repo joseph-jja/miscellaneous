@@ -31,8 +31,7 @@ pub mod statusbar {
                         let column = iter.line_offset();
         
                         let position = format!("Line: {}  Column: {}", line, column);
-                        // Update your UI here
-                        //println!("Cursor moved to Line: {}, Column: {}", line, column);
+                        status_buff.set_text(position);
                     }
                 });
             }
