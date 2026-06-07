@@ -78,7 +78,10 @@ pub mod menubar {
                             open_filename.push_str(&filename);
                         }
                         if let Some(buffer) = get_text_buffer(&app_clone) {
-                            save_file(&app_clone);
+                            let (start, end) = buffer.bounds();
+                            if (end > start) { 
+                                save_file(&app_clone);
+                            }
                         }
                     }
                     Err(err) => {
