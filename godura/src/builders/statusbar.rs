@@ -6,6 +6,13 @@ pub mod statusbar {
     use gtk4 as gtk;
 
     use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
+    
+    use std::sync::{OnceLock, RwLock};
+
+    pub fn position_string() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
 
     pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
