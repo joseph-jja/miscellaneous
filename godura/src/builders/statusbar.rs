@@ -27,13 +27,13 @@ pub mod statusbar {
         buffer.connect_changed(move |buffer| {
             println!("Changed made");
             if let Some(mark) = buffer.mark("position_mark") {
-                println!("Mark found");
                 let mut iter = buffer.end_iter();
                 let line = iter.line();
                 let column = iter.line_offset();
 
                 let fmt_position = format!("Line: {}  Column: {}", line, column);
                 let position = fmt_position.as_str();
+                println!("Mark found {:?}", position);
                 status_buff.set_text(&position);
             }
         });
