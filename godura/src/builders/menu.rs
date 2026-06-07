@@ -6,8 +6,6 @@ pub mod menubar {
     use gtk::{gio, Application, FileDialog, PopoverMenuBar};//, SeparatorMenuItem};
     use gtk4 as gtk;
 
-    use crate::builders::statusbar::statusbar::attach_text_position;
-
     use crate::utils::files::files::{read_in_file, write_outfile};
     use crate::utils::utilities::utilities::get_text_buffer;
 
@@ -38,7 +36,6 @@ pub mod menubar {
                                 open_filename.clear();
                                 open_filename.push_str(&filename);
                             }
-                            attach_text_position(&app_clone);
                         }
                     }
                     Err(err) => {
