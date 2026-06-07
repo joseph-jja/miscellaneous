@@ -44,6 +44,8 @@ fn build_window(app: &Application) {
 
     window.set_child(Some(&main_box));
 
+    statusbar::attach_text_position(&app); 
+
     window.present();
 }
 
