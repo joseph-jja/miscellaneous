@@ -44,6 +44,12 @@ pub mod statusbar {
             let column = iter.line_offset();
             let fmt_position = format!("Line: {}  Column: {}", line, column);
             let position = fmt_position.as_str();
+
+            {
+                let mut text_position = position_string().write().unwrap();
+                text_position.clear();
+                text_position.push_str(&position);
+            }
             //status_buff.set_text(&position);
             println!("Cursor moved to Line: {}, Column: {}", line, column);
         });
