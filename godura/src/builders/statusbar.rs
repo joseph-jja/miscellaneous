@@ -25,7 +25,9 @@ pub mod statusbar {
         let mut iter = buffer.start_iter();
         let mark = buffer.create_mark(Some("position_mark"), &iter, false);
         buffer.connect_changed(move |buffer| {
+            println!("Changed made");
             if let Some(mark) = buffer.mark("position_mark") {
+                println!("Mark found");
                 let mut iter = buffer.end_iter();
                 let line = iter.line();
                 let column = iter.line_offset();
