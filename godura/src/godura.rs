@@ -44,6 +44,8 @@ fn build_window(app: &Application) {
 
     window.set_child(Some(&main_box));
 
+    statusbar::statusbar::attach_text_position(&app); 
+
     window.present();
 }
 
@@ -62,7 +64,6 @@ fn main() {
     // 2. Connect the "open" signal
     app.connect_open(|app, files, _hint| {
         build_window(app);
-        statusbar::statusbar::attach_text_position(&app); 
         println!("Received {} file(s) to open:", files.len());
         for file in files {
             if let Some(path) = file.path() {
@@ -85,7 +86,6 @@ fn main() {
     });
 
     app.connect_activate(build_window);
-    statusbar::statusbar::attach_text_position(&app); 
 
     app.run_with_args(&std::env::args().collect::<Vec<String>>());
 
