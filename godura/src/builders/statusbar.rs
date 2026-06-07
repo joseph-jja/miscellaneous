@@ -30,7 +30,8 @@ pub mod statusbar {
                         let line = iter.line();
                         let column = iter.line_offset();
         
-                        let position = format!("Line: {}  Column: {}", line, column).as_str();
+                        let fmt_position = format!("Line: {}  Column: {}", line, column);
+                        let position = fmt_position.as_str();
                         status_buff.set_text(&position);
                     }
                 });
