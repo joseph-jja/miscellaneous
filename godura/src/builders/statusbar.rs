@@ -20,7 +20,8 @@ pub mod statusbar {
 
     pub fn attach_text_position(app: &Application) {
 
-        if let Some(status_buff) = get_status_buffer(&app) {
+        let status_buff = get_status_buffer(&app).unwrap();
+        //if let Some(status_buff) = get_status_buffer(&app) {
             if let Some(buffer) = get_text_buffer(&app) {       
                 let mut iter = buffer.start_iter();
                 let mark = buffer.create_mark(Some("position_mark"), &iter, false);
@@ -36,6 +37,6 @@ pub mod statusbar {
                     }
                 });
             }
-        }
+        //}
     }
 }
