@@ -20,21 +20,22 @@ pub mod statusbar {
 
     pub fn attach_text_position(app: &Application) {
 
-        let status_buff = get_status_buffer(&app);
-        let buffer = get_text_buffer(&app);
-       
-        let mut iter = buffer.start_iter();
-        let mark = buffer.create_mark(Some("position_mark"), &iter, false);
-        buffer.connect_mark_set(move |buffer, _location, mark| {
-            if let Some(mark) = buffer.mark("position_mark") {
-                let mut iter = buffer.end_iter();
-                let line = iter.line();
-                let column = iter.line_offset();
-
-                let position = format!("Line: {}  Column: {}", line, column);
-                // Update your UI here
-                //println!("Cursor moved to Line: {}, Column: {}", line, column);
+        if let Some(status_buff) = get_status_buffer(&app) {
+            if let Some(buffer = get_text_buffer(&app) {       
+                let mut iter = buffer.start_iter();
+                let mark = buffer.create_mark(Some("position_mark"), &iter, false);
+                buffer.connect_mark_set(move |buffer, _location, mark| {
+                    if let Some(mark) = buffer.mark("position_mark") {
+                        let mut iter = buffer.end_iter();
+                        let line = iter.line();
+                        let column = iter.line_offset();
+        
+                        let position = format!("Line: {}  Column: {}", line, column);
+                        // Update your UI here
+                        //println!("Cursor moved to Line: {}, Column: {}", line, column);
+                    }
+                });
             }
-        });
+        }
     }
 }
