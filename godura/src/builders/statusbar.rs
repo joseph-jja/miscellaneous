@@ -37,5 +37,19 @@ pub mod statusbar {
                 status_buff.set_text(&position);
             }
         });
+
+        buffer.connect_notify(Some("cursor-position"), |buffer, _| {
+            // Get the updated character offset (0-indexed from the start)
+            let cursor_pos = buffer.property::<i32>("cursor-position");
+            
+            // Convert the character offset to a TextIter if you need to calculate line/column numbers
+            let mut iter = buffer.iter_at_offset(cursor_pos);
+            let line = iter.line();
+            let column = iter.line_offset();
+            let fmt_position = format!("Line: {}  Column: {}", line, column);
+            let position = fmt_position.as_str();
+            status_buff.set_text(&position);
+            //println!("Cursor moved to Offset: {}, Line: {}, Column: {}", cursor_pos, line, col);
+        });
     }
 }
