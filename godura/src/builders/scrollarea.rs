@@ -12,12 +12,12 @@ pub mod textarea {
     pub fn build_text_area() -> ScrolledWindow {
         let buffer = TextBuffer::builder().build();
 
-        let buff = buffer.clone();
+        let mut iter = buffer.start_iter();
+        let mark = buffer.create_mark(Some("position_mark"), &iter, false);
         buffer.connect_mark_set(move |buffer, _location, mark| {
             //let status_buff = get_status_buffer
-            let mut iter = buffer.end_iter();
-            if mark == buffer.insert_mark() {
-                let iter = buffer.iter_at_mark(mark);
+            if let Some(mark) = buffer.mark("position_mark") {
+                let mut iter = buffer.end_iter();
                 let line = iter.line();
                 let column = iter.line_offset();
         
