@@ -79,7 +79,7 @@ pub mod menubar {
                         }
                         if let Some(buffer) = get_text_buffer(&app_clone) {
                             let (start, end) = buffer.bounds();
-                            if (end > start) { 
+                            if end > start { 
                                 save_file(&app_clone);
                             }
                         }
