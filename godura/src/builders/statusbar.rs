@@ -28,6 +28,7 @@ pub mod statusbar {
             println!("Changed made");
             if let Some(mark) = buffer.mark("position_mark") {
                 let mut iter = buffer.end_iter();
+                buffer.move_mark(&mark, &iter);
                 let line = iter.line();
                 let column = iter.line_offset();
 
