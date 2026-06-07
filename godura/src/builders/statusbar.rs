@@ -18,28 +18,11 @@ pub mod statusbar {
         return text_view;
     }
 
-    pub fn attach_text_position(app: &Application) {
+        pub fn attach_text_position(app: &Application) {
 
         let status_buff = get_status_buffer(&app).unwrap();
         let buffer = get_text_buffer(&app).unwrap();
-        let mut iter = buffer.start_iter();
-        let mark = buffer.create_mark(Some("position_mark"), &iter, false);
-        buffer.connect_changed(move |buffer| {
-            println!("Changed made");
-            if let Some(mark) = buffer.mark("position_mark") {
-                let mut iter = buffer.end_iter();
-                buffer.move_mark(&mark, &iter);
-                let line = iter.line();
-                let column = iter.line_offset();
-
-                let fmt_position = format!("Line: {}  Column: {}", line, column);
-                let position = fmt_position.as_str();
-                println!("Mark found {:?}", position);
-                status_buff.set_text(&position);
-            }
-        });
-
-        /*buffer.connect_notify(Some("cursor-position"), |buffer, _| {
+        buffer.connect_notify(Some("cursor-position"), |buffer, _| {
             // Get the updated character offset (0-indexed from the start)
             let cursor_pos = buffer.property::<i32>("cursor-position");
             
@@ -49,8 +32,8 @@ pub mod statusbar {
             let column = iter.line_offset();
             let fmt_position = format!("Line: {}  Column: {}", line, column);
             let position = fmt_position.as_str();
-            status_buff.set_text(&position);
-            //println!("Cursor moved to Offset: {}, Line: {}, Column: {}", cursor_pos, line, col);
-        });*/
+            //status_buff.set_text(&position);
+            println!("Cursor moved to Line: {}, Column: {}", line, column);
+        });
     }
 }
