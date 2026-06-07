@@ -10,8 +10,9 @@ pub mod textarea {
     pub fn build_text_area() -> ScrolledWindow {
         let buffer = TextBuffer::builder().build();
 
+        let buff = buffer.clone();
         buffer.connect_changed(move |_| {
-            println!("Text updated!");
+            println!("Text updated! {:?}", &buff);
         });
 
         // 2. Create the TextView widget and assign the buffer
