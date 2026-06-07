@@ -13,13 +13,17 @@ pub mod textarea {
         let buffer = TextBuffer::builder().build();
 
         let buff = buffer.clone();
-        buffer.connect_changed(move |_| {
+        buffer.connect_mark_set(move |buffer, _location, mark| {
             //let status_buff = get_status_buffer
-            let insert_mark = buff.insert_mark();
-            let iter = buff.iter_at_mark(&insert_mark);
-            let line = iter.line();
-            let column = iter.line_offset();
-            println!("Text updated! {} {}", line, column);
+            let mut iter = buffer.end_iter();
+            if mark == buffer.insert_mark() {
+                let iter = buffer.iter_at_mark(mark);
+                let line = iter.line();
+                let column = iter.line_offset();
+        
+                // Update your UI here
+                println!("Cursor moved to Line: {}, Column: {}", line, column);
+            }
         });
 
         // 2. Create the TextView widget and assign the buffer
