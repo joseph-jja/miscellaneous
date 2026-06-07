@@ -1,10 +1,11 @@
 pub mod statusbar {
 
+    use gtk::glib::clone;
     use gtk::prelude::*;
     use gtk::{Application, TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
 
-    use crate::utils::utilities::utilities::{get_text_buffer, get_status_buffer};
+    use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
 
     pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
@@ -18,14 +19,18 @@ pub mod statusbar {
         return text_view;
     }
 
-        pub fn attach_text_position(app: &Application) {
-
-        let status_buff = get_status_buffer(&app).unwrap();
+    pub fn attach_text_position(app: &Application) {
         let buffer = get_text_buffer(&app).unwrap();
-        buffer.connect_notify(Some("cursor-position"), |buffer, _| {
+
+        buffer.connect_notify(Some("cursor-position"), move |buffer, _| {
+            //let root = buffer.toplevel().unwrap();
+            println!("Got root! {:?}", buffer);
+
+            // let status_buff = get_status_buffer(&app_clone).unwrap();
+
             // Get the updated character offset (0-indexed from the start)
             let cursor_pos = buffer.property::<i32>("cursor-position");
-            
+
             // Convert the character offset to a TextIter if you need to calculate line/column numbers
             let mut iter = buffer.iter_at_offset(cursor_pos);
             let line = iter.line();
