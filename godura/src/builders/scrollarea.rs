@@ -12,20 +12,6 @@ pub mod textarea {
     pub fn build_text_area() -> ScrolledWindow {
         let buffer = TextBuffer::builder().build();
 
-        let mut iter = buffer.start_iter();
-        let mark = buffer.create_mark(Some("position_mark"), &iter, false);
-        buffer.connect_mark_set(move |buffer, _location, mark| {
-            //let status_buff = get_status_buffer
-            if let Some(mark) = buffer.mark("position_mark") {
-                let mut iter = buffer.end_iter();
-                let line = iter.line();
-                let column = iter.line_offset();
-        
-                // Update your UI here
-                println!("Cursor moved to Line: {}, Column: {}", line, column);
-            }
-        });
-
         // 2. Create the TextView widget and assign the buffer
         let text_view = TextView::with_buffer(&buffer);
         //text_view.set_monospace(true); // Useful for code-like text
