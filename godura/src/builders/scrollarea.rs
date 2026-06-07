@@ -15,7 +15,7 @@ pub mod textarea {
         let buff = buffer.clone();
         buffer.connect_changed(move |_| {
             //let status_buff = get_status_buffer
-            let insert_mark = buff.insert();
+            let insert_mark = buff.insert_mark();
             let iter = buff.iter_at_mark(&insert_mark);
             let line = iter.line();
             let column = iter.line_offset();
