@@ -36,19 +36,19 @@ pub mod files {
         let is_user_action = std::rc::Rc::new(std::cell::Cell::new(false));
 
         // Track when user interaction starts
-        /*let user_act_clone = is_user_action.clone();
-        buffer.connect_begin_user_action(move |_| {
-            user_act_clone.set(true);
-        });
+        let user_act_clone = is_user_action.clone();
+       // buffer.connect_begin_user_action(move |_| {
+        //    user_act_clone.set(true);
+        //});
 
         // Track when user interaction ends
         let user_act_clone = is_user_action.clone();
-        buffer.connect_end_user_action(move |_| {
-            user_act_clone.set(false);
-        });
+        //buffer.connect_end_user_action(move |_| {
+        //    user_act_clone.set(false);
+        //});
 
         // Watch for changes
-        buffer.connect_changed(move |buffer| {
+        /*buffer.connect_changed(move |buffer| {
             if is_user_action.get() {
                 {
                     let mut file_change = file_changedindicator().write().unwrap();
