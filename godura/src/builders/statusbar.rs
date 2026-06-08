@@ -49,7 +49,7 @@ pub mod statusbar {
             let column = iter.line_offset();
             let fmt_position = format!("Line: {}  Column: {}", line, column);
             
-            println!("Cursor moved to Line: {}, Column: {}", line, column);
+            //println!("Cursor moved to Line: {}, Column: {}", line, column);
             let _ = sender.send(fmt_position);
         });
     }
