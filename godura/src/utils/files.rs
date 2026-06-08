@@ -4,6 +4,7 @@ pub mod files {
     use std::io;
     use std::sync::{OnceLock, RwLock};
 
+    use gtk::prelude::*;
     use gtk4 as gtk;
 
     const FILE_HAS_CHANGED: &str = "file changed";
@@ -36,19 +37,19 @@ pub mod files {
         let is_user_action = std::rc::Rc::new(std::cell::Cell::new(false));
 
         // Track when user interaction starts
-        let user_act_clone = is_user_action.clone();
-       // buffer.connect_begin_user_action(move |_| {
-        //    user_act_clone.set(true);
-        //});
+        let user_act_begin_clone = is_user_action.clone();
+        buffer.connect_begin_user_action(move |_| {
+            user_act_begin_clone.set(true);
+        });
 
         // Track when user interaction ends
-        let user_act_clone = is_user_action.clone();
-        //buffer.connect_end_user_action(move |_| {
-        //    user_act_clone.set(false);
-        //});
+        let user_act_end_clone = is_user_action.clone();
+        buffer.connect_end_user_action(move |_| {
+            user_act_end_clone.set(false);
+        });
 
         // Watch for changes
-        /*buffer.connect_changed(move |buffer| {
+        buffer.connect_changed(move |_| {
             if is_user_action.get() {
                 {
                     let mut file_change = file_changedindicator().write().unwrap();
@@ -56,7 +57,7 @@ pub mod files {
                     file_change.push_str(FILE_HAS_CHANGED);
                 }
             }
-        });*/
+        });
     }
 
     pub fn read_in_file(filename: &String) -> String {

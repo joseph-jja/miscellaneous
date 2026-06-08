@@ -3,7 +3,7 @@ pub mod menubar {
     use std::sync::{OnceLock, RwLock};
 
     use gtk::prelude::*;
-    use gtk::{gio, Application, FileDialog, PopoverMenuBar};//, SeparatorMenuItem};
+    use gtk::{gio, Application, FileDialog, PopoverMenuBar}; //, SeparatorMenuItem};
     use gtk4 as gtk;
 
     use crate::utils::files::files::{read_in_file, write_outfile};
@@ -79,7 +79,7 @@ pub mod menubar {
                         }
                         if let Some(buffer) = get_text_buffer(&app_clone) {
                             let (start, end) = buffer.bounds();
-                            if end > start { 
+                            if end > start {
                                 save_file(&app_clone);
                             }
                         }
@@ -108,7 +108,7 @@ pub mod menubar {
         file_menu.append_section(None, &file_section_two);
         file_menu.append_section(None, &file_section_three);
         file_menu.append_section(None, &file_section_four);
-        
+
         let edit_menu = gio::Menu::new();
         let edit_section_one = gio::Menu::new();
         edit_section_one.append(Some("Undo"), Some("app.Undo"));
