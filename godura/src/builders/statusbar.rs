@@ -1,18 +1,12 @@
 pub mod statusbar {
 
-    use gtk::glib::clone;
+    use gtk::glib;
     use gtk::prelude::*;
     use gtk::{Application, TextBuffer, TextView, WrapMode};
     use gtk4 as gtk;
+    use std::sync::mpsc;
 
     use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer};
-    
-    use std::sync::{OnceLock, RwLock};
-
-    pub fn position_string() -> &'static RwLock<String> {
-        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
-        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
-    }
 
     pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
@@ -29,9 +23,23 @@ pub mod statusbar {
     pub fn attach_text_position(app: &Application) {
         let buffer = get_text_buffer(&app).unwrap();
         let status_buff = get_status_buffer(&app).unwrap();
-        
-        buffer.connect_notify(Some("cursor-position"), move |buffer, _| {
 
+        let (sender, receiver) = mpsc::channel::<String>();
+
+        glib::idle_add_local(glib::clone!(
+            #[strong]
+            status_buff,
+            move || {
+                // Check if a message has arrived without blocking the UI thread loop
+                while let Ok(fmt_position) = receiver.try_recv() {
+                    status_buff.set_text(&fmt_position);
+                }
+                // Return ControlFlow::Continue to keep this background receiver check active
+                glib::ControlFlow::Continue
+            }
+        ));
+
+        buffer.connect_notify(Some("cursor-position"), move |buffer, _| {
             // Get the updated character offset (0-indexed from the start)
             let cursor_pos = buffer.property::<i32>("cursor-position");
 
@@ -42,13 +50,9 @@ pub mod statusbar {
             let fmt_position = format!("Line: {}  Column: {}", line, column);
             let position = fmt_position.as_str();
 
-            {
-                let mut text_position = position_string().write().unwrap();
-                text_position.clear();
-                text_position.push_str(&position);
-            }
             //status_buff.set_text(&position);
             println!("Cursor moved to Line: {}, Column: {}", line, column);
+            let _ = sender.send(fmt_position);
         });
     }
 }
