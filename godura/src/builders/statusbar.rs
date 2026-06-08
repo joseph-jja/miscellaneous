@@ -28,12 +28,9 @@ pub mod statusbar {
 
     pub fn attach_text_position(app: &Application) {
         let buffer = get_text_buffer(&app).unwrap();
-
+        let status_buff = get_status_buffer(&app_clone).unwrap();
+        
         buffer.connect_notify(Some("cursor-position"), move |buffer, _| {
-            //let root = buffer.toplevel().unwrap();
-            println!("Got root! {:?}", buffer);
-
-            // let status_buff = get_status_buffer(&app_clone).unwrap();
 
             // Get the updated character offset (0-indexed from the start)
             let cursor_pos = buffer.property::<i32>("cursor-position");
