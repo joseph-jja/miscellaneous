@@ -44,6 +44,16 @@ fn build_window(app: &Application) {
 
     window.set_child(Some(&main_box));
 
+    window.connect_close_request(|window| {
+        println!("Window close button was clicked!");
+
+        // Perform cleanup or show a dialog here
+        // need to check file changed flag
+
+        //glib::Propagation::Proceed
+        std::process::exit(0);
+    });
+
     statusbar::statusbar::attach_text_position(&app);
 
     window.present();

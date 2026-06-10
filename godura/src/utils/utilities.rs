@@ -34,7 +34,7 @@ pub mod utilities {
         }
         return None;
     }
-    
+
     pub fn get_status_buffer(app: &Application) -> Option<TextBuffer> {
         if let Some(window) = app.active_window() {
             let app_widget: Widget = window.upcast::<Widget>();

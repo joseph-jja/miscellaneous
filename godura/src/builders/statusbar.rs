@@ -6,7 +6,7 @@ pub mod statusbar {
     use gtk4 as gtk;
     use std::sync::mpsc;
 
-    use crate::utils::utilities::utilities::{get_text_buffer, get_status_textview};
+    use crate::utils::utilities::utilities::{get_status_textview, get_text_buffer};
 
     pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
