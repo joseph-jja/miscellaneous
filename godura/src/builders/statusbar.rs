@@ -32,7 +32,9 @@ pub mod statusbar {
             move || {
                 // Check if a message has arrived without blocking the UI thread loop
                 while let Ok(fmt_position) = receiver.try_recv() {
+                    status_view..set_editable(true);
                     status_view.buffer().set_text(&fmt_position);
+                    status_view..set_editable(false);
                 }
                 // Return ControlFlow::Continue to keep this background receiver check active
                 glib::ControlFlow::Continue
