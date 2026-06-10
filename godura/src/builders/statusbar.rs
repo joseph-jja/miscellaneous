@@ -6,7 +6,7 @@ pub mod statusbar {
     use gtk4 as gtk;
     use std::sync::mpsc;
 
-    use crate::utils::utilities::utilities::{get_status_buffer, get_text_buffer, get_status_textview};
+    use crate::utils::utilities::utilities::{get_text_buffer, get_status_textview};
 
     pub fn create_status_bar() -> TextView {
         let buffer = TextBuffer::builder().build();
@@ -22,18 +22,17 @@ pub mod statusbar {
 
     pub fn attach_text_position(app: &Application) {
         let buffer = get_text_buffer(&app).unwrap();
-        let status_buff = get_status_buffer(&app).unwrap();
         let status_view = get_status_textview(&app).unwrap();
 
         let (sender, receiver) = mpsc::channel::<String>();
 
         glib::idle_add_local(glib::clone!(
             #[strong]
-            status_buff,
+            status_view,
             move || {
                 // Check if a message has arrived without blocking the UI thread loop
                 while let Ok(fmt_position) = receiver.try_recv() {
-                    status_buff.set_text(&fmt_position);
+                    status_view.buffer().set_text(&fmt_position);
                 }
                 // Return ControlFlow::Continue to keep this background receiver check active
                 glib::ControlFlow::Continue
