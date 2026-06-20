@@ -55,7 +55,7 @@ fn main() {
         longitude.push_str(borrowe_str);
     }
     {
-        let key_temp: &str = &config_json.keyemp; 
+        let key_temp: &str = &config_json.key; 
         let mut api_key = open_weathermap_api_key().write().unwrap();
         api_key.clear();
         api_key.push_str(key_temp);
