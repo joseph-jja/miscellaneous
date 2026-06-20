@@ -7,9 +7,8 @@ pub mod weather {
     const RELOAD: int = 1000 * 60 * 60;
     const API_HOSTNAME: String = "https://api.weather.gov";
 
-    //DISCOVER_ENDPOINT = (latitude, longitude) => `/points/${latitude},${longitude}`;
+    pub async  fn get_weather_data() {
 
-    pub fn get_weather_data() {
         let endpoint: String = API_HOSTNAME;
         endpoint.push_str("/points/");
 
@@ -18,10 +17,16 @@ pub mod weather {
             let borrowed_str: &str = &latitude;
             endpoint.push_str(borrowed_str);
         }
+
+        endpoint.push_str(",");
+
         {
-            let mut latitude = current_longitude().read().unwrap();
+            let latitude = current_longitude().read().unwrap();
             let borrowed_str: &str = &latitude;
             endpoint.push_str(borrowed_str);
         }
+
+        let results = make_api_request(&endpoint).await.expect("Got weather data!");
+        println!("We got some results {:?}", results);
     }
 }
