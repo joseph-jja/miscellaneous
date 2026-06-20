@@ -34,21 +34,21 @@ pub mod utils {
         Ok(())
     }
 
-    /*#[tokio::main]
-    pub fn make_api_request(api_endpoint: &String)  -> Result<(), Box<dyn std::error::Error>> {
+    #[tokio::main]
+    pub async fn make_api_request(api_endpoint: &String)  -> String {
 
         // 1. Send the GET request
-        let response = reqwest::get(api_endpoint).await?;
+        let response = reqwest::get(api_endpoint).await.expect("Fetch of data failed");
 
         // 2. Check if the request was successful
         if response.status().is_success() {
             // 3. Parse the body text
-            let body = response.text().await?;
+            let body = response.text().await.expect("Get body content failed!");
             println!("Response body:\n{}", body);
+            return body;
         } else {
             println!("Server returned error: {}", response.status());
         }
-    
-        Ok(());
-    }*/
+         return String::from("");
+    }
 }
