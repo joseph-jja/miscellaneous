@@ -31,8 +31,8 @@ fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> 
 fn write_time() {
 
     let now_local = Local::now();
-    let hour = now.hour();
-    let minutes = now.minute();
+    let hour = now_local.hour();
+    let minutes = now_local.minute();
     println!("Local time: {}:{}", hour, minutes);
 }
 
