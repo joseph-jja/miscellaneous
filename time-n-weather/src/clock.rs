@@ -4,7 +4,8 @@ use std::process;
 use time::OffsetDateTime;
 
 pub mod utils;
-use crate::utils;
+use crate::utils::utils::utils::read_in_file;
+use crate::utils::utils::utils::write_file;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
