@@ -2,6 +2,7 @@ use std::fs::{read_to_string, write};
 use std::io;
 use std::process;
 use serde::{Deserialize, Serialize};
+use chrono::{Local};
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -27,6 +28,14 @@ fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> 
         Ok(())
 }
 
+fn write_time() {
+
+    let now_local = Local::now();
+    let hour = now.hour();
+    let minutes = now.minute();
+    println!("Local time: {}:{}", hour, minutes);
+}
+
 fn main() {
 
     let args: Vec<String> = std::env::args().collect();
@@ -42,4 +51,6 @@ fn main() {
                 .expect("Could not parse JSON file!");
 
     println!("Config file latitude: {:?}", configJSON.latitude);
+
+    write_time();    
 }
