@@ -37,9 +37,11 @@ fn main() {
         serde_json::from_str(config_file_data.as_str()).expect("Could not parse JSON file!");
 
     {
+        let lat_temp: String = config_json.latitude.to_string();
+        let borrowe_str: &str = &lat_temp; 
         let mut latitude = current_latitude().write().unwrap();
         latitude.clear();
-        latitude.push_str(&config_json.latitude);
+        latitude.push_str(borrowe_str);
     }
     /*{
         let mut longitude = current_longitude().write().unwrap();
