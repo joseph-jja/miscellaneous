@@ -1,31 +1,15 @@
-use std::fs::{read_to_string, write};
 use std::io;
 use std::process;
 use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
+
+use utils::utils::{ read_in_file, write_file, current_latitude, current_longitude, open_weathermap_api_key };
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
     key: String, 
     latitude: f32,
     longitude: f32
-}
-
-fn read_in_file(filename: &String) -> String {
-
-        let contents = read_to_string(filename).expect("Could not read file specified!");
-
-        //println!("Open file {:?}", filename);
-
-        return contents;
-    }
-
-fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
-
-        println!("Saving file {:?}", filename);
-
-        write(filename, filedata)?;
-        Ok(())
 }
 
 fn write_time() {
@@ -51,6 +35,22 @@ fn main() {
     let configFileData: String = read_in_file(&configFilename);
     let configJSON: ConfigData = serde_json::from_str(configFileData.as_str())
                 .expect("Could not parse JSON file!");
+
+    {
+                                let mut latitude = current_latitude().write().unwrap();
+                                current_latitude.clear();
+                                current_latitude.push_str(&configJSON.latitude);
+                            }
+    {
+                                let mut longitude = current_longitude().write().unwrap();
+                                current_longitude.clear();
+                                current_longitude.push_str(&configJSON.longitude);
+                            }
+    {
+                                let mut api_key = open_weathermap_api_key().write().unwrap();
+                                open_weathermap_api_key.clear();
+                                open_weathermap_api_key.push_str(&configFileData.key);
+                            }
 
     println!("Config file latitude: {:?}", configJSON.latitude);
 
