@@ -20,11 +20,8 @@ const readFile = promisify(fs.readFile);
 
 const hostname = os.hostname();
 
-const latitude = '37.7464',
-    longitude = '-122.4442';
-
 const API_HOSTNAME = 'api.openweathermap.org',
-    DISCOVER_ENDPOINT = `/data/2.5/weather?lat=${latitude}&lon=${longitude}`;
+    DISCOVER_ENDPOINT = (latitude, longitude) => `/data/2.5/weather?lat=${latitude}&lon=${longitude}`;
 
 const RELOAD = 1000 * 60 * 60;
 
@@ -36,9 +33,12 @@ async function start() {
 
     //const results = require('/tmp/full.js');
     const keyFile = await readFile(`${baseDir}/config.json`);
-    key = JSON.parse(keyFile.toString()).key;
+    const keyFileParsed = JSON.parse(keyFile.toString());
+    const key = keyFileParsed.key;
+    const latitude = keyFileParsed.latitude;
+    const longitude = keyFileParsed.longitude;
 
-    const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
+    const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT(latitude, longitude));
     options.path += `&APPID=${key}`;
 
     const [rerr, results] = await asyncwrapper(request(options));
