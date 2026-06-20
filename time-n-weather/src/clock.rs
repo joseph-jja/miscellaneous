@@ -39,7 +39,7 @@ fn main() {
     {
         let mut latitude = current_latitude().write().unwrap();
         latitude.clear();
-        latitude.push_str(&configJSON.latitude);
+        latitude.push_str(&config_json.latitude);
     }
     /*{
         let mut longitude = current_longitude().write().unwrap();
