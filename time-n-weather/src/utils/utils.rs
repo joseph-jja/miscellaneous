@@ -1,6 +1,6 @@
 pub mod utils {
 
-    use std:io;
+    use std::io;
     use std::fs::{read_to_string, write};
     use std::sync::{OnceLock, RwLock};
 
