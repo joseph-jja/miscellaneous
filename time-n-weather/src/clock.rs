@@ -49,16 +49,16 @@ fn main() {
     }
     {
         let long_temp: String = config_json.longitude.to_string();
-        let borrowe_str: &str = &lat_temp; 
+        let borrowe_str: &str = &long_temp; 
         let mut longitude = current_longitude().write().unwrap();
-        current_longitude.clear();
-        current_longitude.push_str(borrowe_str);
+        longitude.clear();
+        longitude.push_str(borrowe_str);
     }
     {
         let key_temp: &str = &config_json.keyemp; 
         let mut api_key = open_weathermap_api_key().write().unwrap();
-        open_weathermap_api_key.clear();
-        open_weathermap_api_key.push_str(key_temp);
+        api_key.clear();
+        api_key.push_str(key_temp);
     }
 
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
