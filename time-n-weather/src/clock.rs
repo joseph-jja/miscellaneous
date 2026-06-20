@@ -3,7 +3,8 @@ use std::io;
 use std::process;
 use time::OffsetDateTime;
 
-use utils::utils::{
+pub mod utils;
+use crate::utils::utils::{
     current_latitude, current_longitude, open_weathermap_api_key, read_in_file, write_file,
 };
 
