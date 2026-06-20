@@ -2,3 +2,5 @@ clock
 config.json
 whichnodejs.h
 node_modules
+target/*
+Cargo.lock
