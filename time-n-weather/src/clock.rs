@@ -4,10 +4,11 @@ use time::OffsetDateTime;
 
 pub mod utils;
 use crate::utils::utils::utils::read_in_file;
-//use crate::utils::utils::utils::write_outfile;
 use crate::utils::utils::utils::current_latitude;
 use crate::utils::utils::utils::current_longitude;
 use crate::utils::utils::utils::open_weathermap_api_key;
+
+use crate::utils::weather::weather::get_weather_data;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -64,4 +65,5 @@ fn main() {
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
     write_time();
+    get_weather_data();
 }
