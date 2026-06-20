@@ -5,6 +5,7 @@ use time::OffsetDateTime;
 pub mod utils;
 use crate::utils::utils::utils::read_in_file;
 use crate::utils::utils::utils::write_outfile;
+use crate::utils::utils::utils::current_latitude;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -30,13 +31,13 @@ fn main() {
         process::exit(1);
     }
 
-    let configFilename: String = args[1].clone();
-    let configFileData: String = utils::read_in_file(&configFilename);
-    let configJSON: ConfigData =
-        serde_json::from_str(configFileData.as_str()).expect("Could not parse JSON file!");
+    let config_filename: String = args[1].clone();
+    let config_file_data: String = read_in_file(&config_filename);
+    let config_json: ConfigData =
+        serde_json::from_str(config_file_data.as_str()).expect("Could not parse JSON file!");
 
-    {
-        let mut latitude = utils::current_latitude().write().unwrap();
+    /*{
+        let mut latitude = current_latitude().write().unwrap();
         utils::current_latitude.clear();
         utils::current_latitude.push_str(&configJSON.latitude);
     }
@@ -49,9 +50,9 @@ fn main() {
         let mut api_key = open_weathermap_api_key().write().unwrap();
         open_weathermap_api_key.clear();
         open_weathermap_api_key.push_str(&configFileData.key);
-    }
+    }*/
 
-    println!("Config file latitude: {:?}", configJSON.latitude);
+    println!("Config file latitude: {:?}", config_json.latitude);
 
     write_time();
 }
