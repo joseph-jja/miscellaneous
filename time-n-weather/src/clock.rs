@@ -4,11 +4,7 @@ use std::process;
 use time::OffsetDateTime;
 
 pub mod utils;
-use crate::utils::utils::utils::current_latitude;
-use crate::utils::utils::utils::current_longitude;
-use crate::utils::utils::utils::open_weathermap_api_key;
-use crate::utils::utils::utils::read_in_file;
-use crate::utils::utils::utils::write_file;
+use crate::utils::utils;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -35,14 +31,14 @@ fn main() {
     }
 
     let configFilename: String = args[1].clone();
-    let configFileData: String = read_in_file(&configFilename);
+    let configFileData: String = utils::read_in_file(&configFilename);
     let configJSON: ConfigData =
         serde_json::from_str(configFileData.as_str()).expect("Could not parse JSON file!");
 
     {
-        let mut latitude = current_latitude().write().unwrap();
-        current_latitude.clear();
-        current_latitude.push_str(&configJSON.latitude);
+        let mut latitude = utils::current_latitude().write().unwrap();
+        utils::current_latitude.clear();
+        utils::current_latitude.push_str(&configJSON.latitude);
     }
     {
         let mut longitude = current_longitude().write().unwrap();
