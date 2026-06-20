@@ -4,7 +4,7 @@ use time::OffsetDateTime;
 
 pub mod utils;
 use crate::utils::utils::utils::read_in_file;
-use crate::utils::utils::utils::write_outfile;
+//use crate::utils::utils::utils::write_outfile;
 use crate::utils::utils::utils::current_latitude;
 
 #[derive(Serialize, Deserialize)]
@@ -38,8 +38,8 @@ fn main() {
 
     {
         let mut latitude = current_latitude().write().unwrap();
-        current_latitude.clear();
-        current_latitude.push_str(&configJSON.latitude);
+        latitude.clear();
+        latitude.push_str(&configJSON.latitude);
     }
     /*{
         let mut longitude = current_longitude().write().unwrap();
