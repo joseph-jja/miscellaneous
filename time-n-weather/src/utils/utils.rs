@@ -34,7 +34,7 @@ pub mod utils {
         Ok(())
     }
 
-    #[tokio::main]
+    /*#[tokio::main]
     pub fn make_api_request(api_endpoint: &String)  -> Result<(), Box<dyn std::error::Error>> {
 
         // 1. Send the GET request
@@ -50,5 +50,5 @@ pub mod utils {
         }
     
         Ok(());
-    }
+    }*/
 }
