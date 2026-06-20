@@ -4,12 +4,12 @@ pub mod weather {
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
 
-    const RELOAD: int = 1000 * 60 * 60;
-    const API_HOSTNAME: String = "https://api.weather.gov";
+    const RELOAD: i32 = 1000 * 60 * 60;
+    const API_HOSTNAME: &str = "https://api.weather.gov";
 
-    pub async  fn get_weather_data() {
+    pub fn get_weather_data() {
 
-        let endpoint: String = API_HOSTNAME;
+        let mut endpoint: String = String::from(API_HOSTNAME);
         endpoint.push_str("/points/");
 
         {
@@ -26,7 +26,7 @@ pub mod weather {
             endpoint.push_str(borrowed_str);
         }
 
-        let results = make_api_request(&endpoint).await.expect("Got weather data!");
+        let results = make_api_request(&endpoint);//.expect("Got weather data!");
         println!("We got some results {:?}", results);
     }
 }
