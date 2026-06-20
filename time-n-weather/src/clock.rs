@@ -36,12 +36,12 @@ fn main() {
     let config_json: ConfigData =
         serde_json::from_str(config_file_data.as_str()).expect("Could not parse JSON file!");
 
-    /*{
-        let mut latitude = current_latitude().write().unwrap();
-        utils::current_latitude.clear();
-        utils::current_latitude.push_str(&configJSON.latitude);
-    }
     {
+        let mut latitude = current_latitude().write().unwrap();
+        current_latitude.clear();
+        current_latitude.push_str(&configJSON.latitude);
+    }
+    /*{
         let mut longitude = current_longitude().write().unwrap();
         current_longitude.clear();
         current_longitude.push_str(&configJSON.longitude);
