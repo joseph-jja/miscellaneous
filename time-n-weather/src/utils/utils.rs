@@ -33,4 +33,22 @@ pub mod utils {
         write(filename, filedata)?;
         Ok(())
     }
+
+    #[tokio::main]
+    pub fn make_api_request(api_endpoint: &String)  -> Result<(), Box<dyn std::error::Error>> {
+
+        // 1. Send the GET request
+        let response = reqwest::get(api_endpoint).await?;
+
+        // 2. Check if the request was successful
+        if response.status().is_success() {
+            // 3. Parse the body text
+            let body = response.text().await?;
+            println!("Response body:\n{}", body);
+        } else {
+            println!("Server returned error: {}", response.status());
+        }
+    
+        Ok(());
+    }
 }
