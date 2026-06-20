@@ -6,6 +6,8 @@ pub mod utils;
 use crate::utils::utils::utils::read_in_file;
 //use crate::utils::utils::utils::write_outfile;
 use crate::utils::utils::utils::current_latitude;
+use crate::utils::utils::utils::current_longitude;
+use crate::utils::utils::utils::open_weathermap_api_key;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -36,6 +38,8 @@ fn main() {
     let config_json: ConfigData =
         serde_json::from_str(config_file_data.as_str()).expect("Could not parse JSON file!");
 
+    // store these in rw lockable variables as they will be accessed by 2 APIs to get the data 
+    // we are going to save and eventually parse
     {
         let lat_temp: String = config_json.latitude.to_string();
         let borrowe_str: &str = &lat_temp; 
@@ -43,18 +47,21 @@ fn main() {
         latitude.clear();
         latitude.push_str(borrowe_str);
     }
-    /*{
+    {
+        let long_temp: String = config_json.longitude.to_string();
+        let borrowe_str: &str = &lat_temp; 
         let mut longitude = current_longitude().write().unwrap();
         current_longitude.clear();
-        current_longitude.push_str(&configJSON.longitude);
+        current_longitude.push_str(borrowe_str);
     }
     {
+        let key_temp: &str = &config_json.keyemp; 
         let mut api_key = open_weathermap_api_key().write().unwrap();
         open_weathermap_api_key.clear();
-        open_weathermap_api_key.push_str(&configFileData.key);
-    }*/
+        open_weathermap_api_key.push_str(key_temp);
+    }
 
-    println!("Config file latitude: {:?}", config_json.latitude);
+    println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
     write_time();
 }
