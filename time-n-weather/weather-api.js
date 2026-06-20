@@ -1,6 +1,6 @@
 const baseDir = process.cwd();
 
-const { readFile, writeFile } = require('fs/promises');,
+const { readFile, writeFile } = require('fs/promises'),
     os = require('os');
 
 const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
