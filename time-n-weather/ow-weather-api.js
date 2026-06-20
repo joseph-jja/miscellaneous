@@ -1,10 +1,7 @@
 const baseDir = process.cwd();
 
 const os = require('os'),
-    fs = require('fs'),
-    {
-        promisify
-    } = require('util');
+    { readFile, writeFile } = require('fs/promises');
 
 const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
     {
@@ -15,8 +12,6 @@ const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
         formatTime,
         formatDate
     } = require(`${baseDir}/node-libs/format.js`);
-
-const readFile = promisify(fs.readFile);
 
 const hostname = os.hostname();
 
@@ -78,8 +73,8 @@ async function start() {
     
     const data = `${temp}    ${tempRange}${os.EOL}${humidity}    ${cloudy}     ${rain}${os.EOL}${updated}`;
 
-    fs.writeFile('/tmp/details.txt', data, () => {});
-    fs.writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {});
+    await writeFile('/tmp/details.txt', data, () => {});
+    await writeFile('/tmp/full.js', `module.exports = ${JSON.stringify(results)};`, () => {});
 
 }
 
