@@ -1,11 +1,10 @@
 use serde::{Deserialize, Serialize};
-use std::io;
 use std::process;
 use time::OffsetDateTime;
 
 pub mod utils;
 use crate::utils::utils::utils::read_in_file;
-use crate::utils::utils::utils::write_file;
+use crate::utils::utils::utils::write_outfile;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
