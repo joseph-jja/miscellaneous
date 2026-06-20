@@ -1,9 +1,6 @@
 const baseDir = process.cwd();
 
-const fs = require('fs'),
-    {
-        promisify
-    } = require('util'),
+const { readFile, writeFile } = require('fs/promises');,
     os = require('os');
 
 const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
@@ -16,19 +13,19 @@ const asyncwrapper = require(`${baseDir}/node-libs/asyncWrapper`),
         formatDate
     } = require(`${baseDir}/node-libs/format.js`);
 
-const writeFile = promisify(fs.writeFile);
-
-const latitude = '37.7464',
-    longitude = '-122.4442';
-
 const RELOAD = 1000 * 60 * 60;
 
 const API_HOSTNAME = 'api.weather.gov',
-    DISCOVER_ENDPOINT = `/points/${latitude},${longitude}`;
-
-const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT);
+    DISCOVER_ENDPOINT = (latitude, longitude) => `/points/${latitude},${longitude}`;
 
 async function start() {
+
+    const configFile = await readFile(`${baseDir}/config.json`);
+    const configFileParsed = JSON.parse(configFile.toString());
+    const latitude = configFileParsed.latitude;
+    const longitude = configFileParsed.longitude;
+
+    const options = getOptions(API_HOSTNAME, DISCOVER_ENDPOINT(latitude, longitude));
 
     const [rerr, props] = await asyncwrapper(request(options));
     if (rerr) {
