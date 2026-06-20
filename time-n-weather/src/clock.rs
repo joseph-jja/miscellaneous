@@ -42,17 +42,17 @@ fn main() {
     // we are going to save and eventually parse
     {
         let lat_temp: String = config_json.latitude.to_string();
-        let borrowe_str: &str = &lat_temp; 
+        let borrowed_str: &str = &lat_temp; 
         let mut latitude = current_latitude().write().unwrap();
         latitude.clear();
-        latitude.push_str(borrowe_str);
+        latitude.push_str(borrowed_str);
     }
     {
         let long_temp: String = config_json.longitude.to_string();
-        let borrowe_str: &str = &long_temp; 
+        let borrowed_str: &str = &long_temp; 
         let mut longitude = current_longitude().write().unwrap();
         longitude.clear();
-        longitude.push_str(borrowe_str);
+        longitude.push_str(borrowed_str);
     }
     {
         let key_temp: &str = &config_json.key; 
