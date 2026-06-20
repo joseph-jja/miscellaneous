@@ -3,7 +3,7 @@ use std::process;
 use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
 
-use utils::utils::{ read_in_file, write_file, current_latitude, current_longitude, open_weathermap_api_key };
+use utils::{ read_in_file, write_file, current_latitude, current_longitude, open_weathermap_api_key };
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
