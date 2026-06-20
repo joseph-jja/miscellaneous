@@ -2,7 +2,7 @@ use std::fs::{read_to_string, write};
 use std::io;
 use std::process;
 use serde::{Deserialize, Serialize};
-use chrono::{Local};
+use time::OffsetDateTime;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -30,10 +30,12 @@ fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> 
 
 fn write_time() {
 
-    let now_local = Local::now();
-    let hour = now_local.hour();
-    let minutes = now_local.minute();
-    println!("Local time: {}:{}", hour, minutes);
+   if let Ok(now) = OffsetDateTime::now_local() {
+        let hour = now.hour();
+        let minute = now.minute();
+        
+        println!("Current time is {:02}:{:02}", hour, minute);
+    }
 }
 
 fn main() {
