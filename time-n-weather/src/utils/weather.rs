@@ -1,32 +1,62 @@
-pub mod weather {
+pub mod utils {
 
-    use crate::utils::utils::utils::current_latitude;
-    use crate::utils::utils::utils::current_longitude;
-    use crate::utils::utils::utils::make_api_request;
+    use std::io;
+    use std::fs::{read_to_string, write};
+    use std::sync::{OnceLock, RwLock};
 
-    const RELOAD: i32 = 1000 * 60 * 60;
-    const API_HOSTNAME: &str = "https://api.weather.gov";
+   const USER_AGENT: &str = "Nozilla/1.0 (console; pios x86_32 ) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/100.1.1";
 
-    pub fn get_weather_data() {
+    pub fn current_latitude() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
 
-        let mut endpoint: String = String::from(API_HOSTNAME);
-        endpoint.push_str("/points/");
+    pub fn current_longitude() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
 
-        {
-            let latitude = current_latitude().read().unwrap();
-            let borrowed_str: &str = &latitude;
-            endpoint.push_str(borrowed_str);
+    pub fn open_weathermap_api_key() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
+
+    pub fn read_in_file(filename: &String) -> String {
+        let contents = read_to_string(filename).expect("Could not read file specified!");
+
+        //println!("Open file {:?}", filename);
+
+        return contents;
+    }
+
+    pub fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
+        println!("Saving file {:?}", filename);
+
+        write(filename, filedata)?;
+        Ok(())
+    }
+
+    #[tokio::main]
+    pub async fn make_api_request(api_endpoint: &String)  -> String {
+
+        let client = reqwest::Client::new();
+
+        // 1. Send the GET request
+        let response = client.get(api_endpoint)
+            .header("User-Agent", USER_AGENT)
+            .header("Accept", "application/json")
+            .send()
+            .await.expect("Fetch of data failed");
+
+        // 2. Check if the request was successful
+        if response.status().is_success() {
+            // 3. Parse the body text
+            let body = response.text().await.expect("Get body content failed!");
+            println!("Response body:\n{}", body);
+            return body;
+        } else {
+            println!("Server returned error: {}", response.status());
         }
-
-        endpoint.push_str(",");
-
-        {
-            let latitude = current_longitude().read().unwrap();
-            let borrowed_str: &str = &latitude;
-            endpoint.push_str(borrowed_str);
-        }
-
-        let results = make_api_request(&endpoint);//.expect("Got weather data!");
-        println!("We got some results {:?}", results);
+         return String::from("");
     }
 }
