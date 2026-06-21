@@ -18,7 +18,7 @@ use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
 
-use crate::utils::numbers::numbers::write_zero;
+use crate::utils::write_number::number;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -31,6 +31,14 @@ fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
         let hour = now.hour();
         let minute = now.minute();
+
+        if hour > 10 {
+            number::write(4, 2, 0);
+            number::write(5 + 11 + 1, 2, hour);
+        } else {
+            number::write(4, 2, 1);
+            number::write(5 + 11 + 1, 2, hour - 10);
+        }
 
         let day = now.day();
         let month = now.month();
@@ -82,7 +90,7 @@ fn main() {
     sleep_terminal(3);
     init_terminal();
     clear_terminal();
-    write_zero(5, 15);
+    write_time();
     flush_stdout();
     sleep_terminal(5);
     destroy_terminal();
@@ -91,7 +99,6 @@ fn main() {
         config_json.latitude, config_json.longitude
     );
 
-    write_time();
     //get_weather_data();
     //get_open_weather_data();
 }
