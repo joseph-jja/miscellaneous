@@ -1,4 +1,6 @@
-pub mod numbers {
+pub mod numbers 
+
+    use crate::utils::terminal::terminal::draw_box_at_location;
 
     // width and height in this case 5x7
     const CLOCK_FONT_WIDTH: i16 = 5;
@@ -13,41 +15,32 @@ pub mod numbers {
 
         let mut i: i8;
 
-        //move(yp, xp);
-
-        //addch(ACS_CKBOARD);
+        draw_box_at_location(xp, yp);
         for i in 0..width {
             xp += 1;
-            //move(yp, xp);
-            //addch(ACS_CKBOARD);
+            draw_box_at_location(xp, yp);
         }
         xp += 1;
-        //move(yp, xp);
-        //addch(ACS_CKBOARD);
-
+        draw_box_at_location(xp, yp);
+        
         for i in 0..height {
             xp = x;
             yp += 1;
-            //move(yp, xp);
-            //addch(ACS_CKBOARD);
+            draw_box_at_location(xp, yp);
             xp += width;
             xp += 1;
-            //move(yp, xp);
-            //addch(ACS_CKBOARD);
+            draw_box_at_location(xp, yp);
         }
 
         xp = x;
         yp += 1;
-        //move(yp, xp);
-        //addch(ACS_CKBOARD);
+        draw_box_at_location(xp, yp);
         for i in 0..width {
             xp += 1;
-            //move(yp, xp);
-            //addch(ACS_CKBOARD);
+            draw_box_at_location(xp, yp);
         }
         xp += 1;
-        //move(yp, xp);
-        //addch(ACS_CKBOARD);
+        draw_box_at_location(xp, yp);
     }
 
     pub fn write_one(x: i16, y: i16) {
