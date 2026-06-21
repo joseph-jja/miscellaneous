@@ -73,12 +73,6 @@ fn main() {
     }
 
     init_terminal();
-
-    draw_box_at_location(10, 10);
-    draw_box_at_location(10, 15);
-    draw_box_at_location(10, 20);
-    flush_stdout();
-    
     destroy_terminal();
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
