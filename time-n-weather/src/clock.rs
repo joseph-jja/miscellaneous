@@ -3,18 +3,18 @@ use std::process;
 use time::OffsetDateTime;
 
 pub mod utils;
-use crate::utils::utils::utils::read_in_file;
 use crate::utils::utils::utils::current_latitude;
 use crate::utils::utils::utils::current_longitude;
 use crate::utils::utils::utils::open_weathermap_api_key;
+use crate::utils::utils::utils::read_in_file;
 
-use crate::utils::weather::weather::get_weather_data;
 use crate::utils::open_weather::open_weather::get_open_weather_data;
+use crate::utils::weather::weather::get_weather_data;
 
-use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::destroy_terminal;
 use crate::utils::terminal::terminal::draw_box_at_location;
 use crate::utils::terminal::terminal::flush_stdout;
+use crate::utils::terminal::terminal::init_terminal;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -32,7 +32,10 @@ fn write_time() {
         let month = now.month();
         let year = now.year();
 
-        println!("Current time is {:02}:{:02} and date {:04}/{:02}/{:02}", hour, minute, year, month, day);
+        println!(
+            "Current time is {:02}:{:02} and date {:04}/{:02}/{:02}",
+            hour, minute, year, month, day
+        );
     }
 }
 
@@ -49,24 +52,24 @@ fn main() {
     let config_json: ConfigData =
         serde_json::from_str(config_file_data.as_str()).expect("Could not parse JSON file!");
 
-    // store these in rw lockable variables as they will be accessed by 2 APIs to get the data 
+    // store these in rw lockable variables as they will be accessed by 2 APIs to get the data
     // we are going to save and eventually parse
     {
         let lat_temp: String = config_json.latitude.to_string();
-        let borrowed_str: &str = &lat_temp; 
+        let borrowed_str: &str = &lat_temp;
         let mut latitude = current_latitude().write().unwrap();
         latitude.clear();
         latitude.push_str(borrowed_str);
     }
     {
         let long_temp: String = config_json.longitude.to_string();
-        let borrowed_str: &str = &long_temp; 
+        let borrowed_str: &str = &long_temp;
         let mut longitude = current_longitude().write().unwrap();
         longitude.clear();
         longitude.push_str(borrowed_str);
     }
     {
-        let key_temp: &str = &config_json.key; 
+        let key_temp: &str = &config_json.key;
         let mut api_key = open_weathermap_api_key().write().unwrap();
         api_key.clear();
         api_key.push_str(key_temp);
@@ -74,7 +77,10 @@ fn main() {
 
     init_terminal();
     destroy_terminal();
-    println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
+    println!(
+        "Config file latitude: {:?} and longitude: {:?}",
+        config_json.latitude, config_json.longitude
+    );
 
     write_time();
     //get_weather_data();
