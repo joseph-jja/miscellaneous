@@ -88,7 +88,7 @@ pub mod numbers {
         draw_box_at_location(yp, xp);
 
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -111,7 +111,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -131,7 +131,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
        
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -153,7 +153,7 @@ pub mod numbers {
          draw_box_at_location(yp, xp);
 
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -197,7 +197,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -239,7 +239,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -407,7 +407,7 @@ pub mod numbers {
         draw_box_at_location(yp, xp);
 
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -445,7 +445,7 @@ pub mod numbers {
         draw_box_at_location(yp, xp);
 
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -469,7 +469,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -493,7 +493,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -515,7 +515,7 @@ pub mod numbers {
         draw_box_at_location(yp, xp);
 
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -539,7 +539,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
@@ -562,7 +562,7 @@ pub mod numbers {
     yp+= 1;
     draw_box_at_location(yp, xp);
     
-    for i 0..width {
+    for i in 0..width {
         xp+= 1;
         draw_box_at_location(yp, xp);
         
