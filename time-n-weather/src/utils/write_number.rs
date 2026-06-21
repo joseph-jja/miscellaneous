@@ -23,7 +23,7 @@ pub mod number {
           6 => write_six(x, y),
           7 => write_seven(x, y),
           8 => write_eight(x, y),
-          9 => write_nine(x, y);
+          9 => write_nine(x, y),
           _ => println!("Something else!")
       }
   }
