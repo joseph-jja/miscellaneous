@@ -12,7 +12,7 @@ use crate::utils::weather::weather::get_weather_data;
 use crate::utils::open_weather::open_weather::get_open_weather_data;
 
 use crate::utils::terminal::terminal::init_terminal;
-use crate::utils::terminal::terminal::destro_terminal;
+use crate::utils::terminal::terminal::destroy_terminal;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -26,7 +26,11 @@ fn write_time() {
         let hour = now.hour();
         let minute = now.minute();
 
-        println!("Current time is {:02}:{:02}", hour, minute);
+        let day = now.day();
+        let month = now.month();
+        let year = now.year();
+
+        println!("Current time is {:02}:{:02} and date {:04}/{:02}/{:02}", hour, minute, year, month, day);
     }
 }
 
@@ -66,9 +70,12 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
+    init_terminal();
+    destroy_terminal();
+
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
     write_time();
     //get_weather_data();
-    get_open_weather_data();
+    //get_open_weather_data();
 }
