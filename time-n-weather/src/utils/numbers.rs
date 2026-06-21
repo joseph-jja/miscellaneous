@@ -43,48 +43,48 @@ pub mod numbers {
         draw_box_at_location(xp, yp);
     }
 
-    pub fn write_one(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_one(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_two(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_two(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_three(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_three(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_four(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_four(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_five(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_five(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_six(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_six(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_seven(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_seven(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_eight(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_eight(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 
-    pub fn write_nine(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_nine(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
     }
 }
