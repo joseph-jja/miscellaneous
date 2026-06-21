@@ -34,10 +34,10 @@ fn write_time() {
 
         if hour > 10 {
             number::write(4, 2, 0);
-            number::write(5 + 11 + 1, 2, hour);
+            number::write(5 + 11 + 1, 2, u16::from(hour));
         } else {
             number::write(4, 2, 1);
-            number::write(5 + 11 + 1, 2, hour - 10);
+            number::write(5 + 11 + 1, 2, u16::from(hour - 10));
         }
 
         let day = now.day();
