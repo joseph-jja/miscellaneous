@@ -9,6 +9,7 @@ use crate::utils::utils::utils::current_longitude;
 use crate::utils::utils::utils::open_weathermap_api_key;
 
 use crate::utils::weather::weather::get_weather_data;
+use crate::utils::open_weather::open_weather::get_open_weather_data;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -65,5 +66,6 @@ fn main() {
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
     write_time();
-    get_weather_data();
+    //get_weather_data();
+    get_open_weather_data();
 }
