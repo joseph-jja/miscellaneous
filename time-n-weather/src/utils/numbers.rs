@@ -16,7 +16,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(xp, yp);
         for _ in 0..width {
@@ -53,7 +53,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -83,7 +83,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -148,7 +148,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
          draw_box_at_location(yp, xp);
 
@@ -215,7 +215,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -273,7 +273,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -337,7 +337,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -403,7 +403,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -441,7 +441,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
@@ -511,7 +511,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let mut i: i8;
+        
 
         draw_box_at_location(yp, xp);
 
