@@ -12,6 +12,8 @@ serde_json = "1.0"
 reqwest = { version = "0.12", features = ["json"] }
 tokio = { version = "1.0", features = ["full"] }
 time = { version = "0.3", features = ["macros", "local-offset"] }
+crossterm = "0.29.0"
+set_timeout = "0.1.4"
 
 [[bin]]
 name = "time-n-weather"
