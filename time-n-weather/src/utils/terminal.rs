@@ -41,7 +41,7 @@ pub mod terminal {
     }
 
     // future will take color
-    pub fn draw_box_at_location(x: i16, y: i16) {
+    pub fn draw_box_at_location(x: u16, y: u16) {
 
         let mut stdout = stdout();
 
