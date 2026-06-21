@@ -43,11 +43,22 @@ pub mod terminal {
         execute!(stdout, Show, LeaveAlternateScreen).expect("Failed to execute again");
     }
 
+    pub fn clear_terminal() {
+        let mut stdout = stdout();
+
+        enable_raw_mode().expect("Error setting raw mode");
+        execute!(stdout, EnterAlternateScreen, Hide).expect("Failed to execute");
+    }
+
     // future will take color
     pub fn draw_box_at_location(x: u16, y: u16) {
         let mut stdout = stdout();
 
         queue!(stdout, MoveTo(x, y), PrintStyledContent("█".magenta())).expect("Write failed");
+    }
+
+    pub fn sleep_terminal(x: u64) {
+        std::thread::sleep(std::time::Duration::from_secs(x));
     }
 
     pub fn flush_stdout() {

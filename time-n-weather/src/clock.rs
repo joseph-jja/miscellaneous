@@ -15,6 +15,8 @@ use crate::utils::terminal::terminal::destroy_terminal;
 use crate::utils::terminal::terminal::draw_box_at_location;
 use crate::utils::terminal::terminal::flush_stdout;
 use crate::utils::terminal::terminal::init_terminal;
+use crate::utils::terminal::terminal::clear_terminal;
+use crate::utils::terminal::terminal::sleep_terminal;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -75,7 +77,14 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
+    sleep_terminal(3);
     init_terminal();
+    clear_terminal();
+    draw_box_at_location(5, 15);
+    draw_box_at_location(15, 15);
+    draw_box_at_location(25, 15);
+    flush_stdout();
+    sleep_terminal(5);
     destroy_terminal();
     println!(
         "Config file latitude: {:?} and longitude: {:?}",
