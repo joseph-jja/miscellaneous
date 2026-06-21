@@ -88,7 +88,6 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
-    sleep_terminal(3);
     init_terminal();
     clear_terminal();
     write_time();
