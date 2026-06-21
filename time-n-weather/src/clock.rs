@@ -29,15 +29,16 @@ struct ConfigData {
 
 fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
-        let hour = now.hour();
+        let hour = u16::from(now.hour());
         let minute = now.minute();
 
-        if hour > 10 {
+        if hour < 10 {
             number::write(4, 2, 0);
-            number::write(5 + 11 + 1, 2, u16::from(hour));
+            number::write(5 + 11 + 1, 2, hour);
         } else {
+            let hour_part = hour - 10;
             number::write(4, 2, 1);
-            number::write(5 + 11 + 1, 2, u16::from(hour - 10));
+            number::write(5 + 11 + 1, 2, hour_part);
         }
 
         let day = now.day();
