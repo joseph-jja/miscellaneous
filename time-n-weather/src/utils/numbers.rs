@@ -3,12 +3,12 @@ pub mod numbers {
     use crate::utils::terminal::terminal::draw_box_at_location;
 
     // width and height in this case 5x7
-    const CLOCK_FONT_WIDTH: i16 = 5;
-    const CLOCK_FONT_HEIGHT: i16 = 7;
+    const CLOCK_FONT_WIDTH: u16 = 5;
+    const CLOCK_FONT_HEIGHT: u16 = 7;
 
-    pub fn write_zero(x: i16, y: i16) {
-        let width: i16 = CLOCK_FONT_WIDTH - 2;
-        let height: i16 = CLOCK_FONT_HEIGHT - 2;
+    pub fn write_zero(x: u16, y: u16) {
+        let width: u16 = CLOCK_FONT_WIDTH - 2;
+        let height: u16 = CLOCK_FONT_HEIGHT - 2;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
