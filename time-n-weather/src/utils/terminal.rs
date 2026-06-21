@@ -40,6 +40,19 @@ pub mod terminal {
         execute!(stdout, Show, LeaveAlternateScreen).expect("Failed to execute again");
     }
 
+    // future will take color
+    pub fn draw_box_at_location(x: i16, y: i16) {
+
+        let mut stdout = stdout();
+
+        queue!(stdout, MoveTo(x, y), PrintStyledContent( "█".magenta())).expect("Write failed");
+    }
+
+    pub fn flush_stdout() {
+        let mut stdout = stdout();
+        stdout.flush().expect("Flush failed");
+    }
+
     pub fn destroy_terminal() {
         disable_raw_mode().expect("Failed to disable raw mode");
     }
