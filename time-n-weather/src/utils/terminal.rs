@@ -36,7 +36,7 @@ pub fn init_terminal() {
     disable_raw_mode()?;
 }
 
-  pub fn destro_termina() {
+  pub fn destro_terminal() {
     disable_raw_mode()?;
   }
 }
