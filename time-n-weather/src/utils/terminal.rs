@@ -25,6 +25,16 @@ pub fn init_terminal() {
         Print("This text is drawn at a specific coordinate.")
     ).expect("Print failed");
 
+      queue!(
+        stdout,
+        Print("Welcome to Crossterm!\r\n"),
+        Print("=====================\r\n"),
+        MoveTo(10, 4),
+        Print("This text is drawn at a specific coordinate.")
+    ).expect("Print failed");
+
+    queue!(stdout, cursor::MoveTo(5, 8), style::PrintStyledContent( "█".magenta())).expect("Write failed");
+
     // 4. Render everything to the screen at once
     stdout.flush().expect("Flush failed");;
 
