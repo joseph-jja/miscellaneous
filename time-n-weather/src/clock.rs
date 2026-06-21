@@ -13,6 +13,8 @@ use crate::utils::open_weather::open_weather::get_open_weather_data;
 
 use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::destroy_terminal;
+use crate::utils::terminal::terminal::draw_box_at_location;
+use crate::utils::terminal::terminal::flush_stdout;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -71,8 +73,13 @@ fn main() {
     }
 
     init_terminal();
-    destroy_terminal();
 
+    draw_box_at_location(10, 10);
+    draw_box_at_location(10, 15);
+    draw_box_at_location(10, 20);
+    flush_stdout();
+    
+    destroy_terminal();
     println!("Config file latitude: {:?} and longitude: {:?}", config_json.latitude, config_json.longitude);
 
     write_time();
