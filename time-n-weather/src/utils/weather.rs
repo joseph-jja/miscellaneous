@@ -8,7 +8,6 @@ pub mod weather {
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
     pub fn get_weather_data() {
-
         let mut endpoint: String = String::from(API_HOSTNAME);
         endpoint.push_str("/points/");
 
@@ -26,7 +25,7 @@ pub mod weather {
             endpoint.push_str(borrowed_str);
         }
 
-        let results = make_api_request(&endpoint);//.expect("Got weather data!");
+        let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
     }
 }

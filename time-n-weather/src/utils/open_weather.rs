@@ -1,4 +1,3 @@
-
 pub mod open_weather {
 
     use crate::utils::utils::utils::current_latitude;
@@ -10,7 +9,6 @@ pub mod open_weather {
     const API_HOSTNAME: &str = "https://api.openweathermap.org";
 
     pub fn get_open_weather_data() {
-
         let mut endpoint: String = String::from(API_HOSTNAME);
         endpoint.push_str("/data/2.5/weather?lat=");
 
@@ -29,14 +27,14 @@ pub mod open_weather {
         }
 
         endpoint.push_str("&APPID=");
-        
+
         {
             let api_key = open_weathermap_api_key().read().unwrap();
             let borrowed_str: &str = &api_key;
             endpoint.push_str(borrowed_str);
         }
 
-        let results = make_api_request(&endpoint);//.expect("Got weather data!");
+        let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
     }
 }
