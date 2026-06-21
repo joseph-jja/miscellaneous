@@ -4,6 +4,7 @@ pub mod open_weather {
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
+    use crate::utils::utils::utils::open_weathermap_api_key;
 
     const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.openweathermap.org";
