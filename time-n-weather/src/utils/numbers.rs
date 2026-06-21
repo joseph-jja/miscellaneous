@@ -2,9 +2,12 @@ pub mod numbers {
 
     use crate::utils::terminal::terminal::draw_box_at_location;
 
-    // width and height in this case 5x7
-    const CLOCK_FONT_WIDTH: u16 = 5;
-    const CLOCK_FONT_HEIGHT: u16 = 7;
+    // width and height in C the default was 5x7
+    // then in C preprocessor direcives would override
+    // not in the mood to use rust macro for this just yet
+    // width and height in this case 11x15
+    const CLOCK_FONT_WIDTH: u16 = 11;
+    const CLOCK_FONT_HEIGHT: u16 = 15;
 
     pub fn write_zero(x: u16, y: u16) {
         let width: u16 = CLOCK_FONT_WIDTH - 2;
