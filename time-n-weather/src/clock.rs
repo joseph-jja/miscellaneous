@@ -18,7 +18,7 @@ use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
 
-use crate::utils::numbers::number::write_zero;
+use crate::utils::numbers::numbers::write_zero;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
