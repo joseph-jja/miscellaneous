@@ -24,11 +24,11 @@ pub mod terminal {
             Print("Welcome to Crossterm!\r\n"),
             Print("=====================\r\n"),
             MoveTo(10, 4),
-            Print("If you are seeing this text drawn at a specific coordinates and underlines, then it works!")
+            Print("If you are seeing this drawn at x=10, y=4 and underlined it works!")
         )
         .expect("Print failed");
 
-        for x in 0..45 {
+        for x in 0..67 {
             queue!(stdout, MoveTo(10 + x, 5), PrintStyledContent("█".magenta()))
                 .expect("Write failed");
         }
