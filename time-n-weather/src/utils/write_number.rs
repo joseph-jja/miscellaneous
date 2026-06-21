@@ -1,4 +1,4 @@
-pub mod write_number {
+pub mod number {
 
   use crate::utils::numbers::numbers::write_zero;
   use crate::utils::numbers::numbers::write_one;
@@ -10,7 +10,7 @@ pub mod write_number {
   use crate::utils::numbers::numbers::write_eight;
   use crate::utils::numbers::numbers::write_nine;
   
-  pub writeNumber(x: u16, y: u16, num: u16) {
+  pub write(x: u16, y: u16, num: u16) {
   
       match num {
           0 => write_zero(x, y),
