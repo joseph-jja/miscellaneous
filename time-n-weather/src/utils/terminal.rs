@@ -12,10 +12,10 @@ use std::io::{stdout, Write};
 pub fn init_terminal() {
 
   let mut stdout = stdout();
-    enable_raw_mode()?;
-    execute!(stdout, EnterAlternateScreen, Hide)?;
+    enable_raw_mode().expect("Error setting raw mode");
+    execute!(stdout, EnterAlternateScreen, Hide).expect("Failed to execute");
 
-      queue!(stdout, Clear(ClearType::All), MoveTo(0, 0))?;
+      queue!(stdout, Clear(ClearType::All), MoveTo(0, 0)).expect("Move failed");
 
   queue!(
         stdout,
@@ -23,20 +23,19 @@ pub fn init_terminal() {
         Print("=====================\r\n"),
         MoveTo(0, 4),
         Print("This text is drawn at a specific coordinate.")
-    )?;
+    ).expect("Print failed");
 
     // 4. Render everything to the screen at once
-    stdout.flush()?;
+    stdout.flush().expect("Flush failed");;
 
     // Pause briefly to view output before restoring terminal state
     std::thread::sleep(std::time::Duration::from_secs(3));
 
     // 5. Clean up terminal state before exiting
-    execute!(stdout, Show, LeaveAlternateScreen)?;
-    disable_raw_mode()?;
+    execute!(stdout, Show, LeaveAlternateScreen).expect("Failed to execute again");
 }
 
   pub fn destro_terminal() {
-    disable_raw_mode()?;
+    disable_raw_mode().expect("Failed to disable raw mode");
   }
 }
