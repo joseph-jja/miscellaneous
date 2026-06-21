@@ -21,7 +21,7 @@ pub fn init_terminal() {
         stdout,
         Print("Welcome to Crossterm!\r\n"),
         Print("=====================\r\n"),
-        MoveTo(0, 4),
+        MoveTo(10, 4),
         Print("This text is drawn at a specific coordinate.")
     ).expect("Print failed");
 
