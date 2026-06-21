@@ -5,6 +5,7 @@ pub mod number {
   use crate::utils::numbers::numbers::write_two;
   use crate::utils::numbers::numbers::write_three;
   use crate::utils::numbers::numbers::write_four;
+  use crate::utils::numbers::numbers::write_five;
   use crate::utils::numbers::numbers::write_six;
   use crate::utils::numbers::numbers::write_seven;
   use crate::utils::numbers::numbers::write_eight;
