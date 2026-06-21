@@ -4,7 +4,7 @@ use crossterm::{
     cursor::{MoveTo, Hide, Show},
     execute,
     queue,
-    style::{self, Stylize, Print}
+    style::{self, Stylize, Print},
     terminal::{Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use std::io::{stdout, Write};
