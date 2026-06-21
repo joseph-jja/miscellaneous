@@ -4,7 +4,7 @@ use crossterm::{
     cursor::{MoveTo, Hide, Show},
     execute,
     queue,
-    style::{self, Stylize, Print},
+    style::{self, Stylize, Print, PrintStyledContent},
     terminal::{Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use std::io::{stdout, Write};
@@ -33,7 +33,7 @@ pub fn init_terminal() {
         Print("This text is drawn at a specific coordinate.")
     ).expect("Print failed");
 
-    queue!(stdout, cursor::MoveTo(5, 8), style::PrintStyledContent( "█".magenta())).expect("Write failed");
+    queue!(stdout, MoveTo(5, 8), PrintStyledContent( "█".magenta())).expect("Write failed");
 
     // 4. Render everything to the screen at once
     stdout.flush().expect("Flush failed");;
