@@ -10,7 +10,7 @@ pub mod number {
   use crate::utils::numbers::numbers::write_eight;
   use crate::utils::numbers::numbers::write_nine;
   
-  pub write(x: u16, y: u16, num: u16) {
+  pub fn write(x: u16, y: u16, num: u16) {
   
       match num {
           0 => write_zero(x, y),
