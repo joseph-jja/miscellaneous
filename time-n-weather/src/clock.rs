@@ -11,6 +11,9 @@ use crate::utils::utils::utils::open_weathermap_api_key;
 use crate::utils::weather::weather::get_weather_data;
 use crate::utils::open_weather::open_weather::get_open_weather_data;
 
+use crate::utils::terminal::terminal::init_terminal;
+use crate::utils::terminal::terminal::destro_terminal;
+
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
     key: String,
