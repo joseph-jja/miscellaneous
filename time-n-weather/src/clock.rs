@@ -82,7 +82,7 @@ fn main() {
     sleep_terminal(3);
     init_terminal();
     clear_terminal();
-    write_zero((5, 15);
+    write_zero(5, 15);
     flush_stdout();
     sleep_terminal(5);
     destroy_terminal();
