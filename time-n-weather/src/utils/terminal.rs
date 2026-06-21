@@ -35,7 +35,7 @@ pub fn init_terminal() {
     execute!(stdout, Show, LeaveAlternateScreen).expect("Failed to execute again");
 }
 
-  pub fn destro_terminal() {
+  pub fn destroy_terminal() {
     disable_raw_mode().expect("Failed to disable raw mode");
   }
 }
