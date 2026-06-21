@@ -1,4 +1,4 @@
-pub mod numbers 
+pub mod numbers {
 
     use crate::utils::terminal::terminal::draw_box_at_location;
 
