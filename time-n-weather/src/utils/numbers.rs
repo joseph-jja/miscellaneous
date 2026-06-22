@@ -51,21 +51,15 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        draw_box_at_location(xp, yp);
-
         xp += width;
         draw_box_at_location(xp, yp);
 
         for _ in 0..height {
-            xp = x;
             yp += 1;
-            xp += width;
             draw_box_at_location(xp, yp);
         }
 
-        xp = x;
         yp += 1;
-        xp += width;
         draw_box_at_location(xp, yp);
     }
 
