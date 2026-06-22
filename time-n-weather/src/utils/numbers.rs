@@ -62,6 +62,7 @@ pub mod numbers {
         let middle: u16 = y + (height / 2);
         let bottom: u16 = y + height;
 
+       draw_box_at_location(xp, top);
         xp += 1;
         for _ in 0..width - 2 {
             draw_box_at_location(xp, top);
@@ -69,7 +70,8 @@ pub mod numbers {
             draw_box_at_location(xp, bottom);
             xp += 1;
         }
-
+        draw_box_at_location(xp, bottom);
+ 
         xp = x + width - 1;
         yp = top + 1;
         for _ in 0..middle - 3 {
@@ -96,14 +98,17 @@ pub mod numbers {
         let middle: u16 = y + (height / 2);
         let bottom: u16 = y + height;
 
-        xp += 1;
+       xp = x;
+       draw_box_at_location(xp, top);
+       draw_box_at_location(xp, bottom);
+       xp += 1;
         for _ in 0..width - 2 {
             draw_box_at_location(xp, top);
             draw_box_at_location(xp, middle);
             draw_box_at_location(xp, bottom);
             xp += 1;
         }
-
+ 
         xp = x + width - 1;
         yp = top + 1;
         for _ in 0..middle - 3 {
