@@ -174,56 +174,39 @@ pub mod numbers {
     }
 
     pub fn write_five(x: u16, y: u16) {
-        let width: u16 = CLOCK_FONT_WIDTH - 2;
-        let height: u16 = CLOCK_FONT_HEIGHT - 2;
+        let width: u16 = CLOCK_FONT_WIDTH;
+        let height: u16 = CLOCK_FONT_HEIGHT;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        draw_box_at_location(xp, yp);
+        let top: u16 = yp;
+        let middle: u16 = y + (height / 2);
+        let bottom: u16 = y + height;
 
-        for _ in 0..width {
-            xp += 1;
-            draw_box_at_location(xp, yp);
-        }
+        draw_box_at_location(xp, bottom);
         xp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..height {
-            xp = x;
+        for _ in 0..width - 2 {
+            draw_box_at_location(xp, top);
+            draw_box_at_location(xp, middle);
+            draw_box_at_location(xp, bottom);
+            xp += 1;
+        }
+       draw_box_at_location(xp, top);
+ 
+        xp = x;
+        yp = top + 1;
+        for _ in 0..middle - 3 {
+            draw_box_at_location(xp, yp);
             yp += 1;
-            draw_box_at_location(xp, yp);
         }
 
-        xp = x;
-        yp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..width {
-            xp += 1;
+        xp = x + width - 1;
+        yp = middle + 1;
+        for _ in middle..height +1 {
             draw_box_at_location(xp, yp);
-        }
-        xp += 1;
-        draw_box_at_location(xp, yp);
-
-        xp = x;
-        xp += width;
-        xp += 1;
-        for _ in 0..height {
             yp += 1;
-            draw_box_at_location(xp, yp);
         }
-
-        xp = x;
-        yp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..width {
-            xp += 1;
-            draw_box_at_location(xp, yp);
-        }
-        xp += 1;
-        draw_box_at_location(xp, yp);
     }
 
     pub fn write_six(x: u16, y: u16) {
