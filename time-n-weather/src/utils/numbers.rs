@@ -10,56 +10,44 @@ pub mod numbers {
     const CLOCK_FONT_HEIGHT: u16 = 15;
 
     pub fn write_zero(x: u16, y: u16) {
-        let width: u16 = CLOCK_FONT_WIDTH - 2;
-        let height: u16 = CLOCK_FONT_HEIGHT - 2;
+        let width: u16 = CLOCK_FONT_WIDTH;
+        let height: u16 = CLOCK_FONT_HEIGHT;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        draw_box_at_location(xp, yp);
-        for _ in 0..width {
-            xp += 1;
-            draw_box_at_location(xp, yp);
-        }
+        // draw top and bottom of 0
         xp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..height {
-            xp = x;
-            yp += 1;
+        for _ in 0..width {
             draw_box_at_location(xp, yp);
-            xp += width;
+            draw_box_at_location(xp, yp + height);
             xp += 1;
-            draw_box_at_location(xp, yp);
         }
 
-        xp = x;
         yp += 1;
-        draw_box_at_location(xp, yp);
-        for _ in 0..width {
-            xp += 1;
+        for _ in 0..height - 1 {
+            xp = x;
             draw_box_at_location(xp, yp);
+            xp += width + 1;
+            draw_box_at_location(xp, yp);
+            yp += 1;
         }
-        xp += 1;
-        draw_box_at_location(xp, yp);
     }
 
     pub fn write_one(x: u16, y: u16) {
-        let width: u16 = CLOCK_FONT_WIDTH - 2;
-        let height: u16 = CLOCK_FONT_HEIGHT - 2;
+        let width: u16 = CLOCK_FONT_WIDTH;
+        let height: u16 = CLOCK_FONT_HEIGHT;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
+        // move to the left width 
         xp += width;
-        draw_box_at_location(xp, yp);
-
         for _ in 0..height {
-            yp += 1;
             draw_box_at_location(xp, yp);
+            yp += 1;
         }
-
-        yp += 1;
+        // one more block needed
         draw_box_at_location(xp, yp);
     }
 
