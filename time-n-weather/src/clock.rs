@@ -30,7 +30,7 @@ struct ConfigData {
 fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
         let hour = u16::from(now.hour());
-        let minute = now.minute();
+        let minute = u16::from(now.minute());
 
         if hour < 10 {
             number::write(4, 2, 0);
@@ -41,10 +41,21 @@ fn write_time() {
             number::write(5 + 11 + 1, 2, hour_part);
         }
 
+        if minute < 10 {
+            number::write(5 + 11 + 11 + 2, 2, 0);
+            number::write(5 + 11 + 11 + 11 + 2, 2, minute);
+        } else {
+            let minute_hundred = (minute / 10).floor() as u16;
+            let minute_ten = (minute - ((minute_hundred * 10).floor())) as u16;
+            number::write(5 + 11 + 11 + 2, 2, minute_hundred);
+            //number::write(5 + 11 + 11 + 11 + 2, 2, minute_ten);
+        }
+
         let day = now.day();
         let month = now.month();
         let year = now.year();
 
+        println!(" ");
         println!(
             "Current time is {:02}:{:02} and date {:04}/{:02}/{:02}",
             hour, minute, year, month, day
