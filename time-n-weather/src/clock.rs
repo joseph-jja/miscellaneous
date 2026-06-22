@@ -46,9 +46,9 @@ fn write_time() {
             number::write(5 + 11 + 11 + 2, 2, 0);
             number::write(5 + 11 + 11 + 11 + 2, 2, minute);
         } else {
-            let minute_hundred = floor(minute / 10, 0) as u16;
-            let minute_ten = (minute - (minute_hundred * 10)) as u16;
-            number::write(5 + 11 + 11 + 2, 2, minute_hundred);
+            let minute_hundred = floor(minute / 10, 0);
+            let minute_ten = (minute - (minute_hundred * 10));
+            //number::write(5 + 11 + 11 + 2, 2, minute_hundred);
             //number::write(5 + 11 + 11 + 11 + 2, 2, minute_ten);
         }
 
