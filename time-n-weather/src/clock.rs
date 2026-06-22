@@ -18,6 +18,7 @@ use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
 
+use crate::utils::numbers::numbers::get_offset;
 use crate::utils::write_number::number;
 
 #[derive(Serialize, Deserialize)]
@@ -32,34 +33,43 @@ fn write_time() {
         let hour = u16::from(now.hour());
         let minute = u16::from(now.minute());
 
+       let hour_big: u16 = get_offset(0, 2);
+       let hour_small: u16 = get_offset(1, 2);
+
+       let minute_big: u16 = 5 + get_offset(2, 2);
+       let minute_small: u16 = 5 + get_offset(3, 2);
+
+        //println!("{:?} {:?} {:?} {:?}", hour_big, hour_small, minute_big, minute_small);
+        //sleep_terminal(2);
+        
         if hour < 10 {
-            number::write(4, 2, 0);
-            number::write(5 + 11 + 1, 2, hour);
+            number::write(hour_big, 2, 0);
+            number::write(hour_small, 2, hour);
         } else {
-            let hour_part = hour - 10;
-            number::write(4, 2, 1);
-            number::write(5 + 11 + 1, 2, hour_part);
+            let hour_hundred: u16 = hour / 10;
+            let hour_ten: u16 = (hour - (hour_hundred * 10));
+            number::write(hour_big, 2, hour_hundred);
+            number::write(hour_small, 2, hour_ten);
         }
 
         if minute < 10 {
-            number::write(5 + 11 + 11 + 2, 2, 0);
-            number::write(5 + 11 + 11 + 11 + 2, 2, minute);
+            number::write(minute_big, 2, 0);
+            number::write(minute_small, 2, minute);
         } else {
             let minute_hundred: u16 = minute / 10;
             let minute_ten: u16 = (minute - (minute_hundred * 10));
-            number::write(5 + 11 + 11 + 2, 2, minute_hundred);
-            number::write(5 + 11 + 11 + 11 + 2, 2, minute_ten);
+            number::write(minute_big, 2, minute_hundred);
+            number::write(minute_small, 2, minute_ten);
         }
 
         let day = now.day();
         let month = now.month();
         let year = now.year();
 
-        println!(" ");
-        println!(
+        /*println!(
             "Current time is {:02}:{:02} and date {:04}/{:02}/{:02}",
             hour, minute, year, month, day
-        );
+        );*/
     }
 }
 
@@ -101,18 +111,15 @@ fn main() {
 
     init_terminal();
     clear_terminal();
-    //write_time
-    number::write(5, 2, 0);   
-    number::write(25, 2, 1);   
-    number::write(45, 2, 2);   
-    //number::write(45, 2, 2);
+    write_time();   
     flush_stdout();
     sleep_terminal(10);
     destroy_terminal();
-    println!(
+    
+    /*println!(
         "Config file latitude: {:?} and longitude: {:?}",
         config_json.latitude, config_json.longitude
-    );
+    );*/
 
     //get_weather_data();
     //get_open_weather_data();

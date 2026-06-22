@@ -339,8 +339,8 @@ pub mod numbers {
         }
     }
 
-    pub fn get_offset(index: u16) -> u16 {
-        let offset: u16 = (index * CLOCK_FONT_WIDTH) + 2;
+    pub fn get_offset(index: u16, left_offset: u16) -> u16 {
+        let offset: u16 = (index * (CLOCK_FONT_WIDTH + 2)) + left_offset;
         return offset;
     }
 }
