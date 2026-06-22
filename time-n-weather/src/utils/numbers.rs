@@ -10,15 +10,15 @@ pub mod numbers {
     const CLOCK_FONT_HEIGHT: u16 = 15;
 
     pub fn write_zero(x: u16, y: u16) {
-        let width: u16 = CLOCK_FONT_WIDTH;
-        let height: u16 = CLOCK_FONT_HEIGHT;
+        let width: u16 = CLOCK_FONT_WIDTH - 1;
+        let height: u16 = CLOCK_FONT_HEIGHT - 1;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
         // draw top and bottom of 0
         xp += 1;
-        for _ in 0..width {
+        for _ in 0..width -1 {
             draw_box_at_location(xp, yp);
             draw_box_at_location(xp, yp + height);
             xp += 1;
@@ -28,15 +28,15 @@ pub mod numbers {
         for _ in 0..height - 1 {
             xp = x;
             draw_box_at_location(xp, yp);
-            xp += width + 1;
+            xp += width;
             draw_box_at_location(xp, yp);
             yp += 1;
         }
     }
 
     pub fn write_one(x: u16, y: u16) {
-        let width: u16 = CLOCK_FONT_WIDTH;
-        let height: u16 = CLOCK_FONT_HEIGHT;
+        let width: u16 = CLOCK_FONT_WIDTH-1;
+        let height: u16 = CLOCK_FONT_HEIGHT - 1;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
@@ -53,7 +53,7 @@ pub mod numbers {
 
     pub fn write_two(x: u16, y: u16) {
         let width: u16 = CLOCK_FONT_WIDTH;
-        let height: u16 = CLOCK_FONT_HEIGHT;
+        let height: u16 = CLOCK_FONT_HEIGHT -1;
 
         let mut xp: u16 = x;
         let mut yp: u16 = y;
@@ -131,45 +131,32 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        draw_box_at_location(xp, yp);
+        let middle: u16 = y + (height / 2);
 
-        xp += width;
-        xp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..height {
-            xp = x;
-            yp += 1;
-            draw_box_at_location(xp, yp);
-
-            xp += width;
-            xp += 1;
-            draw_box_at_location(xp, yp);
-        }
-
+        // draw left
         xp = x;
-        yp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..width {
-            xp += 1;
+        yp = y;
+        for _ in 0..middle - 1 {
             draw_box_at_location(xp, yp);
-        }
-        xp += 1;
-        draw_box_at_location(xp, yp);
-
-        for _ in 0..height {
-            xp = x;
             yp += 1;
-            xp += width;
-            xp += 1;
-            draw_box_at_location(xp, yp);
         }
 
-        xp = x;
-        yp += 1;
-        xp += width;
-        xp += 1;
+        // draw middle 
+        xp = x + 1;
+        yp = middle + 1;
+        for _ in 0..width  {
+            draw_box_at_location(xp, yp);
+            xp += 1;
+        }
+
+        // draw right
+        xp = x + width;
+        yp = y;
+        for _ in 0..height {
+            draw_box_at_location(xp, yp);
+            yp += 1;
+        }
+        draw_box_at_location(xp, yp);
         draw_box_at_location(xp, yp);
     }
 
