@@ -101,9 +101,13 @@ fn main() {
 
     init_terminal();
     clear_terminal();
-    write_time();
+    //write_time
+    number::write(5, 2, 0);   
+    number::write(25, 2, 1);   
+    number::write(45, 2, 2);   
+    //number::write(45, 2, 2);
     flush_stdout();
-    sleep_terminal(5);
+    sleep_terminal(10);
     destroy_terminal();
     println!(
         "Config file latitude: {:?} and longitude: {:?}",
