@@ -59,7 +59,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         draw_box_at_location(xp, top);
@@ -95,7 +95,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         xp = x;
@@ -131,7 +131,7 @@ pub mod numbers {
         let mut xp: u16 = x;
         let mut yp: u16 = y;
 
-        let middle: u16 = y + (height / 2) - 1;
+        let middle: u16 = y + height / 2 - 1;
 
         // draw left
         xp = x;
@@ -167,7 +167,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         draw_box_at_location(xp, bottom);
@@ -203,7 +203,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         xp += 1;
@@ -271,7 +271,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         xp += 1;
@@ -310,7 +310,7 @@ pub mod numbers {
         let mut yp: u16 = y;
 
         let top: u16 = yp;
-        let middle: u16 = y + (height / 2);
+        let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
         xp += 1;
@@ -345,7 +345,7 @@ pub mod numbers {
         let height: u16 = CLOCK_FONT_HEIGHT - 1;
 
         let width_middle: u16 = (width / 2);
-        let heightwidth_middle: u16 = (height / 2);
+        let heightwidth_middle: u16 = height / 2;
 
     }
 
