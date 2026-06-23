@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use std::process;
 use time::OffsetDateTime;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
 
 pub mod utils;
 use crate::utils::utils::utils::current_latitude;
@@ -100,6 +102,13 @@ fn main() {
         api_key.clear();
         api_key.push_str(key_temp);
     }
+
+    let running = Arc::new(AtomicBool::new(true));
+    let r = running.clone();
+
+    ctrlc::set_handler(move || {
+        r.store(false, Ordering::SeqCst);
+    }).expect("Error setting Ctrl-C handler");
 
     init_terminal();
     clear_terminal();
