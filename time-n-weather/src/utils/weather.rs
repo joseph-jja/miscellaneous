@@ -28,6 +28,6 @@ pub mod weather {
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
-        write_outfile("/tmp/hourlyForecast.json", results);
+        write_outfile(String.from("/tmp/hourlyForecast.json"), results);
     }
 }
