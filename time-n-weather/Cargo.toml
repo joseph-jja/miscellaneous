@@ -13,6 +13,7 @@ reqwest = { version = "0.12", features = ["json"] }
 tokio = { version = "1.0", features = ["full"] }
 time = { version = "0.3", features = ["macros", "local-offset"] }
 crossterm = "0.29.0"
+ctrlc = "3.5.2"
 
 [[bin]]
 name = "time-n-weather"
