@@ -39,9 +39,6 @@ fn write_time() {
 
        let minute_big: u16 = 5 + get_offset(2, 2);
        let minute_small: u16 = 5 + get_offset(3, 2);
-
-        //println!("{:?} {:?} {:?} {:?}", hour_big, hour_small, minute_big, minute_small);
-        //sleep_terminal(2);
         
         if hour < 10 {
             number::write(hour_big, 2, 0);
@@ -63,16 +60,8 @@ fn write_time() {
             number::write(minute_small, 2, minute_ten);
         }
 
-        let day = now.day();
-        let month = now.month();
-        let year = now.year();
-
-        write_text_at(2, 20, "-------------");
-
-        /*println!(
-            "Current time is {:02}:{:02} and date {:04}/{:02}/{:02}",
-            hour, minute, year, month, day
-        );*/
+        let formatted_date = format!("{:?}i, {:?} {:?}, {:?}", now.weekday(), now.month(), now.day(), now.year());
+        write_text_at(2, 20, formatted_date);
     }
 }
 
