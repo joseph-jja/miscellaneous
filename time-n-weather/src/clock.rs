@@ -111,10 +111,13 @@ fn main() {
     }).expect("Error setting Ctrl-C handler");
 
     init_terminal();
-    clear_terminal();
-    write_time();   
-    flush_stdout();
-    sleep_terminal(10);
+    while running.load(Ordering::SeqCst) {
+        
+        clear_terminal();
+        write_time();   
+        flush_stdout();
+        sleep_terminal(15);
+    }
     destroy_terminal();
     
     /*println!(
