@@ -56,7 +56,7 @@ pub mod terminal {
         queue!(
             stdout,
             MoveTo(x, y),
-            Print(str)
+            Print(&msg)
         )
         .expect("Print failed in write_text");
     }
