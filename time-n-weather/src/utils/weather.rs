@@ -3,6 +3,7 @@ pub mod weather {
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
+    use crate::utils::utils::utils::write_outfile;
 
     const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.weather.gov";
@@ -27,5 +28,6 @@ pub mod weather {
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
+        write_outfile("/tmp/hourlyForecast.json", results);
     }
 }
