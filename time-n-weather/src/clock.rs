@@ -61,7 +61,7 @@ fn write_time() {
         }
 
         let formatted_date = format!("{:?}i, {:?} {:?}, {:?}", now.weekday(), now.month(), now.day(), now.year());
-        write_text_at(2, 20, formatted_date);
+        write_text_at(2, 20, &formatted_date.as_str());
     }
 }
 
