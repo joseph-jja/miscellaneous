@@ -39,30 +39,58 @@ pub mod weather {
         output_filename.push("forecast.json");
 
         //println!("We got some results {:?} for file {:?}", results, output_filename);
-        let filename: String = output_filename.to_string_lossy().into_owned();
+        let filename: String =  output_filename.to_string_lossy().into_owned();
         write_outfile(&filename, &results);
 
-        let parsed: Value =
-            serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
-        if let Some(forecast_url) = parsed
-            .get("properties")
-            .and_then(|d| d.get("forecastHourly"))
-        {
+        let parsed: Value = serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
+        if let Some(forecast_url) = parsed.get("properties").and_then(|d| d.get("forecastHourly")) {
+
             let forecast = forecast_url.to_string().replace('"', "");
 
             // Print the dynamic object
             println!("Found url: {:?}", forecast);
-
+            
             let hourly_forcast = make_api_request(&forecast);
-
+            
             let mut forecast_filename = PathBuf::new();
             forecast_filename.push("/");
             forecast_filename.push("tmp");
             forecast_filename.push("hourlyForecast.json");
-            let forecast_name: String = forecast_filename.to_string_lossy().into_owned();
+            let forecast_name: String =  forecast_filename.to_string_lossy().into_owned();
             write_outfile(&forecast_name, &hourly_forcast);
 
-            // TODO parse out first 4
+            // TODO parse out first 4 
+            // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
+            // temperature, temperatureUnit
+            // windSpeed, windDirection
+            /*
+            {
+                "number": 156,
+                "name": "",
+                "startTime": "2026-06-29T08:00:00-07:00",
+                "endTime": "2026-06-29T09:00:00-07:00",
+                "isDaytime": true,
+                "temperature": 57,
+                "temperatureUnit": "F",
+                "temperatureTrend": null,
+                "probabilityOfPrecipitation": {
+                    "unitCode": "wmoUnit:percent",
+                    "value": 0
+                },
+                "dewpoint": {
+                    "unitCode": "wmoUnit:degC",
+                    "value": 11.666666666666666
+                },
+                "relativeHumidity": {
+                    "unitCode": "wmoUnit:percent",
+                    "value": 86
+                },
+                "windSpeed": "5 mph",
+                "windDirection": "SW",
+                "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
+                "shortForecast": "Mostly Sunny",
+                "detailedForecast": ""
+            }*/
         }
     }
 }
