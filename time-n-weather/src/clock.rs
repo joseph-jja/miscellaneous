@@ -116,6 +116,6 @@ fn main() {
         config_json.latitude, config_json.longitude
     );*/
 
-    get_weather_data();
+    //get_weather_data();
     //get_open_weather_data();
 }
