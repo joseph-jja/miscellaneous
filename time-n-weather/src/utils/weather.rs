@@ -31,7 +31,9 @@ pub mod weather {
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
 
-        let mut output_filename = PathBuf::from("tmp");
+        let mut output_filename = PathBuf::new();
+        output_filename.push("/");
+        output_filename.push("tmp");
         output_filename.push("hourlyForecast.json");
         let filename: String =  output_filename.to_string_lossy().into_owned();
         
