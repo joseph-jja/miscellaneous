@@ -1,5 +1,7 @@
 pub mod weather {
 
+    use std::path::PathBuf;
+
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
@@ -28,7 +30,11 @@ pub mod weather {
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
         println!("We got some results {:?}", results);
-        let output_filename: String = String.from("/tmp/hourlyForecast.json"); 
-        write_outfile(output_filename, &results);
+
+        let mut output_filename = PathBuf::from("tmp");
+        output_filename.push("hourlyForecast.json");
+        let filename: String =  output_filename.to_string_lossy().into_owned();
+        
+        write_outfile(&filename, &results);
     }
 }
