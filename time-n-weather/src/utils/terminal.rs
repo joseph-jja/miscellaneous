@@ -53,12 +53,7 @@ pub mod terminal {
     pub fn write_text_at(x: u16, y: u16, msg: &str) {
         let mut stdout = stdout();
 
-        queue!(
-            stdout,
-            MoveTo(x, y),
-            Print(&msg)
-        )
-        .expect("Print failed in write_text");
+        queue!(stdout, MoveTo(x, y), Print(&msg)).expect("Print failed in write_text");
     }
 
     // future will take color

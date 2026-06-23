@@ -101,7 +101,7 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
-    init_terminal();
+    /*init_terminal();
     //while running.load(Ordering::SeqCst) {
         
         clear_terminal();
@@ -109,13 +109,13 @@ fn main() {
         flush_stdout();
         sleep_terminal(15);
     //}
-    destroy_terminal();
+    destroy_terminal();*/
     
     /*println!(
         "Config file latitude: {:?} and longitude: {:?}",
         config_json.latitude, config_json.longitude
     );*/
 
-    //get_weather_data();
+    get_weather_data();
     //get_open_weather_data();
 }
