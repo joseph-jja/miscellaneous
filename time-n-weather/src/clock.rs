@@ -17,6 +17,7 @@ use crate::utils::terminal::terminal::flush_stdout;
 use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
+use crate::utils::terminal::terminal::write_text_at;
 
 use crate::utils::numbers::numbers::get_offset;
 use crate::utils::write_number::number;
@@ -65,6 +66,8 @@ fn write_time() {
         let day = now.day();
         let month = now.month();
         let year = now.year();
+
+        write_text_at(2, 20, "-------------");
 
         /*println!(
             "Current time is {:02}:{:02} and date {:04}/{:02}/{:02}",
