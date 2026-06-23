@@ -60,7 +60,7 @@ fn write_time() {
             number::write(minute_small, 2, minute_ten);
         }
 
-        let formatted_date = format!("{:?}i, {:?} {:?}, {:?}", now.weekday(), now.month(), now.day(), now.year());
+        let formatted_date = format!("{:?}, {:?} {:?}, {:?}", now.weekday(), now.month(), now.day(), now.year());
         write_text_at(2, 20, &formatted_date.as_str());
     }
 }
