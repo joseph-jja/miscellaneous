@@ -343,7 +343,7 @@ pub mod numbers {
         let width: u16 = CLOCK_FONT_WIDTH - 1;
         let height: u16 = CLOCK_FONT_HEIGHT - 1;
 
-        let width_middle: u16 = (width / 2);
+        let width_middle: u16 = width / 2;
         let heightwidth_middle: u16 = height / 2;
     }
 
