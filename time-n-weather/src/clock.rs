@@ -21,7 +21,6 @@ use crate::utils::terminal::terminal::write_text_at;
 
 use crate::utils::numbers::numbers::get_offset;
 use crate::utils::write_number::number;
-use crate::utils::write_number::write_colon;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
@@ -65,8 +64,8 @@ fn write_time() {
         }
 
         // 15 => 5 and 10 ?
-        write_colon(hour_small + 11 + 4, 2 + 5);
-        write_colon(hour_small + 11 + 4, 2 + 10);
+        number::write_colon(hour_small + 11 + 4, 2 + 5);
+        number::write_colon(hour_small + 11 + 4, 2 + 10);
 
         if minute < 10 {
             number::write(minute_big, 2, 0);
