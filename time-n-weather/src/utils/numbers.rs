@@ -134,8 +134,6 @@ pub mod numbers {
         let middle: u16 = y + height / 2 - 1;
 
         // draw left
-        xp = x;
-        yp = y;
         for _ in 0..middle - 1 {
             draw_box_at_location(xp, yp);
             yp += 1;
