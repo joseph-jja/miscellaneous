@@ -10,7 +10,6 @@ pub mod weather {
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::write_outfile;
 
-    const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
     pub fn get_weather_data() {
@@ -40,7 +39,7 @@ pub mod weather {
 
         //println!("We got some results {:?} for file {:?}", results, output_filename);
         let filename: String =  output_filename.to_string_lossy().into_owned();
-        write_outfile(&filename, &results);
+        let _ = write_outfile(&filename, &results);
 
         let parsed: Value = serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
         if let Some(forecast_url) = parsed.get("properties").and_then(|d| d.get("forecastHourly")) {
@@ -57,7 +56,7 @@ pub mod weather {
             forecast_filename.push("tmp");
             forecast_filename.push("hourlyForecast.json");
             let forecast_name: String =  forecast_filename.to_string_lossy().into_owned();
-            write_outfile(&forecast_name, &hourly_forcast);
+            let _ = write_outfile(&forecast_name, &hourly_forcast);
 
             // TODO parse out first 4 
             // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
