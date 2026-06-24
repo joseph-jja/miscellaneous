@@ -98,7 +98,6 @@ pub mod numbers {
         let middle: u16 = y + height / 2;
         let bottom: u16 = y + height;
 
-        xp = x;
         draw_box_at_location(xp, top);
         draw_box_at_location(xp, bottom);
         xp += 1;
@@ -280,7 +279,6 @@ pub mod numbers {
             xp += 1;
         }
 
-        xp = x;
         yp = top + 1;
         for _ in 0..middle - 3 {
             xp = x;
