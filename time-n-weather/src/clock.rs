@@ -29,6 +29,9 @@ struct ConfigData {
     longitude: f32,
 }
 
+const RELOAD_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
+const RELOAD_OPEN_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
+
 fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
         let hour = u16::from(now.hour());
