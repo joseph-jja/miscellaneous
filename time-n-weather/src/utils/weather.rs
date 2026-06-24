@@ -2,7 +2,7 @@ pub mod weather {
 
     use std::path::PathBuf;
 
-    use serde::{Deserialize, Serialize};
+    //use serde::{Deserialize, Serialize};
     use serde_json::Value;
 
     use crate::utils::utils::utils::current_latitude;
