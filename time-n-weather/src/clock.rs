@@ -60,7 +60,8 @@ fn write_time() {
             number::write(hour_small, 2, hour_ten);
         }
 
-        write_text_at(hour_small + 4, 5, &"*");
+        // need to use write_colon function for this
+        //write_text_at(hour_small + 4, 5, &"*");
 
         if minute < 10 {
             number::write(minute_big, 2, 0);
