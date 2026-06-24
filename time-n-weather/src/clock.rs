@@ -49,13 +49,13 @@ fn write_time() {
             ampm = "pm";
             let twelve_hour: u16 = hour - 12;
             let hour_hundred: u16 = twelve_hour / 10;
-            let hour_ten: u16 = (twelve_hour - (hour_hundred * 10));
+            let hour_ten: u16 = twelve_hour - hour_hundred * 10;
             number::write(hour_big, 2, hour_hundred);
             number::write(hour_small, 2, hour_ten);
         } else {
             ampm = "pm";
             let hour_hundred: u16 = hour / 10;
-            let hour_ten: u16 = (hour - (hour_hundred * 10));
+            let hour_ten: u16 = hour - hour_hundred * 10;
             number::write(hour_big, 2, hour_hundred);
             number::write(hour_small, 2, hour_ten);
         }
@@ -65,7 +65,7 @@ fn write_time() {
             number::write(minute_small, 2, minute);
         } else {
             let minute_hundred: u16 = minute / 10;
-            let minute_ten: u16 = (minute - (minute_hundred * 10));
+            let minute_ten: u16 = minute - minute_hundred * 10;
             number::write(minute_big, 2, minute_hundred);
             number::write(minute_small, 2, minute_ten);
         }
@@ -114,7 +114,7 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
-    /*init_terminal();
+    init_terminal();
     //while running.load(Ordering::SeqCst) {
         
         clear_terminal();
@@ -122,7 +122,7 @@ fn main() {
         flush_stdout();
         sleep_terminal(15);
     //}
-    destroy_terminal();*/
+    destroy_terminal();
     
     /*println!(
         "Config file latitude: {:?} and longitude: {:?}",
