@@ -21,6 +21,7 @@ use crate::utils::terminal::terminal::write_text_at;
 
 use crate::utils::numbers::numbers::get_offset;
 use crate::utils::write_number::number;
+use crate::utils::write_number::write_colon;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
