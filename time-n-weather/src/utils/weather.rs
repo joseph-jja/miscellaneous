@@ -9,20 +9,21 @@ pub mod weather {
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::write_outfile;
+    use crate::utils::utils::utils::LINE_ENDING;
 
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
     #[derive(Serialize, Deserialize, Default, Debug)]
     struct HourlyForecastData {
-        startTime: String,
-        endTime: String,
+        start_time: String,
+        end_time: String,
         temperature: String,
-        temperatureUnit: String,
-        windSpeed: String,
-        windDirection: String,
+        temperature_unit: String,
+        wind_speed: String,
+        wind_direction: String,
     }
 
-    pub fn get_weather_data() {
+    fn get_main_weather_url() -> String {
         let mut endpoint: String = String::from(API_HOSTNAME);
         endpoint.push_str("/points/");
 
@@ -39,19 +40,45 @@ pub mod weather {
             let borrowed_str: &str = &latitude;
             endpoint.push_str(borrowed_str);
         }
+        return endpoint;
+    }
 
-        let results = make_api_request(&endpoint);
+    fn format_date(input_in: &String) -> String {
+        let input_work: String = input_in
+            .split("T")
+            .nth(1)
+            .clone()
+            .unwrap_or(&input_in)
+            .to_string();
+        let input_out: String = input_work
+            .split("-")
+            .nth(0)
+            .clone()
+            .unwrap_or(&input_work)
+            .to_string();
+        return input_out;
+    }
 
+    fn write_temp_file(filename: &String, data: &String) {
         let mut output_filename = PathBuf::new();
         output_filename.push("/");
         output_filename.push("tmp");
-        output_filename.push("forecast.json");
+        output_filename.push(filename);
+        let output_name: String = output_filename.to_string_lossy().into_owned();
+        let _ = write_outfile(&output_name, &data);
+    }
 
-        //println!("We got some results {:?} for file {:?}", results, output_filename);
-        let filename: String = output_filename.to_string_lossy().into_owned();
-        let _ = write_outfile(&filename, &results);
+    pub fn get_weather_data() {
+        // get the endpoint to call
+        let endpoint: String = get_main_weather_url();
 
-        // The data comes back as an object that has properties.period[] 
+        // call api
+        let results = make_api_request(&endpoint);
+
+        // write to temp file
+        write_temp_file(&String::from("forecast.json"), &results);
+
+        // The data comes back as an object that has properties.period[]
         // and we need to parse out first 4 items of the array and get these values
         // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
         // temperature, temperatureUnit
@@ -87,6 +114,14 @@ pub mod weather {
 
         let parsed: Value =
             serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
+
+        let mut generated: String = String::from("");
+        //     results.push_str(date + time);
+        if let Some(generated_at) = parsed.get("properties").and_then(|d| d.get("generatedAt")) {
+            let generated_work: String = generated_at.to_string().replace('"', "").replace("T", "");
+            generated.push_str(&generated_work);
+        }
+
         if let Some(forecast_url) = parsed
             .get("properties")
             .and_then(|d| d.get("forecastHourly"))
@@ -98,12 +133,7 @@ pub mod weather {
 
             let hourly_forcast = make_api_request(&forecast);
 
-            let mut forecast_filename = PathBuf::new();
-            forecast_filename.push("/");
-            forecast_filename.push("tmp");
-            forecast_filename.push("hourlyForecast.json");
-            let forecast_name: String = forecast_filename.to_string_lossy().into_owned();
-            let _ = write_outfile(&forecast_name, &hourly_forcast);
+            write_temp_file(&String::from("hourlyForecast.json"), &hourly_forcast);
 
             let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str())
                 .expect("Should have hourly forecast data!");
@@ -114,14 +144,19 @@ pub mod weather {
                     for (index, item) in array.iter().enumerate() {
                         if index < 4 {
                             //println!("We got a line of data {:?}", item);
+                            let start_time: String =
+                                format_date(&String::from(item["startTime"].to_string()));
+
+                            let end_time: String =
+                                format_date(&String::from(item["endTime"].to_string()));
 
                             four_hour_forecast.push(HourlyForecastData {
-                                startTime: item["startTime"].to_string().split("T").nth(1).split("-").nth(0),
-                                endTime: item["endTime"].to_string().split("T").nth(1).split("-").nth(0),
+                                start_time: start_time,
+                                end_time: end_time,
                                 temperature: item["temperature"].to_string(),
-                                temperatureUnit: item["temperatureUnit"].to_string(),
-                                windSpeed: item["windSpeed"].to_string(),
-                                windDirection: item["windDirection"].to_string(),
+                                temperature_unit: item["temperatureUnit"].to_string(),
+                                wind_speed: item["windSpeed"].to_string(),
+                                wind_direction: item["windDirection"].to_string(),
                             });
                         } else {
                             break;
@@ -129,27 +164,29 @@ pub mod weather {
                     }
                 }
             }
-            println!("We got me some data {:?}", four_hour_forecast);
-            
+            //println!("We got me some data {:?}", four_hour_forecast);
+
             // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
             // then add in last updated date and time
             // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
-            // let mut results: String = String.from(""); 
-            // for item in four_hour_forecast {
-            //     results.push_str(item.startTime);
-            //     results.push("-");
-            //     results.push_str(item.endTime);
-            //     results.push_str(": ");
-            //     results.push_str(item.temperature);
-            //     results.push_str(item.temperatureUnit);
-            //     results.push_str(" / ");
-            //     results.push_str(item.windSpeed);
-            //     results.push(" ");
-            //     results.push_str(item.windDirection);
+            let mut hourly_results: String = String::from("");
+            for item in four_hour_forecast {
+                hourly_results.push_str(&item.start_time);
+                hourly_results.push_str("-");
+                hourly_results.push_str(&item.end_time);
+                hourly_results.push_str(": ");
+                hourly_results.push_str(&item.temperature);
+                hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
+                hourly_results.push_str(" / ");
+                hourly_results.push_str(&item.wind_speed.replace("\"", ""));
+                hourly_results.push_str(" ");
+                hourly_results.push_str(&item.wind_direction.replace("\"", ""));
+                hourly_results.push_str(LINE_ENDING);
+            }
+            println!("Got generated date {:?}", generated);
             //     results.push_str(os.EOL);  // TODO fix this
-            // }
-            //     results.push_str(date + time);
-            //     results.push_str(os.EOL);  // TODO fix this
+            write_temp_file(&String::from("hourly.txt"), &hourly_results);
+            //println!("We got me some data {:?}", results);
             // TODO write file out "/tmp/hourly.txt" of formatted date
         }
     }

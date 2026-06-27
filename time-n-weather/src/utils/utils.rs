@@ -6,6 +6,12 @@ pub mod utils {
 
     const USER_AGENT: &str = "Nozilla/1.0 (console; pios x86_32 ) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/100.1.1";
 
+    #[cfg(windows)]
+    pub const LINE_ENDING: &str = "\r\n";
+
+    #[cfg(not(windows))]
+    pub const LINE_ENDING: &str = "\n";
+
     pub fn current_latitude() -> &'static RwLock<String> {
         static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
         STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
