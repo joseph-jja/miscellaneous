@@ -53,7 +53,7 @@ pub mod utils {
         if response.status().is_success() {
             // 3. Parse the body text
             let body = response.text().await.expect("Get body content failed!");
-            println!("Response body:\n{}", body);
+            //println!("Response body:\n{}", body);
             return body;
         } else {
             println!("Server returned error: {}", response.status());
