@@ -12,7 +12,7 @@ pub mod weather {
 
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
-    #[derive(Serialize, Deserialize, Clone, Copy, Default, Debug)]
+    #[derive(Serialize, Deserialize, Default)]
     struct HourlyForecastData {
         startTime: String,
         endTime: String,
