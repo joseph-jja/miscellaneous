@@ -19,7 +19,7 @@ pub mod weather {
         temperature: String,
         temperatureUnit: String,
         windSpeed: String,
-        windDirection: String
+        windDirection: String,
     }
 
     pub fn get_weather_data() {
@@ -48,83 +48,85 @@ pub mod weather {
         output_filename.push("forecast.json");
 
         //println!("We got some results {:?} for file {:?}", results, output_filename);
-        let filename: String =  output_filename.to_string_lossy().into_owned();
+        let filename: String = output_filename.to_string_lossy().into_owned();
         let _ = write_outfile(&filename, &results);
 
-		            // TODO parse out first 4 
-            // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
-            // temperature, temperatureUnit
-            // windSpeed, windDirection
-            /*
-            {
-                "number": 156,
-                "name": "",
-                "startTime": "2026-06-29T08:00:00-07:00",
-                "endTime": "2026-06-29T09:00:00-07:00",
-                "isDaytime": true,
-                "temperature": 57,
-                "temperatureUnit": "F",
-                "temperatureTrend": null,
-                "probabilityOfPrecipitation": {
-                    "unitCode": "wmoUnit:percent",
-                    "value": 0
-                },
-                "dewpoint": {
-                    "unitCode": "wmoUnit:degC",
-                    "value": 11.666666666666666
-                },
-                "relativeHumidity": {
-                    "unitCode": "wmoUnit:percent",
-                    "value": 86
-                },
-                "windSpeed": "5 mph",
-                "windDirection": "SW",
-                "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
-                "shortForecast": "Mostly Sunny",
-                "detailedForecast": ""
-            }*/
+        // TODO parse out first 4
+        // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
+        // temperature, temperatureUnit
+        // windSpeed, windDirection
+        /*
+        {
+            "number": 156,
+            "name": "",
+            "startTime": "2026-06-29T08:00:00-07:00",
+            "endTime": "2026-06-29T09:00:00-07:00",
+            "isDaytime": true,
+            "temperature": 57,
+            "temperatureUnit": "F",
+            "temperatureTrend": null,
+            "probabilityOfPrecipitation": {
+                "unitCode": "wmoUnit:percent",
+                "value": 0
+            },
+            "dewpoint": {
+                "unitCode": "wmoUnit:degC",
+                "value": 11.666666666666666
+            },
+            "relativeHumidity": {
+                "unitCode": "wmoUnit:percent",
+                "value": 86
+            },
+            "windSpeed": "5 mph",
+            "windDirection": "SW",
+            "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
+            "shortForecast": "Mostly Sunny",
+            "detailedForecast": ""
+        }*/
 
-
-        let parsed: Value = serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
-        if let Some(forecast_url) = parsed.get("properties").and_then(|d| d.get("forecastHourly")) {
-
+        let parsed: Value =
+            serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
+        if let Some(forecast_url) = parsed
+            .get("properties")
+            .and_then(|d| d.get("forecastHourly"))
+        {
             let forecast = forecast_url.to_string().replace('"', "");
 
             // Print the dynamic object
             println!("Found url: {:?}", forecast);
-            
+
             let hourly_forcast = make_api_request(&forecast);
-            
+
             let mut forecast_filename = PathBuf::new();
             forecast_filename.push("/");
             forecast_filename.push("tmp");
             forecast_filename.push("hourlyForecast.json");
-            let forecast_name: String =  forecast_filename.to_string_lossy().into_owned();
+            let forecast_name: String = forecast_filename.to_string_lossy().into_owned();
             let _ = write_outfile(&forecast_name, &hourly_forcast);
 
-            let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str()).expect("Should have hourly forecast data!");
+            let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str())
+                .expect("Should have hourly forecast data!");
 
             let mut four_hour_forecast: Vec<HourlyForecastData> = Vec::new();
-            if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) { 
-               if let Some(array) = periods.as_array() {
+            if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) {
+                if let Some(array) = periods.as_array() {
                     for (index, item) in array.iter().enumerate() {
                         if index < 4 {
                             //println!("We got a line of data {:?}", item);
 
-                            four_hour_forecast.push(HourlyForecastData  {
-		                startTime: item["startTime"].to_string(),
-        		        endTime: item["endTime"].to_string(),
+                            four_hour_forecast.push(HourlyForecastData {
+                                startTime: item["startTime"].to_string(),
+                                endTime: item["endTime"].to_string(),
                                 temperature: item["temperature"].to_string(),
                                 temperatureUnit: item["temperatureUnit"].to_string(),
                                 windSpeed: item["windSpeed"].to_string(),
-                                windDirection: item["windDirection"].to_string()
+                                windDirection: item["windDirection"].to_string(),
                             });
-                       }
+                        }
                     }
                 }
             }
             println!("We got me some data {:?}", four_hour_forecast);
-
         }
     }
 }
