@@ -12,7 +12,7 @@ pub mod weather {
 
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
-    #[derive(Serialize, Deserialize, Default)]
+    #[derive(Serialize, Deserialize, Default, Debug)]
     struct HourlyForecastData {
         startTime: String,
         endTime: String,
@@ -70,17 +70,26 @@ pub mod weather {
 
             let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str()).expect("Should have hourly forecast data!");
 
-            let mut four_hour_forecast: [Option<HourlyForecastData>; 4] = [const { None }; 4];
+            let mut four_hour_forecast: Vec<HourlyForecastData> = Vec::new();
             if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) { 
-                let mut index: i32 = 0;  
-                for index in 0..4 {
-                    let index_str: String = index.to_string();
-                    if let Some(a_period) = periods.get(&index_str) {
-                        let hour_data: HourlyForecastData = serde_json::from_str(&a_period.to_string()).expect("Could not parse hourly forcast line!");
-                        four_hour_forecast[index] = Some( hour_data );
+               if let Some(array) = periods.as_array() {
+                    for (index, item) in array.iter().enumerate() {
+                        if index < 4 {
+                            //println!("We got a line of data {:?}", item);
+
+                            four_hour_forecast.push(HourlyForecastData  {
+		                startTime: item["startTime"].to_string(),
+        		        endTime: item["endTime"].to_string(),
+                                temperature: item["temperature"].to_string(),
+                                temperatureUnit: item["temperatureUnit"].to_string(),
+                                windSpeed: item["windSpeed"].to_string(),
+                                windDirection: item["windDirection"].to_string()
+                            });
+                       }
                     }
                 }
             }
+            println!("We got me some data {:?}", four_hour_forecast);
 
             // TODO parse out first 4 
             // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
