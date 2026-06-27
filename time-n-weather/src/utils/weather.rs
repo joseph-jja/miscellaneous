@@ -169,7 +169,13 @@ pub mod weather {
             //     results.push_str(os.EOL);  // TODO fix this
             write_temp_file(&String::from("hourly.txt"), &hourly_results);
             //println!("We got me some data {:?}", results);
-            // TODO write file out "/tmp/hourly.txt" of formatted date
         }
+    }
+
+    pub fn write_data_to_screen(x: u16, y: u16) {
+       // read in hourly file and then write to screen at x
+       // y increases x is fixed
+       // we write 5 lines
+
     }
 }
