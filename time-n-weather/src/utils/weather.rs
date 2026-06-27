@@ -130,10 +130,26 @@ pub mod weather {
                 }
             }
             println!("We got me some data {:?}", four_hour_forecast);
-            // TODO loop over four_hour_forecast and format
+            
             // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
             // then add in last updated date and time
             // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
+            // let mut results: String = String.from(""); 
+            // for item in four_hour_forecast {
+            //     results.push_str(item.startTime);
+            //     results.push("-");
+            //     results.push_str(item.endTime);
+            //     results.push_str(": ");
+            //     results.push_str(item.temperature);
+            //     results.push_str(item.temperatureUnit);
+            //     results.push_str(" / ");
+            //     results.push_str(item.windSpeed);
+            //     results.push(" ");
+            //     results.push_str(item.windDirection);
+            //     results.push_str(os.EOL);  // TODO fix this
+            // }
+            //     results.push_str(date + time);
+            //     results.push_str(os.EOL);  // TODO fix this
             // TODO write file out "/tmp/hourly.txt" of formatted date
         }
     }
