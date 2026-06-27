@@ -2,6 +2,7 @@ pub mod utils {
 
     use std::fs::{read_to_string, write};
     use std::io;
+    use std::path::PathBuf;
     use std::sync::{OnceLock, RwLock};
 
     const USER_AGENT: &str = "Nozilla/1.0 (console; pios x86_32 ) AppleWebKit/537.36 (KHTML, like Gecko but not) xpi/100.1.1";
@@ -65,5 +66,30 @@ pub mod utils {
             println!("Server returned error: {}", response.status());
         }
         return String::from("");
+    }
+
+    pub fn format_date(input_in: &String) -> String {
+        let input_work: String = input_in
+            .split("T")
+            .nth(1)
+            .clone()
+            .unwrap_or(&input_in)
+            .to_string();
+        let input_out: String = input_work
+            .split("-")
+            .nth(0)
+            .clone()
+            .unwrap_or(&input_work)
+            .to_string();
+        return input_out;
+    }
+
+    pub fn write_temp_file(filename: &String, data: &String) {
+        let mut output_filename = PathBuf::new();
+        output_filename.push("/");
+        output_filename.push("tmp");
+        output_filename.push(filename);
+        let output_name: String = output_filename.to_string_lossy().into_owned();
+        let _ = write_outfile(&output_name, &data);
     }
 }
