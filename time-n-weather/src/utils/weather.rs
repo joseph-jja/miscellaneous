@@ -20,7 +20,7 @@ pub mod weather {
         temperatureUnit: String,
         windSpeed: String,
         windDirection: String
-    };
+    }
 
     pub fn get_weather_data() {
         let mut endpoint: String = String::from(API_HOSTNAME);
@@ -73,7 +73,7 @@ pub mod weather {
             let mut four_hour_forecast: [HourlyForecastData; 4] = [HourlyForecastData::default(); 4];
             if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) { 
                 for index in 0..4 {
-                    let Some(a_period) = periods.get(&index.as_str()) {
+                    if let Some(a_period) = periods.get(&index.as_str()) {
                         let hour_data: HourlyForecastData = serde_json::from_str(a_period.as_str()).expect("Could not parse hourly forcast line!");
                         four_hour_forecast[index] = hour_data;
                     }
