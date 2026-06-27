@@ -72,10 +72,12 @@ pub mod weather {
 
             let mut four_hour_forecast: [HourlyForecastData; 4] = [HourlyForecastData::default(); 4];
             if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) { 
-                for index:i32 in 0..4 {
-                    if let Some(a_period) = periods.get(&index.as_str()) {
-                        let hour_data: HourlyForecastData = serde_json::from_str(&a_period.as_str()).expect("Could not parse hourly forcast line!");
-                        four_hour_forecast[index] = hour_data;
+                let mut index: i32 = 0;  
+                for index in 0..4 {
+                    let index_str: String = index.to_string();
+                    if let Some(a_period) = periods.get(&index_str) {
+                        //let hour_data: HourlyForecastData = serde_json::from_str(&a_period.to_string().as_str()).expect("Could not parse hourly forcast line!");
+                        //four_hour_forecast[index] = hour_data;
                     }
                 }
             }
