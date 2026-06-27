@@ -1,14 +1,13 @@
 pub mod weather {
 
-    use std::path::PathBuf;
-
     use serde::{Deserialize, Serialize};
     use serde_json::Value;
 
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
+    use crate::utils::utils::utils::format_date;
     use crate::utils::utils::utils::make_api_request;
-    use crate::utils::utils::utils::write_outfile;
+    use crate::utils::utils::utils::write_temp_file;
     use crate::utils::utils::utils::LINE_ENDING;
 
     const API_HOSTNAME: &str = "https://api.weather.gov";
@@ -41,31 +40,6 @@ pub mod weather {
             endpoint.push_str(borrowed_str);
         }
         return endpoint;
-    }
-
-    fn format_date(input_in: &String) -> String {
-        let input_work: String = input_in
-            .split("T")
-            .nth(1)
-            .clone()
-            .unwrap_or(&input_in)
-            .to_string();
-        let input_out: String = input_work
-            .split("-")
-            .nth(0)
-            .clone()
-            .unwrap_or(&input_work)
-            .to_string();
-        return input_out;
-    }
-
-    fn write_temp_file(filename: &String, data: &String) {
-        let mut output_filename = PathBuf::new();
-        output_filename.push("/");
-        output_filename.push("tmp");
-        output_filename.push(filename);
-        let output_name: String = output_filename.to_string_lossy().into_owned();
-        let _ = write_outfile(&output_name, &data);
     }
 
     pub fn get_weather_data() {
@@ -115,13 +89,6 @@ pub mod weather {
         let parsed: Value =
             serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
 
-        let mut generated: String = String::from("");
-        //     results.push_str(date + time);
-        if let Some(generated_at) = parsed.get("properties").and_then(|d| d.get("generatedAt")) {
-            let generated_work: String = generated_at.to_string().replace('"', "").replace("T", "");
-            generated.push_str(&generated_work);
-        }
-
         if let Some(forecast_url) = parsed
             .get("properties")
             .and_then(|d| d.get("forecastHourly"))
@@ -137,6 +104,17 @@ pub mod weather {
 
             let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str())
                 .expect("Should have hourly forecast data!");
+
+            let mut generated: String = String::from("");
+            //     results.push_str(date + time);
+            if let Some(generated_at) = hourly_data
+                .get("properties")
+                .and_then(|d| d.get("generatedAt"))
+            {
+                let generated_work: String =
+                    generated_at.to_string().replace('"', "").replace("T", " ");
+                generated.push_str(&generated_work);
+            }
 
             let mut four_hour_forecast: Vec<HourlyForecastData> = Vec::new();
             if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) {
@@ -169,7 +147,8 @@ pub mod weather {
             // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
             // then add in last updated date and time
             // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
-            let mut hourly_results: String = String::from("");
+            let mut hourly_results: String = String::from("Hourly:");
+            hourly_results.push_str(LINE_ENDING);
             for item in four_hour_forecast {
                 hourly_results.push_str(&item.start_time);
                 hourly_results.push_str("-");
@@ -183,7 +162,10 @@ pub mod weather {
                 hourly_results.push_str(&item.wind_direction.replace("\"", ""));
                 hourly_results.push_str(LINE_ENDING);
             }
-            println!("Got generated date {:?}", generated);
+            hourly_results.push_str("Last Updated (GMT):");
+            hourly_results.push_str(&generated);
+            hourly_results.push_str(LINE_ENDING);
+            //println!("Got generated date {:?}", generated);
             //     results.push_str(os.EOL);  // TODO fix this
             write_temp_file(&String::from("hourly.txt"), &hourly_results);
             //println!("We got me some data {:?}", results);

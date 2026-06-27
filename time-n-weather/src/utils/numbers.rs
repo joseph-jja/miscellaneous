@@ -317,7 +317,6 @@ pub mod numbers {
             xp += 1;
         }
 
-        xp = x;
         yp = top + 1;
         for _ in 0..middle - 3 {
             xp = x;
