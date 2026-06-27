@@ -51,7 +51,8 @@ pub mod weather {
         let filename: String = output_filename.to_string_lossy().into_owned();
         let _ = write_outfile(&filename, &results);
 
-        // TODO parse out first 4
+        // The data comes back as an object that has properties.period[] 
+        // and we need to parse out first 4 items of the array and get these values
         // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
         // temperature, temperatureUnit
         // windSpeed, windDirection
@@ -115,18 +116,25 @@ pub mod weather {
                             //println!("We got a line of data {:?}", item);
 
                             four_hour_forecast.push(HourlyForecastData {
-                                startTime: item["startTime"].to_string(),
-                                endTime: item["endTime"].to_string(),
+                                startTime: item["startTime"].to_string().split("T").nth(1).split("-").nth(0),
+                                endTime: item["endTime"].to_string().split("T").nth(1).split("-").nth(0),
                                 temperature: item["temperature"].to_string(),
                                 temperatureUnit: item["temperatureUnit"].to_string(),
                                 windSpeed: item["windSpeed"].to_string(),
                                 windDirection: item["windDirection"].to_string(),
                             });
+                        } else {
+                            break;
                         }
                     }
                 }
             }
             println!("We got me some data {:?}", four_hour_forecast);
+            // TODO loop over four_hour_forecast and format
+            // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
+            // then add in last updated date and time
+            // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
+            // TODO write file out "/tmp/hourly.txt" of formatted date
         }
     }
 }
