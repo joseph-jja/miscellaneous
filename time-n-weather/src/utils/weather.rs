@@ -51,6 +51,40 @@ pub mod weather {
         let filename: String =  output_filename.to_string_lossy().into_owned();
         let _ = write_outfile(&filename, &results);
 
+		            // TODO parse out first 4 
+            // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
+            // temperature, temperatureUnit
+            // windSpeed, windDirection
+            /*
+            {
+                "number": 156,
+                "name": "",
+                "startTime": "2026-06-29T08:00:00-07:00",
+                "endTime": "2026-06-29T09:00:00-07:00",
+                "isDaytime": true,
+                "temperature": 57,
+                "temperatureUnit": "F",
+                "temperatureTrend": null,
+                "probabilityOfPrecipitation": {
+                    "unitCode": "wmoUnit:percent",
+                    "value": 0
+                },
+                "dewpoint": {
+                    "unitCode": "wmoUnit:degC",
+                    "value": 11.666666666666666
+                },
+                "relativeHumidity": {
+                    "unitCode": "wmoUnit:percent",
+                    "value": 86
+                },
+                "windSpeed": "5 mph",
+                "windDirection": "SW",
+                "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
+                "shortForecast": "Mostly Sunny",
+                "detailedForecast": ""
+            }*/
+
+
         let parsed: Value = serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
         if let Some(forecast_url) = parsed.get("properties").and_then(|d| d.get("forecastHourly")) {
 
@@ -91,38 +125,6 @@ pub mod weather {
             }
             println!("We got me some data {:?}", four_hour_forecast);
 
-            // TODO parse out first 4 
-            // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
-            // temperature, temperatureUnit
-            // windSpeed, windDirection
-            /*
-            {
-                "number": 156,
-                "name": "",
-                "startTime": "2026-06-29T08:00:00-07:00",
-                "endTime": "2026-06-29T09:00:00-07:00",
-                "isDaytime": true,
-                "temperature": 57,
-                "temperatureUnit": "F",
-                "temperatureTrend": null,
-                "probabilityOfPrecipitation": {
-                    "unitCode": "wmoUnit:percent",
-                    "value": 0
-                },
-                "dewpoint": {
-                    "unitCode": "wmoUnit:degC",
-                    "value": 11.666666666666666
-                },
-                "relativeHumidity": {
-                    "unitCode": "wmoUnit:percent",
-                    "value": 86
-                },
-                "windSpeed": "5 mph",
-                "windDirection": "SW",
-                "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
-                "shortForecast": "Mostly Sunny",
-                "detailedForecast": ""
-            }*/
         }
     }
 }
