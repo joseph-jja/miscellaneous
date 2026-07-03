@@ -37,7 +37,7 @@ pub mod utils {
     }
 
     pub fn write_outfile(filename: &String, filedata: &String) -> Result<(), io::Error> {
-        println!("Saving file {:?}", filename);
+        //println!("Saving file {:?}", filename);
 
         write(filename, filedata)?;
         Ok(())
