@@ -84,12 +84,21 @@ pub mod utils {
         return input_out;
     }
 
-    pub fn write_temp_file(filename: &String, data: &String) {
+    pub fn write_temp_file(filename: &str, data: &String) {
         let mut output_filename = PathBuf::new();
         output_filename.push("/");
         output_filename.push("tmp");
-        output_filename.push(filename);
+        output_filename.push(&String::from(filename));
         let output_name: String = output_filename.to_string_lossy().into_owned();
         let _ = write_outfile(&output_name, &data);
+    }
+
+    pub fn read_temp_file(filename: &str) -> String {
+        let mut input_filename = PathBuf::new();
+        input_filename.push("/");
+        input_filename.push("tmp");
+        input_filename.push(&String::from(filename));
+        let input_name: String = input_filename.to_string_lossy().into_owned();
+        return read_in_file(&input_name);
     }
 }
