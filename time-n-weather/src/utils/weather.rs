@@ -187,8 +187,8 @@ pub mod weather {
        let mut i: u16 = 0;
        
        for line in data.lines() {
-           println!("{:?}", line);
-           write_text_at(x, y, line);
+           //println!("{:?}", line);
+           write_text_at(x, yy, line);
            i = i + 1;
            yy = y + i;
        }
