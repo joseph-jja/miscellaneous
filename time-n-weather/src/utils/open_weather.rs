@@ -37,7 +37,7 @@ pub mod open_weather {
         }
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
-        write_temp_file("openweather.json", results);
+        write_temp_file("openweather.json", &results);
         //println!("We got some results {:?}", results);
     }
 }
