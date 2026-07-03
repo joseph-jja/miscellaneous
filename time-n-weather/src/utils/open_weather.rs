@@ -5,6 +5,8 @@ pub mod open_weather {
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::open_weathermap_api_key;
 
+    use crate::utils::utils::utils::write_temp_file;
+
     const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.openweathermap.org";
 
@@ -35,6 +37,7 @@ pub mod open_weather {
         }
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
-        println!("We got some results {:?}", results);
+        write_temp_file("openweather.json", results);
+        //println!("We got some results {:?}", results);
     }
 }
