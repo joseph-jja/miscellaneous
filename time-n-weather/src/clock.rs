@@ -10,6 +10,7 @@ use crate::utils::utils::utils::read_in_file;
 
 use crate::utils::open_weather::open_weather::get_open_weather_data;
 use crate::utils::weather::weather::get_weather_data;
+use crate::utils::weather::weather::write_data_to_screen;
 
 use crate::utils::terminal::terminal::destroy_terminal;
 use crate::utils::terminal::terminal::draw_box_at_location;
@@ -32,6 +33,8 @@ struct ConfigData {
 
 const RELOAD_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
 const RELOAD_OPEN_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
+const SLEEP_TIME: i32 = 15;
+const SLEEP_TIME_U64: u64 = 15; // easier than converting
 
 fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
@@ -122,21 +125,34 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
+    /*println!(
+            "Config file latitude: {:?} and longitude: {:?}",
+            config_json.latitude, config_json.longitude
+    );*/
+
+    let mut i: i32 = 0;
     init_terminal();
     //while running.load(Ordering::SeqCst) {
         
         clear_terminal();
         write_time();   
+
+        if i == 0 {
+            get_weather_data();
+        }
+        let x_offset: u16 = 7 + get_offset(4, 2);
+        write_data_to_screen(x_offset, 8);
+
+        //get_open_weather_data();
+
         flush_stdout();
-        sleep_terminal(15);
+        sleep_terminal(SLEEP_TIME_U64);
+        i = i + SLEEP_TIME;
+        if i > RELOAD_WEATHER_API_DATA {
+            i = 0;
+        }
     //}
     destroy_terminal();
     
-    /*println!(
-        "Config file latitude: {:?} and longitude: {:?}",
-        config_json.latitude, config_json.longitude
-    );*/
-
-    //get_weather_data();
-    //get_open_weather_data();
+    
 }
