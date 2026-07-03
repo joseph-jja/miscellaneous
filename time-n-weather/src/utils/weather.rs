@@ -8,9 +8,12 @@ pub mod weather {
     use crate::utils::utils::utils::format_date;
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::write_temp_file;
+    use crate::utils::utils::utils::read_temp_file;
     use crate::utils::utils::utils::LINE_ENDING;
 
     const API_HOSTNAME: &str = "https://api.weather.gov";
+
+    const HOURLY_FILENAME: &str = "hourly.txt";
 
     #[derive(Serialize, Deserialize, Default, Debug)]
     struct HourlyForecastData {
@@ -167,7 +170,7 @@ pub mod weather {
             hourly_results.push_str(LINE_ENDING);
             //println!("Got generated date {:?}", generated);
             //     results.push_str(os.EOL);  // TODO fix this
-            write_temp_file(&String::from("hourly.txt"), &hourly_results);
+            write_temp_file(HOURLY_FILENAME, &hourly_results);
             //println!("We got me some data {:?}", results);
         }
     }
@@ -176,6 +179,7 @@ pub mod weather {
        // read in hourly file and then write to screen at x
        // y increases x is fixed
        // we write 5 lines
+       let data: String = read_temp_file(HOURLY_FILENAME);
 
     }
 }
