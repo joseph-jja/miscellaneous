@@ -11,6 +11,8 @@ pub mod weather {
     use crate::utils::utils::utils::read_temp_file;
     use crate::utils::utils::utils::LINE_ENDING;
 
+    use crate::utils::terminal::terminal::write_text_at;
+
     const API_HOSTNAME: &str = "https://api.weather.gov";
 
     const HOURLY_FILENAME: &str = "hourly.txt";
