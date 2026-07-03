@@ -101,7 +101,7 @@ pub mod weather {
             let forecast = forecast_url.to_string().replace('"', "");
 
             // Print the dynamic object
-            println!("Found url: {:?}", forecast);
+            //println!("Found url: {:?}", forecast);
 
             let hourly_forcast = make_api_request(&forecast);
 
