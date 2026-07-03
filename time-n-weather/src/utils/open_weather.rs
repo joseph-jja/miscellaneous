@@ -9,6 +9,13 @@ pub mod open_weather {
 
     const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.openweathermap.org";
+    
+    const KELVIN_TO_FAHRENHEIT_MULTIPLIER: f64 = 9.0 / 5.0;
+    const KELVIN_CONST: f64 = 459.67;
+    
+    fn to_fahrenheit(kelvin_in: f64) -> String {
+         return (KELVIN_TO_FAHRENHEIT_MULTIPLIER * kelvin_in - KELVIN_CONST).round().to_string();
+    }
 
     pub fn get_open_weather_data() {
         let mut endpoint: String = String::from(API_HOSTNAME);
