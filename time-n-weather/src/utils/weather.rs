@@ -181,5 +181,14 @@ pub mod weather {
        // we write 5 lines
        let data: String = read_temp_file(HOURLY_FILENAME);
 
+       let mut yy: u16 = y; 
+       let mut i: u16 = 0;
+       
+       for line in data.lines() {
+           println!("{:?}", line);
+           write_text_at(x, y, line);
+           i = i + 1;
+           yy = y + i;
+       }
     }
 }
