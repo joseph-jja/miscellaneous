@@ -17,7 +17,7 @@ pub mod open_weather {
     const KELVIN_TO_FAHRENHEIT_MULTIPLIER: f64 = 9.0 / 5.0;
     const KELVIN_CONST: f64 = 459.67;
 
-    fn to_fahrenheit(kelvin_in: f64) -> String {
+    fn kelvin_to_fahrenheit(kelvin_in: f64) -> String {
         let mut result: String = (KELVIN_TO_FAHRENHEIT_MULTIPLIER * kelvin_in - KELVIN_CONST)
             .round()
             .to_string();
@@ -76,18 +76,18 @@ pub mod open_weather {
 
         if let Some(main_section) = parsed.get("main") {
             let temp: String = main_section.get("temp").unwrap().to_string();
-            let temp_value_F: String = to_fahrenheit(temp.parse().unwrap());
+            let temp_value_f: String = kelvin_to_fahrenheit(temp.parse().unwrap());
             output_data.push_str("Current: ");
-            output_data.push_str(&temp_value_F);
+            output_data.push_str(&temp_value_f);
             
             let temp_min: String = main_section.get("temp_min").unwrap().to_string();
-            let temp__min_value_F: String = to_fahrenheit(temp_min.parse().unwrap());
+            let temp__min_value_f: String = kelvin_to_fahrenheit(temp_min.parse().unwrap());
             let temp_max: String = main_section.get("temp_max").unwrap().to_string();
-            let temp__max_value_F: String = to_fahrenheit(temp_max.parse().unwrap());
+            let temp__max_value_f: String = kelvin_to_fahrenheit(temp_max.parse().unwrap());
             output_data.push_str("    High/Low: ");
-            output_data.push_str(&temp__min_value_F);
+            output_data.push_str(&temp__min_value_f);
             output_data.push_str("/");
-            output_data.push_str(&temp__max_value_F);
+            output_data.push_str(&temp__max_value_f);
             output_data.push_str(LINE_ENDING);
 
             let humidity: String = main_section.get("humidity").unwrap().to_string();
