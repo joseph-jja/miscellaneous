@@ -163,7 +163,7 @@ pub mod open_weather {
 
         for line in data.lines() {
             write_text_at(x, yy, line);
-            yy = y + i;
+            yy = yy + 1;
         }
     }
 }
