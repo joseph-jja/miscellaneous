@@ -60,14 +60,18 @@ pub mod open_weather {
         let mut output_data: String = String::from("");
 
         if let Some(unix_timestamp) = parsed.get("dt") {
-            //let utc_time = OffsetDateTime::from_unix_timestamp(unix_timestamp.parse::<f64>().unwrap()).unwrap();
-            /*let local_offset = UtcOffset::current_local_offset().unwrap();
-            let local_time = utc_time.to_offset(local_offset);
-            let format = format_description::parse(
-                "[year]-[month]-[day] [hour]:[minute]:[second] [offset_hour sign:mandatory]:[offset_minute]"
-            ).expect("Format specifier");
-            
-            let local_string = local_time.format(&format).unwrap();*/
+            let unix_timestamp = dt_timestamp.to_string().parse::<i64>().unwrap();
+            let utc_time = OffsetDateTime::from_unix_timestamp(unix_timestamp)
+                .expect("OffsetDateTime to utc_time");
+            let local_offset = UtcOffset::current_local_offset()
+                .expect("UtcOffset to local_offset");
+            let local_time: String = utc_time.to_offset(local_offset).to_string();
+            let formatted_local_time: String =  local_time.split(".")
+                .nth(0).clone()
+                .unwrap_or(&local_time).to_string().replace('"', "");
+            println!("{:?}", formatted_local_Time);
+            output_data.push_str("Updated: ");
+            output_data.push_str(&formatted_local_time);
         }
 
         if let Some(main_section) = parsed.get("main") {
