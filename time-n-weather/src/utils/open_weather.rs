@@ -55,16 +55,14 @@ pub mod open_weather {
 
         let mut output_data: String = String::from("");
 
-        if let Some(weather) = parsed
-            .get("weather")
-        {
-            if let Some(main) = weather
-                .get("main")
-            {
-                output_data.push_str(&main.to_string());
-            }
-            if let Some(description) = weather
-                .get("desciption")
+        if let Some(main_section) = parsed.get("main") {
+            let temp: String = main_section.get("temp").to_string();
+            let temp_value_F: String = to_fahrenheit(temp.parse().unwrap());
+            output_data.push_str("Current: ");
+            output_data(&temp_value_F);
+            
+            if let Some(description) = main_section
+                .get("temp_min")
             {
                 output_data.push_str(&description.to_string());
             }
