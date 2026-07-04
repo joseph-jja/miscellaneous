@@ -69,7 +69,7 @@ pub mod open_weather {
             let formatted_local_time: String =  local_time.split(".")
                 .nth(0).clone()
                 .unwrap_or(&local_time).to_string().replace('"', "");
-            println!("{:?}", formatted_local_Time);
+            //println!("{:?}", formatted_local_time);
             output_data.push_str("Updated: ");
             output_data.push_str(&formatted_local_time);
         }
