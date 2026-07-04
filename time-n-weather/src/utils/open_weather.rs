@@ -71,6 +71,10 @@ pub mod open_weather {
             output_data.push_str("/");
             output_data.push_str(&temp__max_value_F);
             output_data.push_str(LINE_ENDING);
+
+            let humidity: String = main_section.get("humidity").unwrap().to_string();
+            output_data.push_str("Humidity: ");
+            output_data.push_str(&humidity);
         }
         //let weather: String  = parsed.get("weather").unwrap().to_string();
         //let main: String = parsed.get("main").unwrap().to_string();
