@@ -76,6 +76,16 @@ pub mod open_weather {
             output_data.push_str("Humidity: ");
             output_data.push_str(&humidity);
         }
+
+        output_data.push_str("    Clouds: ");
+        if let Some(clouds) = parsed.get("clouds").and_then(|d| d.get("all")) {
+            output_data.push_str(&clouds.to_string());
+        } else {
+            output_data.push_str("0");
+        }
+        output_data.push_str("%");
+        
+
         //let weather: String  = parsed.get("weather").unwrap().to_string();
         //let main: String = parsed.get("main").unwrap().to_string();
         //let wind: String = parsed.get("wind").unwrap().to_string();
