@@ -15,7 +15,6 @@ use crate::utils::weather::weather::write_data_to_screen;
 
 use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::destroy_terminal;
-use crate::utils::terminal::terminal::draw_box_at_location;
 use crate::utils::terminal::terminal::flush_stdout;
 use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
@@ -32,10 +31,12 @@ struct ConfigData {
     longitude: f32,
 }
 
-const RELOAD_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
-const RELOAD_OPEN_WEATHER_API_DATA: i32 = 1000 * 30 * 60;
-const SLEEP_TIME: i32 = 15;
+const MINUTE: i32 = 60;
+const RELOAD_WEATHER_API_DATA: i32 = 30 * MINUTE; // 30 minutes update
+const RELOAD_OPEN_WEATHER_API_DATA: i32 = 60 * MINUTE; // one hour update
+const SLEEP_TIME: i32 = 15; // in seconds
 const SLEEP_TIME_U64: u64 = 15; // easier than converting
+const MAX_SLEEP_I_VALUE: i32 = 120 * MINUTE;
 
 fn write_time() {
     if let Ok(now) = OffsetDateTime::now_local() {
@@ -139,30 +140,37 @@ fn main() {
 
     let mut i: i32 = 0;
     init_terminal();
-    //while running.load(Ordering::SeqCst) {
+    // TODO need to add in control-C kill app functionality
+    // for now testing we just run loop 20 times
+    // ideally we would have endless loop until control-C
+    while i < 20 {
+        // get the weather data first time and then
+        // 30 minuntes
+        if i == 0 || i == RELOAD_WEATHER_API_DATA {
+            get_weather_data();
+        }
+        // then every 60 minutes
+        if i == 0 || i == RELOAD_OPEN_WEATHER_API_DATA {
+            get_open_weather_data();
+        }
 
-    if i == 0 {
-        get_weather_data();
-        get_open_weather_data();
+        clear_terminal();
+        write_time();
+
+        let x_offset: u16 = 7 + get_offset(4, 2);
+        write_data_to_screen(x_offset, 8);
+
+        write_ow_data_to_screen(10, 15 + 2 + 2);
+        if i == 0 {
+            get_weather_data();
+        }
+
+        flush_stdout();
+        sleep_terminal(SLEEP_TIME_U64);
+        i = i + SLEEP_TIME;
+        if i > MAX_SLEEP_I_VALUE {
+            i = 0;
+        }
     }
-
-    clear_terminal();
-    write_time();
-
-    let x_offset: u16 = 7 + get_offset(4, 2);
-    write_data_to_screen(x_offset, 8);
-
-    write_ow_data_to_screen(10, 15 + 2 + 2);
-    if i == 0 {
-        get_weather_data();
-    }
-
-    flush_stdout();
-    sleep_terminal(SLEEP_TIME_U64);
-    i = i + SLEEP_TIME;
-    if i > RELOAD_WEATHER_API_DATA {
-        i = 0;
-    }
-    //}
     destroy_terminal();
 }
