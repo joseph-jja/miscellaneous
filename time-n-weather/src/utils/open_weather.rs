@@ -3,11 +3,11 @@ pub mod open_weather {
     use serde_json::Value;
     use time::{OffsetDateTime, UtcOffset};
 
+    use crate::utils::utils::utils::LINE_ENDING;
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::open_weathermap_api_key;
-    use crate::utils::utils::utils::LINE_ENDING;
 
     use crate::utils::utils::utils::read_temp_file;
     use crate::utils::utils::utils::write_temp_file;
