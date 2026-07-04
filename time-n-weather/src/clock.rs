@@ -140,16 +140,17 @@ fn main() {
     init_terminal();
     //while running.load(Ordering::SeqCst) {
 
-    clear_terminal();
-    write_time();
-
     if i == 0 {
         get_weather_data();
     }
+    //get_open_weather_data();
+
+    clear_terminal();
+    write_time();
+
     let x_offset: u16 = 7 + get_offset(4, 2);
     write_data_to_screen(x_offset, 8);
 
-    //get_open_weather_data();
 
     flush_stdout();
     sleep_terminal(SLEEP_TIME_U64);
