@@ -3,13 +3,13 @@ pub mod weather {
     use serde::{Deserialize, Serialize};
     use serde_json::Value;
 
-    use crate::utils::utils::utils::LINE_ENDING;
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::format_date;
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::read_temp_file;
     use crate::utils::utils::utils::write_temp_file;
+    use crate::utils::utils::utils::LINE_ENDING;
 
     use crate::utils::terminal::terminal::write_text_at;
 
@@ -47,7 +47,7 @@ pub mod weather {
         return endpoint;
     }
 
-    pub fn get_weather_data() {
+    fn get_weather_data_endpoint() -> String {
         // get the endpoint to call
         let endpoint: String = get_main_weather_url();
 
@@ -57,47 +57,59 @@ pub mod weather {
         // write to temp file
         write_temp_file(&String::from("forecast.json"), &results);
 
-        // The data comes back as an object that has properties.period[]
-        // and we need to parse out first 4 items of the array and get these values
-        // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
-        // temperature, temperatureUnit
-        // windSpeed, windDirection
-        /*
-        {
-            "number": 156,
-            "name": "",
-            "startTime": "2026-06-29T08:00:00-07:00",
-            "endTime": "2026-06-29T09:00:00-07:00",
-            "isDaytime": true,
-            "temperature": 57,
-            "temperatureUnit": "F",
-            "temperatureTrend": null,
-            "probabilityOfPrecipitation": {
-                "unitCode": "wmoUnit:percent",
-                "value": 0
-            },
-            "dewpoint": {
-                "unitCode": "wmoUnit:degC",
-                "value": 11.666666666666666
-            },
-            "relativeHumidity": {
-                "unitCode": "wmoUnit:percent",
-                "value": 86
-            },
-            "windSpeed": "5 mph",
-            "windDirection": "SW",
-            "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
-            "shortForecast": "Mostly Sunny",
-            "detailedForecast": ""
-        }*/
-
         let parsed: Value =
             serde_json::from_str(&results.as_str()).expect("Should have forecast data!");
 
+        let mut forecast: String = String::from("");
         if let Some(forecast_url) = parsed
             .get("properties")
             .and_then(|d| d.get("forecastHourly"))
         {
+            forecast = forecast_url.to_string().replace('"', "");
+        }
+        return forecast;
+    }
+
+    // this function gets the data and then we parse the first 4 records
+    // The data comes back as an object that has properties.period[]
+    // and we need to parse out first 4 items of the array and get these values
+    // startTime, endTime, (in 2026-06-29T08:00:00-07:00 => out 08:00:00)
+    // temperature, temperatureUnit
+    // windSpeed, windDirection
+    /*
+    {
+        "number": 156,
+        "name": "",
+        "startTime": "2026-06-29T08:00:00-07:00",
+        "endTime": "2026-06-29T09:00:00-07:00",
+        "isDaytime": true,
+        "temperature": 57,
+        "temperatureUnit": "F",
+        "temperatureTrend": null,
+        "probabilityOfPrecipitation": {
+            "unitCode": "wmoUnit:percent",
+            "value": 0
+        },
+        "dewpoint": {
+            "unitCode": "wmoUnit:degC",
+            "value": 11.666666666666666
+        },
+        "relativeHumidity": {
+            "unitCode": "wmoUnit:percent",
+            "value": 86
+        },
+        "windSpeed": "5 mph",
+        "windDirection": "SW",
+        "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
+        "shortForecast": "Mostly Sunny",
+        "detailedForecast": ""
+    }*/
+
+    pub fn get_weather_data() {
+        // call first endpoint and get forecast URL from it
+        let forecast_url: String = get_weather_data_endpoint();
+
+        if forecast_url.len() > 0 {
             let forecast = forecast_url.to_string().replace('"', "");
 
             // Print the dynamic object
