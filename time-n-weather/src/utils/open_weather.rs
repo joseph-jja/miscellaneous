@@ -75,7 +75,7 @@ pub mod open_weather {
                 .nth(0).clone()
                 .unwrap_or(&local_time).to_string().replace('"', "");
             //println!("{:?}", formatted_local_time);
-            output_data.push_str("Updated: ");
+            output_data.push_str("Last Updated: ");
             output_data.push_str(&formatted_local_time);
             output_data.push_str(LINE_ENDING);
         }
@@ -159,20 +159,10 @@ pub mod open_weather {
         // we write 5 lines
         let data: String = read_temp_file(DETAILS_FILENAME);
 
-        let mut xx: u16 = x;
         let mut yy: u16 = y;
-        let mut i: u16 = 0;
 
         for line in data.lines() {
-            //println!("{:?}", line);
-            if i == 1 {
-                xx = x + 4;
-            }
-            if i == 5 {
-                xx = x;
-            }
-            write_text_at(xx, yy, line);
-            i = i + 1;
+            write_text_at(x, yy, line);
             yy = y + i;
         }
     }
