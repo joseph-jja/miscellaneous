@@ -150,11 +150,11 @@ pub mod open_weather {
             if let Some(array) = weather.as_array() {
                 for (_index, item) in array.iter().enumerate() {
                     if let Some(main_title) = item.get("main") {
-                        output_data.push_str(&main_title.to_string());
+                        output_data.push_str(&main_title.to_string().replace('"', ""));
 
                         if let Some(description) = item.get("description") {
                             output_data.push_str(": ");
-                            output_data.push_str(&description.to_string());
+                            output_data.push_str(&description.to_string().replace('"', ""));
                         }
                         output_data.push_str(LINE_ENDING);
                     }

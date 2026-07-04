@@ -5,11 +5,11 @@ pub mod terminal {
         execute, queue,
         style::{Print, PrintStyledContent, Stylize},
         terminal::{
-            Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
-            enable_raw_mode,
+            disable_raw_mode, enable_raw_mode, Clear, ClearType, EnterAlternateScreen,
+            LeaveAlternateScreen,
         },
     };
-    use std::io::{Write, stdout};
+    use std::io::{stdout, Write};
 
     pub fn init_terminal() {
         let mut stdout = stdout();
@@ -48,6 +48,8 @@ pub mod terminal {
 
         enable_raw_mode().expect("Error setting raw mode");
         execute!(stdout, EnterAlternateScreen, Hide).expect("Failed to execute");
+
+        queue!(stdout, Clear(ClearType::All), MoveTo(0, 0)).expect("Move failed");
     }
 
     pub fn write_text_at(x: u16, y: u16, msg: &str) {
