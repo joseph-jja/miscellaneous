@@ -9,6 +9,7 @@ use crate::utils::utils::utils::open_weathermap_api_key;
 use crate::utils::utils::utils::read_in_file;
 
 use crate::utils::open_weather::open_weather::get_open_weather_data;
+use crate::utils::open_weather::open_weather::write_ow_data_to_screen;
 use crate::utils::weather::weather::get_weather_data;
 use crate::utils::weather::weather::write_data_to_screen;
 
@@ -142,8 +143,8 @@ fn main() {
 
     if i == 0 {
         get_weather_data();
+        get_open_weather_data();
     }
-    //get_open_weather_data();
 
     clear_terminal();
     write_time();
@@ -151,6 +152,10 @@ fn main() {
     let x_offset: u16 = 7 + get_offset(4, 2);
     write_data_to_screen(x_offset, 8);
 
+    write_ow_data_to_screen(10, 15 + 2 + 2);
+    if i == 0 {
+        get_weather_data();
+    }
 
     flush_stdout();
     sleep_terminal(SLEEP_TIME_U64);
