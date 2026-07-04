@@ -12,11 +12,11 @@ use crate::utils::open_weather::open_weather::get_open_weather_data;
 use crate::utils::weather::weather::get_weather_data;
 use crate::utils::weather::weather::write_data_to_screen;
 
+use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::destroy_terminal;
 use crate::utils::terminal::terminal::draw_box_at_location;
 use crate::utils::terminal::terminal::flush_stdout;
 use crate::utils::terminal::terminal::init_terminal;
-use crate::utils::terminal::terminal::clear_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
 use crate::utils::terminal::terminal::write_text_at;
 
@@ -41,14 +41,14 @@ fn write_time() {
         let hour = u16::from(now.hour());
         let minute = u16::from(now.minute());
 
-       let hour_big: u16 = get_offset(0, 2);
-       let hour_small: u16 = get_offset(1, 2);
+        let hour_big: u16 = get_offset(0, 2);
+        let hour_small: u16 = get_offset(1, 2);
 
-       let minute_big: u16 = 5 + get_offset(2, 2);
-       let minute_small: u16 = 5 + get_offset(3, 2);
+        let minute_big: u16 = 5 + get_offset(2, 2);
+        let minute_small: u16 = 5 + get_offset(3, 2);
 
         let mut ampm: &str = "am";
-        
+
         if hour < 10 {
             number::write(hour_big, 2, 0);
             number::write(hour_small, 2, hour);
@@ -83,7 +83,13 @@ fn write_time() {
 
         let right_offset: u16 = 7 + get_offset(4, 2);
 
-        let formatted_date = format!("{:?}, {:?} {:?}, {:?}", now.weekday(), now.month(), now.day(), now.year());
+        let formatted_date = format!(
+            "{:?}, {:?} {:?}, {:?}",
+            now.weekday(),
+            now.month(),
+            now.day(),
+            now.year()
+        );
         write_text_at(right_offset, 3, &formatted_date.as_str());
         write_text_at(right_offset, 5, &ampm);
     }
@@ -133,26 +139,24 @@ fn main() {
     let mut i: i32 = 0;
     init_terminal();
     //while running.load(Ordering::SeqCst) {
-        
-        clear_terminal();
-        write_time();   
 
-        if i == 0 {
-            get_weather_data();
-        }
-        let x_offset: u16 = 7 + get_offset(4, 2);
-        write_data_to_screen(x_offset, 8);
+    clear_terminal();
+    write_time();
 
-        //get_open_weather_data();
+    if i == 0 {
+        get_weather_data();
+    }
+    let x_offset: u16 = 7 + get_offset(4, 2);
+    write_data_to_screen(x_offset, 8);
 
-        flush_stdout();
-        sleep_terminal(SLEEP_TIME_U64);
-        i = i + SLEEP_TIME;
-        if i > RELOAD_WEATHER_API_DATA {
-            i = 0;
-        }
+    //get_open_weather_data();
+
+    flush_stdout();
+    sleep_terminal(SLEEP_TIME_U64);
+    i = i + SLEEP_TIME;
+    if i > RELOAD_WEATHER_API_DATA {
+        i = 0;
+    }
     //}
     destroy_terminal();
-    
-    
 }

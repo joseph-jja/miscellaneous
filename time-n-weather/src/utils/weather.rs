@@ -3,13 +3,13 @@ pub mod weather {
     use serde::{Deserialize, Serialize};
     use serde_json::Value;
 
+    use crate::utils::utils::utils::LINE_ENDING;
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::format_date;
     use crate::utils::utils::utils::make_api_request;
-    use crate::utils::utils::utils::write_temp_file;
     use crate::utils::utils::utils::read_temp_file;
-    use crate::utils::utils::utils::LINE_ENDING;
+    use crate::utils::utils::utils::write_temp_file;
 
     use crate::utils::terminal::terminal::write_text_at;
 
@@ -178,26 +178,26 @@ pub mod weather {
     }
 
     pub fn write_data_to_screen(x: u16, y: u16) {
-       // read in hourly file and then write to screen at x
-       // y increases x is fixed
-       // we write 5 lines
-       let data: String = read_temp_file(HOURLY_FILENAME);
+        // read in hourly file and then write to screen at x
+        // y increases x is fixed
+        // we write 5 lines
+        let data: String = read_temp_file(HOURLY_FILENAME);
 
-       let mut xx: u16 = x; 
-       let mut yy: u16 = y; 
-       let mut i: u16 = 0;
-       
-       for line in data.lines() {
-           //println!("{:?}", line);
-           if i == 1 { 
-               xx = x + 4;
-           } 
-           if i == 5 {
-               xx = x;
-           }
-           write_text_at(xx, yy, line);
-           i = i + 1;
-           yy = y + i;
-       }
+        let mut xx: u16 = x;
+        let mut yy: u16 = y;
+        let mut i: u16 = 0;
+
+        for line in data.lines() {
+            //println!("{:?}", line);
+            if i == 1 {
+                xx = x + 4;
+            }
+            if i == 5 {
+                xx = x;
+            }
+            write_text_at(xx, yy, line);
+            i = i + 1;
+            yy = y + i;
+        }
     }
 }

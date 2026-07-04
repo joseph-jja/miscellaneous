@@ -5,11 +5,11 @@ pub mod terminal {
         execute, queue,
         style::{Print, PrintStyledContent, Stylize},
         terminal::{
-            disable_raw_mode, enable_raw_mode, Clear, ClearType, EnterAlternateScreen,
-            LeaveAlternateScreen,
+            Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
+            enable_raw_mode,
         },
     };
-    use std::io::{stdout, Write};
+    use std::io::{Write, stdout};
 
     pub fn init_terminal() {
         let mut stdout = stdout();
