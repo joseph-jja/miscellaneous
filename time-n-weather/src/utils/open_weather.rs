@@ -17,7 +17,7 @@ pub mod open_weather {
     const KELVIN_CONST: f64 = 459.67;
 
     fn to_fahrenheit(kelvin_in: f64) -> String {
-        let mut result: String (KELVIN_TO_FAHRENHEIT_MULTIPLIER * kelvin_in - KELVIN_CONST)
+        let mut result: String = (KELVIN_TO_FAHRENHEIT_MULTIPLIER * kelvin_in - KELVIN_CONST)
             .round()
             .to_string();
         result.push_str("F");
