@@ -10,12 +10,17 @@ pub mod open_weather {
     use crate::utils::utils::utils::LINE_ENDING;
 
     use crate::utils::utils::utils::write_temp_file;
+    use crate::utils::utils::utils::read_temp_file;
+
+    use crate::utils::terminal::terminal::write_text_at;
 
     const RELOAD: i32 = 1000 * 60 * 60;
     const API_HOSTNAME: &str = "https://api.openweathermap.org";
 
     const KELVIN_TO_FAHRENHEIT_MULTIPLIER: f64 = 9.0 / 5.0;
     const KELVIN_CONST: f64 = 459.67;
+
+    const DETAILS_FILENAME: &str= "details.txt";
 
     fn kelvin_to_fahrenheit(kelvin_in: f64) -> String {
         let mut result: String = (KELVIN_TO_FAHRENHEIT_MULTIPLIER * kelvin_in - KELVIN_CONST)
@@ -72,6 +77,7 @@ pub mod open_weather {
             //println!("{:?}", formatted_local_time);
             output_data.push_str("Updated: ");
             output_data.push_str(&formatted_local_time);
+            output_data.push_str(LINE_ENDING);
         }
 
         if let Some(main_section) = parsed.get("main") {
@@ -144,6 +150,30 @@ pub mod open_weather {
         }
 
         //println!("We got some results {:?}", results);
-        write_temp_file("details.txt", &output_data);
+        write_temp_file(DETAILS_FILENAME, &output_data);
+    }
+
+    pub fn write_ow_data_to_screen(x: u16, y: u16) {
+        // read in hourly file and then write to screen at x
+        // y increases x is fixed
+        // we write 5 lines
+        let data: String = read_temp_file(DETAILS_FILENAME);
+
+        let mut xx: u16 = x;
+        let mut yy: u16 = y;
+        let mut i: u16 = 0;
+
+        for line in data.lines() {
+            //println!("{:?}", line);
+            if i == 1 {
+                xx = x + 4;
+            }
+            if i == 5 {
+                xx = x;
+            }
+            write_text_at(xx, yy, line);
+            i = i + 1;
+            yy = y + i;
+        }
     }
 }
