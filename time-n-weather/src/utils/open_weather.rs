@@ -1,6 +1,7 @@
 pub mod open_weather {
 
     use serde_json::Value;
+    use time::{OffsetDateTime, UtcOffset, format_description};
 
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
@@ -57,6 +58,17 @@ pub mod open_weather {
             serde_json::from_str(&results.as_str()).expect("Should have open weather data!");
 
         let mut output_data: String = String::from("");
+
+        if let Some(unix_timestamp) = parsed.get("dt") {
+            //let utc_time = OffsetDateTime::from_unix_timestamp(unix_timestamp.parse::<f64>().unwrap()).unwrap();
+            /*let local_offset = UtcOffset::current_local_offset().unwrap();
+            let local_time = utc_time.to_offset(local_offset);
+            let format = format_description::parse(
+                "[year]-[month]-[day] [hour]:[minute]:[second] [offset_hour sign:mandatory]:[offset_minute]"
+            ).expect("Format specifier");
+            
+            let local_string = local_time.format(&format).unwrap();*/
+        }
 
         if let Some(main_section) = parsed.get("main") {
             let temp: String = main_section.get("temp").unwrap().to_string();
