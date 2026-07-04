@@ -54,6 +54,11 @@ pub mod weather {
         // call api
         let results = make_api_request(&endpoint);
 
+        if results.as_str().len() <= 0 {
+            println!("Could not fetch weather data!");
+            return String::from("");
+        }
+
         // write to temp file
         write_temp_file(&String::from("forecast.json"), &results);
 
@@ -109,84 +114,93 @@ pub mod weather {
         // call first endpoint and get forecast URL from it
         let forecast_url: String = get_weather_data_endpoint();
 
-        if forecast_url.len() > 0 {
-            let forecast = forecast_url.to_string().replace('"', "");
+        if forecast_url.len() <= 0 {
+            println!("No forecast URL to fetch data from!");
+            return;
+        }
+        let forecast = forecast_url.to_string().replace('"', "");
 
-            // Print the dynamic object
-            //println!("Found url: {:?}", forecast);
+        // Print the dynamic object
+        //println!("Found url: {:?}", forecast);
 
-            let hourly_forcast = make_api_request(&forecast);
+        let hourly_forcast = make_api_request(&forecast);
+        if hourly_forcast.as_str().len() <= 0 {
+            let msg: String = String::from("Could not fetch hourly forecast data!");
+            println!(msg);
+            write_temp_file(HOURLY_FILENAME, &msg);
 
-            write_temp_file(&String::from("hourlyForecast.json"), &hourly_forcast);
+            return;
+        }
 
-            let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str())
-                .expect("Should have hourly forecast data!");
+        write_temp_file(&String::from("hourlyForecast.json"), &hourly_forcast);
 
-            let mut generated: String = String::from("");
-            //     results.push_str(date + time);
-            if let Some(generated_at) = hourly_data
-                .get("properties")
-                .and_then(|d| d.get("generatedAt"))
-            {
-                let generated_work: String =
-                    generated_at.to_string().replace('"', "").replace("T", " ");
-                generated.push_str(&generated_work);
-            }
+        let hourly_data: Value = serde_json::from_str(&hourly_forcast.as_str())
+            .expect("Should have hourly forecast data!");
 
-            let mut four_hour_forecast: Vec<HourlyForecastData> = Vec::new();
-            if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) {
-                if let Some(array) = periods.as_array() {
-                    for (index, item) in array.iter().enumerate() {
-                        if index < 4 {
-                            //println!("We got a line of data {:?}", item);
-                            let start_time: String =
-                                format_date(&String::from(item["startTime"].to_string()));
+        let mut generated: String = String::from("");
+        //     results.push_str(date + time);
+        if let Some(generated_at) = hourly_data
+            .get("properties")
+            .and_then(|d| d.get("generatedAt"))
+        {
+            let generated_work: String =
+                generated_at.to_string().replace('"', "").replace("T", " ");
+            generated.push_str(&generated_work);
+        }
 
-                            let end_time: String =
-                                format_date(&String::from(item["endTime"].to_string()));
+        let mut four_hour_forecast: Vec<HourlyForecastData> = Vec::new();
+        if let Some(periods) = hourly_data.get("properties").and_then(|d| d.get("periods")) {
+            if let Some(array) = periods.as_array() {
+                for (index, item) in array.iter().enumerate() {
+                    if index < 4 {
+                        //println!("We got a line of data {:?}", item);
+                        let start_time: String =
+                            format_date(&String::from(item["startTime"].to_string()));
 
-                            four_hour_forecast.push(HourlyForecastData {
-                                start_time: start_time,
-                                end_time: end_time,
-                                temperature: item["temperature"].to_string(),
-                                temperature_unit: item["temperatureUnit"].to_string(),
-                                wind_speed: item["windSpeed"].to_string(),
-                                wind_direction: item["windDirection"].to_string(),
-                            });
-                        } else {
-                            break;
-                        }
+                        let end_time: String =
+                            format_date(&String::from(item["endTime"].to_string()));
+
+                        four_hour_forecast.push(HourlyForecastData {
+                            start_time: start_time,
+                            end_time: end_time,
+                            temperature: item["temperature"].to_string(),
+                            temperature_unit: item["temperatureUnit"].to_string(),
+                            wind_speed: item["windSpeed"].to_string(),
+                            wind_direction: item["windDirection"].to_string(),
+                        });
+                    } else {
+                        break;
                     }
                 }
             }
-            //println!("We got me some data {:?}", four_hour_forecast);
-
-            // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
-            // then add in last updated date and time
-            // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
-            let mut hourly_results: String = String::from("Hourly:");
-            hourly_results.push_str(LINE_ENDING);
-            for item in four_hour_forecast {
-                hourly_results.push_str(&item.start_time);
-                hourly_results.push_str("-");
-                hourly_results.push_str(&item.end_time);
-                hourly_results.push_str(": ");
-                hourly_results.push_str(&item.temperature);
-                hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
-                hourly_results.push_str(" / ");
-                hourly_results.push_str(&item.wind_speed.replace("\"", ""));
-                hourly_results.push_str(" ");
-                hourly_results.push_str(&item.wind_direction.replace("\"", ""));
-                hourly_results.push_str(LINE_ENDING);
-            }
-            hourly_results.push_str("Last Updated (GMT): ");
-            hourly_results.push_str(&generated);
-            hourly_results.push_str(LINE_ENDING);
-            //println!("Got generated date {:?}", generated);
-            //     results.push_str(os.EOL);  // TODO fix this
-            write_temp_file(HOURLY_FILENAME, &hourly_results);
-            //println!("We got me some data {:?}", results);
         }
+        //println!("We got me some data {:?}", four_hour_forecast);
+
+        // details =>  (${startTime}-${endTime}): ${period.temperature}${period.temperatureUnit} / ${period.windSpeed} ${period.windDirection} ${os.EOL}`;
+        // then add in last updated date and time
+        // details => `Last Updated: ${formattedDate} @ ${formattedTime}`;
+        let mut hourly_results: String = String::from("Hourly:");
+        hourly_results.push_str(LINE_ENDING);
+        for item in four_hour_forecast {
+            hourly_results.push_str(&item.start_time);
+            hourly_results.push_str("-");
+            hourly_results.push_str(&item.end_time);
+            hourly_results.push_str(": ");
+            hourly_results.push_str(&item.temperature);
+            hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
+            hourly_results.push_str(" / ");
+            hourly_results.push_str(&item.wind_speed.replace("\"", ""));
+            hourly_results.push_str(" ");
+            hourly_results.push_str(&item.wind_direction.replace("\"", ""));
+            hourly_results.push_str(LINE_ENDING);
+        }
+        hourly_results.push_str("Last Updated (GMT): ");
+        hourly_results.push_str(&generated);
+        hourly_results.push_str(LINE_ENDING);
+        //println!("Got generated date {:?}", generated);
+        //     results.push_str(os.EOL);  // TODO fix this
+        write_temp_file(HOURLY_FILENAME, &hourly_results);
+        //println!("We got me some data {:?}", results);
     }
 
     pub fn write_data_to_screen(x: u16, y: u16) {
