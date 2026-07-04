@@ -1,7 +1,7 @@
 pub mod open_weather {
 
     use serde_json::Value;
-    use time::{OffsetDateTime, UtcOffset, format_description};
+    use time::{OffsetDateTime, UtcOffset};
 
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
