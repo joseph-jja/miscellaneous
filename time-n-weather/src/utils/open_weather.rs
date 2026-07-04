@@ -59,7 +59,7 @@ pub mod open_weather {
 
         let mut output_data: String = String::from("");
 
-        if let Some(unix_timestamp) = parsed.get("dt") {
+        if let Some(dt_timestamp) = parsed.get("dt") {
             let unix_timestamp = dt_timestamp.to_string().parse::<i64>().unwrap();
             let utc_time = OffsetDateTime::from_unix_timestamp(unix_timestamp)
                 .expect("OffsetDateTime to utc_time");
