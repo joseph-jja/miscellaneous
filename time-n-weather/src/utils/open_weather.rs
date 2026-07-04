@@ -53,10 +53,26 @@ pub mod open_weather {
         let parsed: Value =
             serde_json::from_str(&results.as_str()).expect("Should have open weather data!");
 
-        let weather: String  = parsed.get("weather").unwrap().to_string();
-        let main: String = parsed.get("main").unwrap().to_string();
-        let wind: String = parsed.get("wind").unwrap().to_string();
-        let clouds: String = parsed.get("clouds").unwrap().to_string();
+        let mut output_data: String = String::from("");
+
+        if let Some(weather) = parsed
+            .get("weather")
+        {
+            if let Some(main) = weather
+                .get("main")
+            {
+                output_data.push_str(&main.to_string());
+            }
+            if let Some(description) = weather
+                .get("desciption")
+            {
+                output_data.push_str(&description.to_string());
+            }
+        }
+        //let weather: String  = parsed.get("weather").unwrap().to_string();
+        //let main: String = parsed.get("main").unwrap().to_string();
+        //let wind: String = parsed.get("wind").unwrap().to_string();
+        //let clouds: String = parsed.get("clouds").unwrap().to_string();
         
         //println!("We got some results {:?}", results);
     }
