@@ -121,18 +121,6 @@ pub mod open_weather {
         }
         output_data.push_str(LINE_ENDING);
 
-        if let Some(weather) = parsed.get("weather") {
-            if let Some(main_title) = weather.get("main") { 
-                output_data.push_str(&main_title.to_string());
-    
-                if let Some(description) = weather.get("description") {
-                    output_data.push_str(": ");
-                    output_data.push_str(&description.to_string());
-                }
-                output_data.push_str(LINE_ENDING);
-            }
-        }
-
         if let Some(wind) = parsed.get("wind") {
             let wind_speed = wind.get("speed").unwrap().to_string();
             output_data.push_str("Wind Speed: ");
@@ -147,6 +135,23 @@ pub mod open_weather {
             output_data.push_str(&wind_gust);
 
             output_data.push_str(LINE_ENDING);
+        }
+
+        if let Some(weather) = parsed.get("weather") {
+            //if let Some(array) = weather.as_array() {
+            //    for (index, item) in array.iter().enumerate() {
+
+                    if let Some(main_title) = item.get("main") { 
+                        output_data.push_str(&main_title.to_string());
+            
+                        if let Some(description) = item.get("description") {
+                            output_data.push_str(": ");
+                            output_data.push_str(&description.to_string());
+                        }
+                        output_data.push_str(LINE_ENDING);
+                    }
+                //}
+            //}
         }
 
         //println!("We got some results {:?}", results);
