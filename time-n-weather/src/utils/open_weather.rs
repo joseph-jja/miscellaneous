@@ -1,5 +1,7 @@
 pub mod open_weather {
 
+    use serde_json::Value;
+
     use crate::utils::utils::utils::current_latitude;
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
@@ -47,6 +49,15 @@ pub mod open_weather {
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
         write_temp_file("openweather.json", &results);
+
+        let parsed: Value =
+            serde_json::from_str(&results.as_str()).expect("Should have open weather data!");
+
+        let weather: String  = parsed.get("weather").unwrap().to_string();
+        let main: String = parsed.get("main").unwrap().to_string();
+        let wind: String = parsed.get("wind").unwrap().to_string();
+        let clouds: String = parsed.get("clouds").unwrap().to_string();
+        
         //println!("We got some results {:?}", results);
     }
 }
