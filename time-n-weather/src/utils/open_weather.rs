@@ -107,8 +107,8 @@ pub mod open_weather {
                     output_data.push_str(": ");
                     output_data.push_str(&description.to_string());
                 }
+                output_data.push_str(LINE_ENDING);
             }
-            output_data.push_str(LINE_ENDING);
         }
 
         if let Some(wind) = parsed.get("wind") {
@@ -117,11 +117,11 @@ pub mod open_weather {
             output_data.push_str(&wind_speed);
             
             let wind_direction = wind.get("deg").unwrap().to_string();
-            output_data.push_str("Wind Direction: ");
+            output_data.push_str("    Wind Direction: ");
             output_data.push_str(&wind_direction);
 
             let wind_gust = wind.get("gust").unwrap().to_string();
-            output_data.push_str("Wind Gust: ");
+            output_data.push_str("    Wind Gust: ");
             output_data.push_str(&wind_gust);
 
             output_data.push_str(LINE_ENDING);
