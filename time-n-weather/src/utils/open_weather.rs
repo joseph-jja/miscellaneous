@@ -56,6 +56,12 @@ pub mod open_weather {
         }
 
         let results = make_api_request(&endpoint); //.expect("Got weather data!");
+        if results.to_string().len() <= 0 {
+            let msg: String = String::from("Could not get data from openweather!");
+            println!("{:?}", msg);
+            write_temp_file("openweather.json", &msg);
+            return;
+        }
         write_temp_file("openweather.json", &results);
 
         let parsed: Value =
