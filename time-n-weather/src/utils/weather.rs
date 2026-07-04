@@ -126,7 +126,7 @@ pub mod weather {
         let hourly_forcast = make_api_request(&forecast);
         if hourly_forcast.as_str().len() <= 0 {
             let msg: String = String::from("Could not fetch hourly forecast data!");
-            println!(msg);
+            println!("{:?}", msg);
             write_temp_file(HOURLY_FILENAME, &msg);
 
             return;
