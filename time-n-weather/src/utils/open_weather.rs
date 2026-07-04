@@ -85,12 +85,32 @@ pub mod open_weather {
         }
         output_data.push_str("%");
         
+        output_data.push_str("    Rain: ");
+        if let Some(rain) = parsed.get("rain") {
+            if let Some(one_hr) = rain.get("1h") {
+                output_data.push_str(&one_hr.to_string());
+            } else {
+                output_data.push_str("0");
+            }
+        } else {
+            output_data.push_str("0");
+        }
+        output_data.push_str(LINE_ENDING);
 
-        //let weather: String  = parsed.get("weather").unwrap().to_string();
-        //let main: String = parsed.get("main").unwrap().to_string();
+        if let Some(weather) = parsed.get("weather") {
+            let main_title = rain.get("main").unwrap().to_string()
+            output_data.push_str(&main_title);
+            
+            output_data.push_str(": ");
+            
+            let description = rain.get("description").unwrap().to_string()
+            output_data.push_str(&description);
+            output_data.push_str(LINE_ENDING);
+        }
+
         //let wind: String = parsed.get("wind").unwrap().to_string();
-        //let clouds: String = parsed.get("clouds").unwrap().to_string();
         
         //println!("We got some results {:?}", results);
+        write_temp_file("details.txt", &output_data);
     }
 }
