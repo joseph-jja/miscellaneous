@@ -99,11 +99,11 @@ pub mod open_weather {
 
         if let Some(weather) = parsed.get("weather") {
             if let Some(main_title) = weather.get("main") { 
-                output_data.push_str(&main_title.unwrap().to_string());
+                output_data.push_str(&main_title.to_string());
     
                 if let Some(description) = weather.get("description") {
                     output_data.push_str(": ");
-                    output_data.push_str(&description.unwrap().to_string());
+                    output_data.push_str(&description.to_string());
                 }
             }
             output_data.push_str(LINE_ENDING);
