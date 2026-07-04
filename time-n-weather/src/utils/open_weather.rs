@@ -98,18 +98,32 @@ pub mod open_weather {
         output_data.push_str(LINE_ENDING);
 
         if let Some(weather) = parsed.get("weather") {
-            let main_title = rain.get("main").unwrap().to_string();
+            let main_title = weather.get("main").unwrap().to_string();
             output_data.push_str(&main_title);
             
             output_data.push_str(": ");
             
-            let description = rain.get("description").unwrap().to_string();
+            let description = weather.get("description").unwrap().to_string();
             output_data.push_str(&description);
             output_data.push_str(LINE_ENDING);
         }
 
-        //let wind: String = parsed.get("wind").unwrap().to_string();
-        
+        if let Some(wind) = parsed.get("wind") {
+            let wind_speed = wind.get("speed").unwrap().to_string();
+            output_data.push_str("Wind Speed: ");
+            output_data.push_str(&wind_speed);
+            
+            let wind_direction = wind.get("deg").unwrap().to_string();
+            output_data.push_str("Wind Direction: ");
+            output_data.push_str(&wind_direction);
+
+            let wind_gust = wind.get("gust").unwrap().to_string();
+            output_data.push_str("Wind Gust: ");
+            output_data.push_str(&wind_gust);
+
+            output_data.push_str(LINE_ENDING);
+        }
+
         //println!("We got some results {:?}", results);
         write_temp_file("details.txt", &output_data);
     }
