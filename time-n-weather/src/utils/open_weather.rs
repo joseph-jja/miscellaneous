@@ -56,16 +56,19 @@ pub mod open_weather {
         let mut output_data: String = String::from("");
 
         if let Some(main_section) = parsed.get("main") {
-            //let temp: String = main_section.get("temp").to_string();
-            //let temp_value_F: String = to_fahrenheit(temp.parse().unwrap());
+            let temp: String = main_section.get("temp").unwrap().to_string();
+            let temp_value_F: String = to_fahrenheit(temp.parse().unwrap());
             output_data.push_str("Current: ");
-            //output_data(&temp_value_F);
+            output_data.push_str(&temp_value_F);
             
-            if let Some(description) = main_section
-                .get("temp_min")
-            {
-                output_data.push_str(&description.to_string());
-            }
+            let temp_min: String = main_section.get("temp_min").unwrap().to_string();
+            let temp__min_value_F: String = to_fahrenheit(temp_min.parse().unwrap());
+            let temp_max: String = main_section.get("temp_max").unwrap().to_string();
+            let temp__max_value_F: String = to_fahrenheit(temp_max.parse().unwrap());
+            output_data.push_str("    High/Low: ");
+            output_data.push_str(&temp__min_value_F);
+            output_data.push_str("/");
+            output_data.push_str(&temp__max_value_F);
         }
         //let weather: String  = parsed.get("weather").unwrap().to_string();
         //let main: String = parsed.get("main").unwrap().to_string();
