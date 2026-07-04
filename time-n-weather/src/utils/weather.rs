@@ -167,7 +167,7 @@ pub mod weather {
                 hourly_results.push_str(&item.wind_direction.replace("\"", ""));
                 hourly_results.push_str(LINE_ENDING);
             }
-            hourly_results.push_str("Last Updated (GMT):");
+            hourly_results.push_str("Last Updated (GMT): ");
             hourly_results.push_str(&generated);
             hourly_results.push_str(LINE_ENDING);
             //println!("Got generated date {:?}", generated);
