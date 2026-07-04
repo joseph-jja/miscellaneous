@@ -6,6 +6,7 @@ pub mod open_weather {
     use crate::utils::utils::utils::current_longitude;
     use crate::utils::utils::utils::make_api_request;
     use crate::utils::utils::utils::open_weathermap_api_key;
+    use crate::utils::utils::utils::LINE_ENDING;
 
     use crate::utils::utils::utils::write_temp_file;
 
@@ -69,6 +70,7 @@ pub mod open_weather {
             output_data.push_str(&temp__min_value_F);
             output_data.push_str("/");
             output_data.push_str(&temp__max_value_F);
+            output_data.push_str(LINE_ENDING);
         }
         //let weather: String  = parsed.get("weather").unwrap().to_string();
         //let main: String = parsed.get("main").unwrap().to_string();
