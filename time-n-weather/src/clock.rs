@@ -137,10 +137,7 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
-    /*println!(
-            "Config file latitude: {:?} and longitude: {:?}",
-            config_json.latitude, config_json.longitude
-    );*/
+    let net_ifaces: String = get_interfaces();
 
     let mut i: i32 = 0;
     init_terminal();
@@ -178,4 +175,8 @@ fn main() {
         update_color();
     }
     destroy_terminal();
+
+    println!(" ");
+    println!("{:?}", net_ifaces);
+    println!(" ");
 }
