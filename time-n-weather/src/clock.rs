@@ -34,8 +34,8 @@ struct ConfigData {
 const MINUTE: i32 = 60;
 const RELOAD_WEATHER_API_DATA: i32 = 30 * MINUTE; // 30 minutes update
 const RELOAD_OPEN_WEATHER_API_DATA: i32 = 60 * MINUTE; // one hour update
-const SLEEP_TIME: i32 = 15; // in seconds
-const SLEEP_TIME_U64: u64 = 15; // easier than converting
+const SLEEP_TIME: i32 = 1; // in seconds
+const SLEEP_TIME_U64: u64 = 1; // easier than converting
 const MAX_SLEEP_I_VALUE: i32 = 120 * MINUTE;
 
 fn write_time() {
