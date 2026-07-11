@@ -30,6 +30,12 @@ pub mod open_weather {
         return result;
     }
 
+    fn meters_per_second_to_miles_per_hour() 
+
+        // meter/sec multiply by 2.237
+
+    }
+
     pub fn get_open_weather_data() {
         let mut endpoint: String = String::from(API_HOSTNAME);
         endpoint.push_str("/data/2.5/weather?lat=");
