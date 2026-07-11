@@ -3,13 +3,15 @@ pub mod weather {
     use serde::{Deserialize, Serialize};
     use serde_json::Value;
 
-    use crate::utils::utils::utils::LINE_ENDING;
-    use crate::utils::utils::utils::current_latitude;
-    use crate::utils::utils::utils::current_longitude;
-    use crate::utils::utils::utils::format_date;
-    use crate::utils::utils::utils::make_api_request;
-    use crate::utils::utils::utils::read_temp_file;
-    use crate::utils::utils::utils::write_temp_file;
+    use crate::utils::utils::utils::{
+        LINE_ENDING,
+        current_latitude, 
+        current_longitude,
+        format_date, 
+        make_api_request, 
+        read_temp_file,
+        write_temp_file
+    };
 
     use crate::utils::terminal::terminal::write_text_at;
 
