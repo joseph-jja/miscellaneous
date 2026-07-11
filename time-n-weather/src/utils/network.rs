@@ -22,6 +22,6 @@ pub mod iface {
                 network_info.push_str(LINE_ENDING);
             }
         }
-        return network_info;
+        return network_info.replace("\"", "");
     }
 }
