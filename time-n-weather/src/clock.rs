@@ -3,26 +3,27 @@ use std::process;
 use time::OffsetDateTime;
 
 pub mod utils;
-use crate::utils::utils::utils::current_latitude;
-use crate::utils::utils::utils::current_longitude;
-use crate::utils::utils::utils::open_weathermap_api_key;
-use crate::utils::utils::utils::read_in_file;
+use crate::utils::utils::utils::{
+    current_latitude,
+    current_longitude, 
+    open_weathermap_api_key, 
+    read_in_file
+};
 
-use crate::utils::open_weather::open_weather::get_open_weather_data;
-use crate::utils::open_weather::open_weather::write_ow_data_to_screen;
-use crate::utils::weather::weather::get_weather_data;
-use crate::utils::weather::weather::write_data_to_screen;
+use crate::utils::open_weather::open_weather::{ get_open_weather_data, write_ow_data_to_screen};
+use crate::utils::weather::weather::{get_weather_data, write_data_to_screen};
 
-use crate::utils::terminal::terminal::clear_terminal;
-use crate::utils::terminal::terminal::destroy_terminal;
-use crate::utils::terminal::terminal::flush_stdout;
-use crate::utils::terminal::terminal::init_terminal;
-use crate::utils::terminal::terminal::sleep_terminal;
-use crate::utils::terminal::terminal::write_text_at;
-use crate::utils::terminal::terminal::update_color;
+use crate::utils::terminal::terminal::{
+    clear_terminal, 
+    destroy_terminal, 
+    flush_stdout, 
+    init_terminal, 
+    sleep_terminal, 
+    write_text_at,
+    update_color
+};
 
-use crate::utils::numbers::numbers::get_offset;
-use crate::utils::numbers::numbers::write_colon;
+use crate::utils::numbers::numbers::{ get_offset, write_colon};
 use crate::utils::write_number::number;
 
 #[derive(Serialize, Deserialize)]
