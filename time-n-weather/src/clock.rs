@@ -19,6 +19,7 @@ use crate::utils::terminal::terminal::flush_stdout;
 use crate::utils::terminal::terminal::init_terminal;
 use crate::utils::terminal::terminal::sleep_terminal;
 use crate::utils::terminal::terminal::write_text_at;
+use crate::utils::terminal::terminal::update_color;
 
 use crate::utils::numbers::numbers::get_offset;
 use crate::utils::numbers::numbers::write_colon;
@@ -171,6 +172,7 @@ fn main() {
         if i > MAX_SLEEP_I_VALUE {
             i = 0;
         }
+        update_color();
     }
     destroy_terminal();
 }
