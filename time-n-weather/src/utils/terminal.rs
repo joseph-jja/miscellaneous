@@ -3,7 +3,7 @@ pub mod terminal {
     use crossterm::{
         cursor::{Hide, MoveTo, Show},
         execute, queue,
-        style::{Print, PrintStyledContent, Stylize, Color},
+        style::{Print, PrintStyledContent, Stylize, ContentStyle, Color},
         terminal::{
             Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
             enable_raw_mode,
@@ -89,14 +89,20 @@ pub mod terminal {
     pub fn write_text_at(x: u16, y: u16, msg: &str) {
         let mut stdout = stdout();
 
-        queue!(stdout, MoveTo(x, y), Print(&msg)).expect("Print failed in write_text");
+        let current_color: Color = get_color();
+
+        let style = ContentStyle::new().
+            with(current_color);
+        
+        let content = style.apply(&msg);
+        
+        queue!(stdout, MoveTo(x, y), PrintStyledContent(content)).expect("Print failed in write_text");
     }
 
     // future will take color
     pub fn draw_box_at_location(x: u16, y: u16) {
-        let mut stdout = stdout();
 
-        queue!(stdout, MoveTo(x, y), PrintStyledContent("█".magenta())).expect("Write failed");
+        write_text_at(x, y, "█");
     }
 
     pub fn sleep_terminal(x: u64) {
