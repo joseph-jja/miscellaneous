@@ -143,9 +143,9 @@ fn main() {
     let mut i: i32 = 0;
     init_terminal();
     // TODO need to add in control-C kill app functionality
-    // for now testing we just run loop 20 times
+    // for now testing we just run loop 120 times which should be about 2 minutes
     // ideally we would have endless loop until control-C
-    while i < 20 {
+    while i < 120 {
         // get the weather data first time and then
         // 30 minuntes
         if i == 0 || i == RELOAD_WEATHER_API_DATA {
