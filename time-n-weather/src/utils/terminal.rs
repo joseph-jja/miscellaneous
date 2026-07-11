@@ -3,7 +3,7 @@ pub mod terminal {
     use crossterm::{
         cursor::{Hide, MoveTo, Show},
         execute, queue,
-        style::{Print, PrintStyledContent, Stylize},
+        style::{Print, PrintStyledContent, Stylize, Color},
         terminal::{
             Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
             enable_raw_mode,
@@ -12,9 +12,37 @@ pub mod terminal {
     use std::io::{Write, stdout};
     use std::sync::{OnceLock, RwLock};
 
-    fn current_color() -> &'static RwLock<String> {
-        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
-        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    fn current_color() -> &'static RwLock<i8> {
+        static COLOR_LOCK: OnceLock<RwLock<i8>> = OnceLock::new();
+        COLOR_LOCK.get_or_init(|| RwLock::new(0))
+    }
+
+    fn get_color() -> Color {
+
+        let mut color: i8 = 0;
+        {
+            let color_lock_read = current_color().read().unwrap();
+            color = *color_lock_read;
+        }
+
+        if color > 6 {
+            {
+                let mut color_lock_write = current_color().write().unwrap();
+                *color_lock_write = 0i8;
+                color = 0;
+            }
+        }
+
+        return match color {
+            0 => Color::Magenta,
+            1 => Color::Red,
+            2 => Color::Blue,
+            3 => Color::Yellow,
+            4 => Color::Green,
+            5 => Color::Cyan,
+            6 => Color::White,
+            _ => Color::Magenta
+        };
     }
     
     pub fn init_terminal() {
@@ -27,10 +55,10 @@ pub mod terminal {
 
         queue!(
             stdout,
-            Print("Welcome to Crossterm!\r\n"),
-            Print("=====================\r\n"),
+            PrintStyledContent("Welcome to Crossterm!\r\n".magenta()),
+            PrintStyledContent("=====================\r\n".magenta()),
             MoveTo(10, 4),
-            Print("If you are seeing this drawn at x=10, y=4 and underlined it works!")
+            PrintStyledContent("If you are seeing this drawn at x=10, y=4 and underlined it works!".magenta())
         )
         .expect("Print failed");
 
