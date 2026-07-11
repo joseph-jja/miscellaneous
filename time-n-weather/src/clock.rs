@@ -137,8 +137,6 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
-    let net_ifaces: String = get_interfaces();
-
     let mut i: i32 = 0;
     init_terminal();
     // TODO need to add in control-C kill app functionality
@@ -161,6 +159,9 @@ fn main() {
         let x_offset: u16 = 7 + get_offset(4, 2);
         write_data_to_screen(x_offset, 8);
 
+        let net_ifaces: String = get_interfaces();
+        write_text_at(x_offset, 15, &net_ifaces);
+
         write_ow_data_to_screen(10, 15 + 2 + 2);
         if i == 0 {
             get_weather_data();
@@ -175,8 +176,4 @@ fn main() {
         update_color();
     }
     destroy_terminal();
-
-    println!(" ");
-    println!("{:?}", net_ifaces);
-    println!(" ");
 }
