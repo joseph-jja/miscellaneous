@@ -19,6 +19,12 @@ pub mod terminal {
 
     pub fn update_color() {
 
+         let mut color: i8 = 0;
+        {
+            let color_lock_read = current_color().read().unwrap();
+            color = *color_lock_read;
+        }
+
         {
             let mut color_lock_write = current_color().write().unwrap();
             *color_lock_write = if color >= 6 { 0 } else { color + 1 };
