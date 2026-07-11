@@ -4,3 +4,4 @@ pub mod terminal;
 pub mod utils;
 pub mod weather;
 pub mod write_number;
+pub mod network;
