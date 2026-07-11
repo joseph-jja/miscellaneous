@@ -9,5 +9,5 @@
 }
 ```
 
-![Screenshot of current rust implementation](./Screenshot 2026-07-11 11.29.31 AM.png)
+![Screenshot of current rust implementation](./Screenshot_2026-07-11_11_29_31_AM.png)
 
