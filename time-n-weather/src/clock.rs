@@ -26,7 +26,7 @@ use crate::utils::terminal::terminal::{
 use crate::utils::numbers::numbers::{ get_offset, write_colon};
 use crate::utils::write_number::number;
 
-use crate::utils::network::iface::get_interfaces
+use crate::utils::network::iface::get_interfaces;
 
 #[derive(Serialize, Deserialize)]
 struct ConfigData {
