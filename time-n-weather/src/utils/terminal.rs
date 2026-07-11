@@ -17,20 +17,20 @@ pub mod terminal {
         COLOR_LOCK.get_or_init(|| RwLock::new(0))
     }
 
+    pub fn update_color() {
+
+        {
+            let mut color_lock_write = current_color().write().unwrap();
+            *color_lock_write = if color >= 6 { 0 } else { color + 1 };
+        }
+    }
+    
     fn get_color() -> Color {
 
         let mut color: i8 = 0;
         {
             let color_lock_read = current_color().read().unwrap();
             color = *color_lock_read;
-        }
-
-        if color > 6 {
-            {
-                let mut color_lock_write = current_color().write().unwrap();
-                *color_lock_write = 0i8;
-                color = 0;
-            }
         }
 
         return match color {
