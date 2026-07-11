@@ -1,15 +1,17 @@
 pub mod number {
 
-    use crate::utils::numbers::numbers::write_eight;
-    use crate::utils::numbers::numbers::write_five;
-    use crate::utils::numbers::numbers::write_four;
-    use crate::utils::numbers::numbers::write_nine;
-    use crate::utils::numbers::numbers::write_one;
-    use crate::utils::numbers::numbers::write_seven;
-    use crate::utils::numbers::numbers::write_six;
-    use crate::utils::numbers::numbers::write_three;
-    use crate::utils::numbers::numbers::write_two;
-    use crate::utils::numbers::numbers::write_zero;
+    use crate::utils::numbers::numbers::{ 
+        write_zero,
+        write_one,
+        write_two,
+        write_three,
+        write_four,
+        write_five,
+        write_six,
+        write_seven,
+        write_eight,
+        write_nine
+    };
 
     pub fn write(x: u16, y: u16, num: u16) {
         match num {
