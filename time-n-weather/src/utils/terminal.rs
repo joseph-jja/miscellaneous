@@ -10,7 +10,13 @@ pub mod terminal {
         },
     };
     use std::io::{Write, stdout};
+    use std::sync::{OnceLock, RwLock};
 
+    fn current_color() -> &'static RwLock<String> {
+        static STRING_LOCK: OnceLock<RwLock<String>> = OnceLock::new();
+        STRING_LOCK.get_or_init(|| RwLock::new(String::from("")))
+    }
+    
     pub fn init_terminal() {
         let mut stdout = stdout();
 
