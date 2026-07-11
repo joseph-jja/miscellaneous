@@ -33,7 +33,7 @@ pub mod terminal {
     
     fn get_color() -> Color {
 
-        let mut color: i8 = 0;
+        let color: i8;
         {
             let color_lock_read = current_color().read().unwrap();
             color = *color_lock_read;
