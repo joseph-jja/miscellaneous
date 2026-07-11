@@ -16,8 +16,10 @@ pub mod iface {
                 // Loop through all associated IP addresses (IPv4 and IPv6)
                 network_info.push_str(":");
                 for addr in interface.addr {
-                    network_info.push_str(" ");
-                    network_info.push_str(&addr.ip().to_string());
+                    if addr.ip().is_ipv4() {
+                        network_info.push_str(" ");
+                        network_info.push_str(&addr.ip().to_string());
+                    }
                 }
                 network_info.push_str(LINE_ENDING);
             }
