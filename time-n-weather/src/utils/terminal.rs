@@ -3,7 +3,7 @@ pub mod terminal {
     use crossterm::{
         cursor::{Hide, MoveTo, Show},
         execute, queue,
-        style::{Print, PrintStyledContent, Stylize, ContentStyle, Color},
+        style::{PrintStyledContent, Stylize, ContentStyle, Color},
         terminal::{
             Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
             enable_raw_mode,
