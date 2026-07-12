@@ -19,6 +19,7 @@ pub mod open_weather {
 
     const KELVIN_TO_FAHRENHEIT_MULTIPLIER: f64 = 9.0 / 5.0;
     const KELVIN_CONST: f64 = 459.67;
+    const MPS_TO_MPH: f64 = 2.237; // meters per second to miles per hour const
 
     const DETAILS_FILENAME: &str = "details.txt";
 
@@ -30,10 +31,11 @@ pub mod open_weather {
         return result;
     }
 
-    fn meters_per_second_to_miles_per_hour() 
+    fn meters_per_second_to_miles_per_hour(meters_per_sec: f64) -> String { 
 
-        // meter/sec multiply by 2.237
-
+        let mut result: String = (MPS_TO_MPH * meters_per_sec).round().to_string();
+        result.push_str("mph")
+        return result;
     }
 
     pub fn get_open_weather_data() {
@@ -138,7 +140,7 @@ pub mod open_weather {
         output_data.push_str(LINE_ENDING);
 
         if let Some(wind) = parsed.get("wind") {
-            let wind_speed = wind.get("speed").unwrap().to_string();
+            let wind_speed: String = meters_per_second_to_miles_per_hour(wind.get("speed").unwrap().to_string().parse().unwrap());
             output_data.push_str("Wind Speed: ");
             output_data.push_str(&wind_speed);
 
