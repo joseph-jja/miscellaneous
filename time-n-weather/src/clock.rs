@@ -47,47 +47,47 @@ fn write_time() {
         let hour = u16::from(now.hour());
         let minute = u16::from(now.minute());
 
-        let hour_big: u16 = get_offset(0, 2);
-        let hour_small: u16 = get_offset(1, 2);
+        let hour_big: u16 = get_offset(0, 1);
+        let hour_small: u16 = get_offset(1, 1);
 
-        let minute_big: u16 = 5 + get_offset(2, 2);
-        let minute_small: u16 = 5 + get_offset(3, 2);
+        let minute_big: u16 = 5 + get_offset(2, 1);
+        let minute_small: u16 = 5 + get_offset(3, 1);
 
         let mut ampm: &str = "am";
 
         if hour < 10 {
-            number::write(hour_big, 2, 0);
-            number::write(hour_small, 2, hour);
+            number::write(hour_big, 1, 0);
+            number::write(hour_small, 1, hour);
         } else if hour > 12 {
             ampm = "pm";
             let twelve_hour: u16 = hour - 12;
             let hour_hundred: u16 = twelve_hour / 10;
             let hour_ten: u16 = twelve_hour - hour_hundred * 10;
-            number::write(hour_big, 2, hour_hundred);
-            number::write(hour_small, 2, hour_ten);
+            number::write(hour_big, 1, hour_hundred);
+            number::write(hour_small, 1, hour_ten);
         } else {
             ampm = "pm";
             let hour_hundred: u16 = hour / 10;
             let hour_ten: u16 = hour - hour_hundred * 10;
-            number::write(hour_big, 2, hour_hundred);
-            number::write(hour_small, 2, hour_ten);
+            number::write(hour_big, 1, hour_hundred);
+            number::write(hour_small, 1, hour_ten);
         }
 
         // 15 => 5 and 10 ?
-        write_colon(hour_small + 11 + 3, 2 + 5);
-        write_colon(hour_small + 11 + 3, 2 + 10);
+        write_colon(hour_small + 11 + 3, 1 + 5);
+        write_colon(hour_small + 11 + 3, 1 + 10);
 
         if minute < 10 {
-            number::write(minute_big, 2, 0);
-            number::write(minute_small, 2, minute);
+            number::write(minute_big, 1, 0);
+            number::write(minute_small, 1, minute);
         } else {
             let minute_hundred: u16 = minute / 10;
             let minute_ten: u16 = minute - minute_hundred * 10;
-            number::write(minute_big, 2, minute_hundred);
-            number::write(minute_small, 2, minute_ten);
+            number::write(minute_big, 1, minute_hundred);
+            number::write(minute_small, 1, minute_ten);
         }
 
-        let right_offset: u16 = 7 + get_offset(4, 2);
+        let right_offset: u16 = 7 + get_offset(4, 1);
 
         let formatted_date = format!(
             "{:?}, {:?} {:?}, {:?}",
@@ -96,8 +96,8 @@ fn write_time() {
             now.day(),
             now.year()
         );
-        write_text_at(right_offset, 3, &formatted_date.as_str());
-        write_text_at(right_offset, 5, &ampm);
+        write_text_at(right_offset, 2, &formatted_date.as_str());
+        write_text_at(right_offset, 4, &ampm);
     }
 }
 
