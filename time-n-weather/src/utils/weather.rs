@@ -218,7 +218,7 @@ pub mod weather {
         for line in data.lines() {
             //println!("{:?}", line);
             if i == 1 {
-                xx = x + 4;
+                xx = x + 2;
             }
             if i == 5 {
                 xx = x;
