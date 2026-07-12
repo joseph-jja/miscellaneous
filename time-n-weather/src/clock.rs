@@ -47,11 +47,11 @@ fn write_time() {
         let hour = u16::from(now.hour());
         let minute = u16::from(now.minute());
 
-        let hour_big: u16 = get_offset(0, 2);
-        let hour_small: u16 = get_offset(1, 2);
+        let hour_big: u16 = get_offset(0, 1);
+        let hour_small: u16 = get_offset(1, 1);
 
-        let minute_big: u16 = 5 + get_offset(2, 2);
-        let minute_small: u16 = 5 + get_offset(3, 2);
+        let minute_big: u16 = 5 + get_offset(2, 1);
+        let minute_small: u16 = 5 + get_offset(3, 1);
 
         let mut ampm: &str = "am";
 
