@@ -9,13 +9,13 @@ pub mod iface {
         // Retrieve all network interfaces on the system
         let interfaces = NetworkInterface::show().expect("Failed to load network interfaces");
  
-        let os_hostname: String = gethostname(); // TODO get this as string
+        let os_hostname: String = gethostname().into_string().unwrap();
         
-        let mut network_info: String = String::from("");
+        let mut network_info: String = String::from(&os_hostname);
         for interface in interfaces {
             let iface_name: String = interface.name.to_string();
             if !iface_name.starts_with("lo") && !iface_name.starts_with("dummy") { 
-                network_info.push_str(&iface_name);
+                //network_info.push_str(&iface_name);
     
                 // Loop through all associated IP addresses (IPv4 and IPv6)
                 network_info.push_str(":");
