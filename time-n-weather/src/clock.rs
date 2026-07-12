@@ -162,10 +162,11 @@ fn main() {
         let x_offset: u16 = 5 + get_offset(4, 2);
         write_data_to_screen(x_offset, 6);
 
-        let net_ifaces: String = get_interfaces();
-        write_text_at(x_offset, 13, &net_ifaces);
+        let offset: u16 = 15 + 2 + 1;
+        write_ow_data_to_screen(8, offset);
 
-        write_ow_data_to_screen(10, 15 + 2 + 2);
+        let net_ifaces: String = get_interfaces();
+        write_text_at(8 + 30 + 5, offset, &net_ifaces);
 
         flush_stdout();
         sleep_terminal(SLEEP_TIME_U64);
