@@ -18,12 +18,18 @@ pub mod iface {
                 //network_info.push_str(&iface_name);
     
                 // Loop through all associated IP addresses (IPv4 and IPv6)
-                network_info.push_str(":");
+                network_info.push_str(" =>");
                 for addr in interface.addr {
                     if addr.ip().is_ipv4() {
                         network_info.push_str(" ");
-                        // TODO only use last digit
-                        network_info.push_str(&addr.ip().to_string());
+                        let ipaddr: String = addr.ip().to_string();
+
+                        let last_digit: String = ipaddr.split(".")
+                            .nth(3)
+                            .clone()
+                            .unwrap_or(&ipaddr)
+                            .to_string();
+                        network_info.push_str(&last_digit);
                     }
                 }
                 network_info.push_str(LINE_ENDING);
