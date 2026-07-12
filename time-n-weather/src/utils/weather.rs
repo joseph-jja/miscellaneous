@@ -184,10 +184,10 @@ pub mod weather {
         let mut hourly_results: String = String::from("Hourly:");
         hourly_results.push_str(LINE_ENDING);
         for item in four_hour_forecast {
-            hourly_results.push_str(&item.start_time);
+            hourly_results.push_str(&item.start_time[0..5]);
             hourly_results.push_str("-");
-            hourly_results.push_str(&item.end_time);
-            hourly_results.push_str(": ");
+            hourly_results.push_str(&item.end_time[0..5]);
+            hourly_results.push_str(" = ");
             hourly_results.push_str(&item.temperature);
             hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
             hourly_results.push_str(" / ");
