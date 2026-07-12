@@ -166,9 +166,6 @@ fn main() {
         write_text_at(x_offset, 13, &net_ifaces);
 
         write_ow_data_to_screen(10, 15 + 2 + 2);
-        if i == 0 {
-            get_weather_data();
-        }
 
         flush_stdout();
         sleep_terminal(SLEEP_TIME_U64);

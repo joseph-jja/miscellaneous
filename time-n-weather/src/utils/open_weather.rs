@@ -94,7 +94,7 @@ pub mod open_weather {
                 .replace('"', "");
             //println!("{:?}", formatted_local_time);
             output_data.push_str("Last Updated: ");
-            output_data.push_str(&formatted_local_time);
+            output_data.push_str(&formatted_local_time[0..16]);
             output_data.push_str(LINE_ENDING);
         }
 
