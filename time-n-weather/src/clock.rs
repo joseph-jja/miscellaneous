@@ -87,7 +87,7 @@ fn write_time() {
             number::write(minute_small, 1, minute_ten);
         }
 
-        let right_offset: u16 = 7 + get_offset(4, 1);
+        let right_offset: u16 = 6 + get_offset(4, 1);
 
         let formatted_date = format!(
             "{:?}, {:?} {:?}, {:?}",
@@ -156,7 +156,7 @@ fn main() {
         clear_terminal();
         write_time();
 
-        let x_offset: u16 = 7 + get_offset(4, 2);
+        let x_offset: u16 = 6 + get_offset(4, 1);
         write_data_to_screen(x_offset, 8);
 
         let net_ifaces: String = get_interfaces();
