@@ -148,7 +148,7 @@ pub mod open_weather {
             output_data.push_str("    Wind Direction: ");
             output_data.push_str(&wind_direction);
 
-            let wind_gust = wind.get("gust").unwrap().to_string();
+            let wind_gust: String = meters_per_second_to_miles_per_hour(wind.get("gust").unwrap().to_string().parse().unwrap());
             output_data.push_str("    Wind Gust: ");
             output_data.push_str(&wind_gust);
 
