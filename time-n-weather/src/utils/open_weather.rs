@@ -34,7 +34,7 @@ pub mod open_weather {
     fn meters_per_second_to_miles_per_hour(meters_per_sec: f64) -> String { 
 
         let mut result: String = (MPS_TO_MPH * meters_per_sec).round().to_string();
-        result.push_str("mph")
+        result.push_str("mph");
         return result;
     }
 
