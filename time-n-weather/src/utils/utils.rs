@@ -48,24 +48,32 @@ pub mod utils {
         let client = reqwest::Client::new();
 
         // 1. Send the GET request
-        let response = client
+        let response = match client
             .get(api_endpoint)
             .header("User-Agent", USER_AGENT)
             .header("Accept", "application/json")
             .send()
             .await
-            .expect("Fetch of data failed");
+            {
+                Ok(response) => response,
+                Err(e) => {
+                    eprintln!("Fetch of data failed: {}", e);
+                    return String::from(""); // Acts as your .catch()
+                }
+            };
 
-        // 2. Check if the request was successful
         if response.status().is_success() {
-            // 3. Parse the body text
-            let body = response.text().await.expect("Get body content failed!");
-            //println!("Response body:\n{}", body);
-            return body;
+            match response.text().await {
+                Ok(body) => body, // Acts as your .then()
+                Err(e) => {
+                    eprintln!("Get body content failed: {}", e);
+                    String::from("")
+                }
+            }
         } else {
             println!("Server returned error: {}", response.status());
+            String::from("")
         }
-        return String::from("");
     }
 
     pub fn format_date(input_in: &String) -> String {
