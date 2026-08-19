@@ -191,7 +191,7 @@ pub mod weather {
             hourly_results.push_str(&item.temperature);
             hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
             hourly_results.push_str(LINE_ENDING);
-            hourly_results.push_str("    ");
+            hourly_results.push_str("    => ");
             hourly_results.push_str(&item.wind_speed.replace("\"", ""));
             hourly_results.push_str(" ");
             hourly_results.push_str(&item.wind_direction.replace("\"", ""));
