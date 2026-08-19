@@ -187,16 +187,19 @@ pub mod weather {
             hourly_results.push_str(&item.start_time[0..5]);
             hourly_results.push_str("-");
             hourly_results.push_str(&item.end_time[0..5]);
-            hourly_results.push_str(" ");
+            hourly_results.push_str(" => ");
             hourly_results.push_str(&item.temperature);
             hourly_results.push_str(&item.temperature_unit.replace("\"", ""));
-            hourly_results.push_str(" ");
+            hourly_results.push_str(LINE_ENDING);
+            hourly_results.push_str("    ");
             hourly_results.push_str(&item.wind_speed.replace("\"", ""));
             hourly_results.push_str(" ");
             hourly_results.push_str(&item.wind_direction.replace("\"", ""));
             hourly_results.push_str(LINE_ENDING);
         }
-        hourly_results.push_str("Updated GMT: ");
+        hourly_results.push_str("Last Updated(GMT):");
+        hourly_results.push_str(LINE_ENDING);
+        hourly_results.push_str("    ");
         hourly_results.push_str(&generated[0..16]);
         hourly_results.push_str(LINE_ENDING);
         //println!("Got generated date {:?}", generated);
@@ -220,7 +223,7 @@ pub mod weather {
             if i == 1 {
                 xx = x + 2;
             }
-            if i == 5 {
+            if i == 9 {
                 xx = x;
             }
             write_text_at(xx, yy, line);
