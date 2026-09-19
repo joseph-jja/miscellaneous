@@ -108,7 +108,6 @@ pub mod utils {
         input_filename.push(&String::from(filename));
         let input_name: String = input_filename.to_string_lossy().into_owned();
 
-        return read_to_string(filename)?;
-        //Ok(results);
+        return read_to_string(filename);
     }
 }
