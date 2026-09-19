@@ -1,7 +1,7 @@
+use crossterm::event::{self, Event, KeyCode, KeyModifiers};
+use std::time::Duration;
 use serde::{Deserialize, Serialize};
 use std::process;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
 use time::OffsetDateTime;
 use std::thread;
 
@@ -142,21 +142,13 @@ fn main() {
         api_key.clear();
         api_key.push_str(key_temp);
     }
-
-    let running = Arc::new(AtomicBool::new(true));
-    let r = running.clone();
-
-    ctrlc::set_handler(move || {
-        r.store(false, Ordering::SeqCst);
-    })
-    .expect("failed to set Ctrl-C handler");
     
     let mut i: i32 = 0;
     init_terminal();
     // TODO need to add in control-C kill app functionality
     // for now testing we just run loop 120 times which should be about 2 minutes
     // ideally we would have endless loop until control-C
-    while running.load(Ordering::SeqCst) {
+    loop {
         // get the weather data first time and then
         // 30 minuntes
         if i == 0 || i == RELOAD_WEATHER_API_DATA {
@@ -189,7 +181,24 @@ fn main() {
         write_text_at(8 + 30 + 5, offset, &net_ifaces);
 
         flush_stdout();
-        sleep_terminal(SLEEP_TIME_U64);
+
+        // Wait for up to one second for a keyboard event.
+        if event::poll(Duration::from_secs(1)).unwrap_or(false) {
+            if let Ok(Event::Key(key_event)) = event::read() {
+                if key_event.code == KeyCode::Char('c')
+                    && key_event.modifiers.contains(KeyModifiers::CONTROL)
+                {
+                    break;
+                }
+                if key_event.code == KeyCode::Esc
+                    || (key_event.code == KeyCode::Char('c')
+                        && key_event.modifiers.contains(KeyModifiers::CONTROL))
+                {
+                    break;
+                }
+            }
+        }
+
         i = i + SLEEP_TIME;
         if i > MAX_SLEEP_I_VALUE {
             i = 0;
