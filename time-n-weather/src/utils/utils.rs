@@ -101,7 +101,7 @@ pub mod utils {
         let _ = write_outfile(&output_name, &data);
     }
 
-    pub fn read_temp_file(filename: &str) -> Result<String, Error> {
+    pub fn read_temp_file(filename: &str) -> Result<String, io::Error> {
         let mut input_filename = PathBuf::new();
         input_filename.push("/");
         input_filename.push("tmp");
