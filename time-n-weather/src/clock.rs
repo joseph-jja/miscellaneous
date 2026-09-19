@@ -21,7 +21,6 @@ use crate::utils::terminal::terminal::{
     destroy_terminal, 
     flush_stdout, 
     init_terminal, 
-    sleep_terminal, 
     write_text_at,
     update_color
 };
