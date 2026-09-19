@@ -234,7 +234,7 @@ pub mod weather {
             Err(error) => {
                 let message = format!(
                     "Could not read '{}': {}",
-                    DETAILS_FILENAME, error
+                    HOURLY_FILENAME, error
                 );
                 write_text_at(x, y, &message);
             }
