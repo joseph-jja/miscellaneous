@@ -212,23 +212,32 @@ pub mod weather {
         // read in hourly file and then write to screen at x
         // y increases x is fixed
         // we write 5 lines
-        let data: String = read_temp_file(HOURLY_FILENAME);
-
-        let mut xx: u16 = x;
-        let mut yy: u16 = y;
-        let mut i: u16 = 0;
-
-        for line in data.lines() {
-            //println!("{:?}", line);
-            if i == 1 {
-                xx = x + 2;
+         match read_temp_file(HOURLY_FILENAME) {
+            Ok(data) => {
+                let mut xx: u16 = x;
+                let mut yy: u16 = y;
+                let mut i: u16 = 0;
+        
+                for line in data.lines() {
+                    //println!("{:?}", line);
+                    if i == 1 {
+                        xx = x + 2;
+                    }
+                    if i == 9 {
+                        xx = x;
+                    }
+                    write_text_at(xx, yy, line);
+                    i = i + 1;
+                    yy = y + i;
+                }
             }
-            if i == 9 {
-                xx = x;
+            Err(error) => {
+                let message = format!(
+                    "Could not read '{}': {}",
+                    DETAILS_FILENAME, error
+                );
+                write_text_at(x, y, &message);
             }
-            write_text_at(xx, yy, line);
-            i = i + 1;
-            yy = y + i;
         }
     }
 }
