@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::process;
 use time::OffsetDateTime;
+use std::thread;
 
 pub mod utils;
 use crate::utils::utils::utils::{
@@ -149,13 +150,25 @@ fn main() {
         // get the weather data first time and then
         // 30 minuntes
         if i == 0 || i == RELOAD_WEATHER_API_DATA {
-            get_weather_data();
+            let weather_handle = std::thread::spawn(|| {
+                get_weather_data();
+            });
+            weather_handle
+                .join()
+                .expect("get_weather_data thread panicked");
         }
+        
         // then every 60 minutes
         if i == 0 || i == RELOAD_OPEN_WEATHER_API_DATA {
-            get_open_weather_data();
+            let open_weather_handle = std::thread::spawn(|| {
+                get_open_weather_data();
+            });
+    
+            open_weather_handle
+                .join()
+                .expect("get_open_weather_data thread panicked");
         }
-
+        
         clear_terminal();
         write_time();
 
