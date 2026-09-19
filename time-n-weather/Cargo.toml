@@ -15,7 +15,6 @@ time = { version = "0.3", features = ["macros", "local-offset"] }
 crossterm = "0.29.0"
 network-interface = "2.0"
 gethostname = "1.1"
-ctrlc = "3.4"
 
 [[bin]]
 name = "time-n-weather"
