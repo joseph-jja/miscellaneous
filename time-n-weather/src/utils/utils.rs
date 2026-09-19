@@ -101,12 +101,14 @@ pub mod utils {
         let _ = write_outfile(&output_name, &data);
     }
 
-    pub fn read_temp_file(filename: &str) -> String {
+    pub fn read_temp_file(filename: &str) -> Result<String, io::Error> {
         let mut input_filename = PathBuf::new();
         input_filename.push("/");
         input_filename.push("tmp");
         input_filename.push(&String::from(filename));
         let input_name: String = input_filename.to_string_lossy().into_owned();
-        return read_in_file(&input_name);
+
+        let results = read_to_string(filename)?;
+        Ok(results);
     }
 }
