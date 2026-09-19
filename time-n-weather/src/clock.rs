@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::process;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
 use time::OffsetDateTime;
 use std::thread;
 
@@ -141,12 +143,20 @@ fn main() {
         api_key.push_str(key_temp);
     }
 
+    let running = Arc::new(AtomicBool::new(true));
+    let r = running.clone();
+
+    ctrl_c::set_handler(move || {
+        r.store(false, Ordering::SeqCst);
+    })
+    .expect("failed to set Ctrl-C handler");
+    
     let mut i: i32 = 0;
     init_terminal();
     // TODO need to add in control-C kill app functionality
     // for now testing we just run loop 120 times which should be about 2 minutes
     // ideally we would have endless loop until control-C
-    while i < 120 {
+    while running.load(Ordering::SeqCst) {
         // get the weather data first time and then
         // 30 minuntes
         if i == 0 || i == RELOAD_WEATHER_API_DATA {
