@@ -150,23 +150,20 @@ fn main() {
         // get the weather data first time and then
         // 30 minuntes
         if i == 0 || i == RELOAD_WEATHER_API_DATA {
-            let weather_handle = thread::spawn(|| {
+            //let weather_handle = 
+            thread::spawn(|| {
                 get_weather_data();
             });
-            weather_handle
-                .join()
-                .expect("get_weather_data thread panicked");
+            //weather_handle.join().expect("get_weather_data thread panicked");
         }
         
         // then every 60 minutes
         if i == 0 || i == RELOAD_OPEN_WEATHER_API_DATA {
-            let open_weather_handle = thread::spawn(|| {
+            //let open_weather_handle = 
+            thread::spawn(|| {
                 get_open_weather_data();
             });
-    
-            open_weather_handle
-                .join()
-                .expect("get_open_weather_data thread panicked");
+            // open_weather_handle.join().expect("get_open_weather_data thread panicked");
         }
         
         clear_terminal();
