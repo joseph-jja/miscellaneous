@@ -146,7 +146,7 @@ fn main() {
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
 
-    ctrl_c::set_handler(move || {
+    ctrlc::set_handler(move || {
         r.store(false, Ordering::SeqCst);
     })
     .expect("failed to set Ctrl-C handler");
