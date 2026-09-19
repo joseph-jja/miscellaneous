@@ -181,13 +181,22 @@ pub mod open_weather {
         // read in hourly file and then write to screen at x
         // y increases x is fixed
         // we write 5 lines
-        let data: String = read_temp_file(DETAILS_FILENAME);
-
-        let mut yy: u16 = y;
-
-        for line in data.lines() {
-            write_text_at(x, yy, line);
-            yy = yy + 1;
+        match read_temp_file(DETAILS_FILENAME) {
+            Ok(data) => {
+                let mut yy: u16 = y;
+    
+                for line in data.lines() {
+                    write_text_at(x, yy, line);
+                    yy += 1;
+                }
+            }
+            Err(error) => {
+                let message = format!(
+                    "Could not read '{}': {}",
+                    DETAILS_FILENAME, error
+                );
+                write_text_at(x, y, &message);
+            }
         }
     }
 }
