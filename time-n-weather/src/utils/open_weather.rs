@@ -192,7 +192,7 @@ pub mod open_weather {
             }
             Err(error) => {
                 let message = format!(
-                    "Could not read '{}': {}",
+                    "Could not read '{}':\n{}",
                     DETAILS_FILENAME, error
                 );
                 write_text_at(x, y, &message);
