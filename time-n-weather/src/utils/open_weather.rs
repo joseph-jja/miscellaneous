@@ -109,9 +109,9 @@ pub mod open_weather {
             let temp_max: String = main_section.get("temp_max").unwrap().to_string();
             let temp_max_value_f: String = kelvin_to_fahrenheit(temp_max.parse().unwrap());
             output_data.push_str("    High/Low: ");
-            output_data.push_str(&temp_min_value_f);
-            output_data.push_str("/");
             output_data.push_str(&temp_max_value_f);
+            output_data.push_str("/");
+            output_data.push_str(&temp_min_value_f);
             output_data.push_str(LINE_ENDING);
 
             let humidity: String = main_section.get("humidity").unwrap().to_string();
